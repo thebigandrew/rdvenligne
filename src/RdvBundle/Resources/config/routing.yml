@@ -1,0 +1,3 @@
+rdv_homepage:
+    path:     /
+    defaults: { _controller: RdvBundle:Default:index }

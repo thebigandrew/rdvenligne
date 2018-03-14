@@ -1,0 +1,4 @@
+services:
+#    rdv.example:
+#        class: RdvBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
