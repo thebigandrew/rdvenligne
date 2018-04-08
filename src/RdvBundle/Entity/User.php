@@ -50,6 +50,9 @@ class User extends BaseUser {
 
     public function __construct() {
         parent::__construct();
+        
+        // Set to false by default
+        $this->validationAdmin = false;
     }
 
     /**
