@@ -1,3 +1,15 @@
 rdv_homepage:
     path:     /
     defaults: { _controller: RdvBundle:Default:index }
+
+rdv_validation_admin:
+    path: /validation_admin
+    defaults: { _controller: RdvBundle:ValidationAdmin:index }
+
+rdv_validation_pro:
+    path:      /validation_pro/{id}
+    controller: RdvBundle:ValidationAdmin:validation
+    requirements:
+        page: '\d+'
+    options:
+        expose: true
