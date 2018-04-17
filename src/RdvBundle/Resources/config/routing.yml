@@ -13,3 +13,7 @@ rdv_validation_pro:
         page: '\d+'
     options:
         expose: true
+        
+rdv_user_list_pro:
+    path:      /rdv_user_list
+    controller: RdvBundle:RdvUserList:index

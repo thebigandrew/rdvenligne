@@ -2,3 +2,7 @@ services:
     rdv.datatable.user:
         class: RdvBundle\Datatables\UserDatatable
         parent: sg_datatables.datatable.abstract
+        
+    app.datatable.rdvuserlist:
+        class: RdvBundle\Datatables\RdvDatatable
+        parent: sg_datatables.datatable.abstract
