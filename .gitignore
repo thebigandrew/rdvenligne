@@ -12,7 +12,10 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
-/vendor/
+/vendor/*
+/vendor/friendsofsymfony/*
+/vendor/friendsofsymfony/user-bundle/*
+/vendor/friendsofsymfony/user-bundle/Controller/*
 !/vendor/friendsofsymfony/user-bundle/Controller/RegistrationController.php
 /web/bundles/
 /nbproject/
