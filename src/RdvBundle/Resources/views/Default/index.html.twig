@@ -1,1 +1,4 @@
 Hello World!
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+	<a href="{{ path('rdv_user_profile') }}">Profil</a>
+{% endif %}
