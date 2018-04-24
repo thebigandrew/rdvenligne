@@ -13,3 +13,7 @@ rdv_validation_pro:
         page: '\d+'
     options:
         expose: true
+
+rdv_listing_pro:
+    path: /listing_pro
+    defaults: { _controller: RdvBundle:ListingPro:index }
