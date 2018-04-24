@@ -63,11 +63,8 @@ class UserDatatable extends AbstractDatatable
             ->add('telephone', Column::class, array(
                 'title' => 'Telephone',
                 ))
-            ->add('dateNaissance', Column::class, array(
+            ->add('dateNaissance', DateTimeColumn::class, array(
                 'title' => 'DateNaissance',
-                ))
-            ->add('validationAdmin', BooleanColumn::class, array(
-                'title' => 'ValidationAdmin',
                 ))
             ->add(null, ActionColumn::class, array(
                 'title' => $this->translator->trans('sg.datatables.actions.title'),
@@ -77,8 +74,7 @@ class UserDatatable extends AbstractDatatable
                         'route_parameters' => array(
                             'id' => 'id'
                         ),
-                        'label' => $this->translator->trans('sg.datatables.actions.show'),
-                        'icon' => 'glyphicon glyphicon-eye-open',
+                        'label' => 'Valider',
                         'attributes' => array(
                             'rel' => 'tooltip',
                             'title' => $this->translator->trans('sg.datatables.actions.show'),

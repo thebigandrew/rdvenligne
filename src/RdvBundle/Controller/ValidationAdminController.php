@@ -4,6 +4,7 @@ namespace RdvBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ValidationAdminController extends Controller
 {
@@ -40,6 +41,6 @@ class ValidationAdminController extends Controller
     public function validationAction(Request $request, $id)
     {
         $this->getDoctrine()->getManager()->getRepository('RdvBundle:User')->validateUser( $id );
-        return new \Symfony\Component\HttpFoundation\JsonResponse([]);
+        return $this->redirectToRoute('rdv_validation_admin');
     }
 }

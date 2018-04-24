@@ -3,11 +3,11 @@ rdv_homepage:
     defaults: { _controller: RdvBundle:Default:index }
 
 rdv_validation_admin:
-    path: /validation_admin
+    path: /admin/validation_admin
     defaults: { _controller: RdvBundle:ValidationAdmin:index }
 
 rdv_validation_pro:
-    path:      /validation_pro/{id}
+    path:      /admin/validation_pro/{id}
     controller: RdvBundle:ValidationAdmin:validation
     requirements:
         page: '\d+'
