@@ -54,6 +54,9 @@ class User extends BaseUser {
         
         // Set to false by default
         $this->validationAdmin = false;
+        
+        // Ajouté pour les tests de droits
+        $this->addRole('ROLE_ADMIN');
     }
 
     /**

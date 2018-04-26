@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ValidationAdminController extends Controller
+class ListingProController extends Controller
 {
    
     public function indexAction(Request $request)
@@ -28,19 +28,15 @@ class ValidationAdminController extends Controller
             $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
             
             $qb = $datatableQueryBuilder->getQb();
-            $qb->andWhere('user.validationAdmin = false');
+            $qb->andWhere('user.roles LIKE :role');
+            $qb->setParameter('role', '%"ROLE_PRO"%');
 
             return $responseService->getResponse();
         }
 
-        return $this->render('RdvBundle:ValidationAdmin:index.html.twig', array(
+        return $this->render('RdvBundle:ListingPro:index.html.twig', array(
             'datatable' => $datatable,
         ));
     }
     
-    public function validationAction(Request $request, $id)
-    {
-        $this->getDoctrine()->getManager()->getRepository('RdvBundle:User')->validateUser( $id );
-        return $this->redirectToRoute('rdv_validation_admin');
-    }
 }
