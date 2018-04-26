@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
+ * @ORM\Entity(repositoryClass="RdvBundle\Repository\UserRepository")
  */
 class User extends BaseUser {
 
@@ -51,6 +52,9 @@ class User extends BaseUser {
         
         // Set to false by default
         $this->validationAdmin = false;
+        
+        // Ajouté pour les tests de droits
+        $this->addRole('ROLE_ADMIN');
     }
 
     /**
