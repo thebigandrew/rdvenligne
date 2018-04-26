@@ -1,5 +1,4 @@
 <?php
-
 namespace RdvBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
@@ -17,13 +16,12 @@ class User extends BaseUser {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
+    
     /**
      * @var string
      * @ORM\Column(name="lastname", type="text")
      */
     private $lastname;
-
     /**
      * @var string
      * @ORM\Column(name="firstname", type="text")
@@ -55,42 +53,6 @@ class User extends BaseUser {
         $this->validationAdmin = false;
     }
 
-    /**
-     * Set lastname
-     * @param string $lastname
-     * @return User
-     */
-    public function setLastname($lastname) {
-        $this->lastname = $lastname;
-        return $this;
-    }
-
-    /**
-     * Get lastname
-     * @return string
-     */
-    public function getLastname() {
-        return $this->lastname;
-    }
-
-    /**
-     * Set lastname
-     * @param string $firstname
-     * @return User
-     */
-    public function setFirstname($firstname) {
-        $this->firstname = $firstname;
-        return $this;
-    }
-
-    /**
-     * Get firstname
-     * @return string
-     */
-    public function getFirstname() {
-        return $this->firstname;
-    }
-    
     /**
      * Set telephone
      * @param string $telephone
@@ -143,5 +105,53 @@ class User extends BaseUser {
     public function setValidationAdmin($validationAdmin) {
         $this->validationAdmin = $validationAdmin;
         return $this;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return User
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     *
+     * @return User
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
     }
 }
