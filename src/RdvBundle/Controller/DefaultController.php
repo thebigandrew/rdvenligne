@@ -4,6 +4,8 @@ namespace RdvBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use RdvBundle\Entity\TypeRdv;
+use RdvBundle\Form\TypeRdvType;
 use RdvBundle\Form\UserProfileType;
 
 class DefaultController extends Controller
@@ -29,5 +31,31 @@ class DefaultController extends Controller
             return $this->render('RdvBundle:Default:userprofile.html.twig', array('form' => $form->createView()));
         }
         return $this->render('RdvBundle:Default:userprofile.html.twig', array('form' => $form->createView()));
+    }
+    
+    public function typeRdvAction(Request $request){
+        $entityManager = $this->getDoctrine()->getManager();
+        $repositoryTypeRdv = $entityManager->getRepository(TypeRdv::class);
+        $tTypeRdv = $repositoryTypeRdv->findAll();
+        return $this->render('RdvBundle:Default:typerdv.html.twig', array('tTypeRdv' => $tTypeRdv));
+    }
+    
+    public function typeRdvAddUpdateAction(Request $request, $id){
+        $entityManager = $this->getDoctrine()->getManager();
+        $repositoryTypeRdv = $entityManager->getRepository(TypeRdv::class);
+        if($id != null){
+            $oTypeRdv = $repositoryTypeRdv->findOneBy(array('id' => $id));
+        }else{
+            $oTypeRdv = new TypeRdv();
+        }
+        $form = $form = $this->createForm(TypeRdvType::class, $oTypeRdv);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() and $form->isValid()) {
+            $entityManager->persist($oTypeRdv);
+            $entityManager->flush();
+            $tTypeRdv = $repositoryTypeRdv->findAll();
+            return $this->render('RdvBundle:Default:typerdv.html.twig', array('tTypeRdv' => $tTypeRdv));
+        }
+        return $this->render('RdvBundle:Default:typerdvaddupdate.html.twig', array('form' => $form->createView()));
     }
 }
