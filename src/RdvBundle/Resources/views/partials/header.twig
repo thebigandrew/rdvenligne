@@ -21,7 +21,7 @@
         <ul class="nav navbar-nav">
             <!-- User Account Menu -->
             <li class="dropdown user user-menu">
-                <a href="{{ path('user-profile') }}">
+                <a href="#">{#  {{ path('user-profile') }} #}
                     <!-- The user image in the navbar-->
                     <div class="avatar-circle">
                         {# <span class="initials">{{ user.firstname|first|capitalize }}{{ user.lastname|first|capitalize }}</span> #}
@@ -33,7 +33,7 @@
             </li>
             <!-- Control Sidebar Toggle Button -->
             <li>
-                <a href="{{ path('logout') }}"><i class="fa fa-sign-out"></i></a>
+                <a href="#"><i class="fa fa-sign-out"></i></a> {# {{ path('logout') }} #}
             </li>
         </ul>
     </div>
