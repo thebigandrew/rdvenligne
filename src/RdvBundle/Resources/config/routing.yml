@@ -12,4 +12,31 @@ rdv_type_rdv:
     
 rdv_type_rdv_update:
     path:     /typerdv/update/{id}
-    defaults: { _controller: RdvBundle:Default:typeRdvAddUpdate, id:null } 
+    defaults: { _controller: RdvBundle:Default:typeRdvAddUpdate, id:null }
+    
+rdv_validation_admin:
+    path: /validation_admin
+    path: /admin/validation_admin
+    defaults: { _controller: RdvBundle:ValidationAdmin:index }
+ 
+rdv_validation_pro:
+    path:      /validation_pro/{id}
+    path:      /admin/validation_pro/{id}
+    controller: RdvBundle:ValidationAdmin:validation
+    requirements:
+        page: '\d+'
+    options:
+        expose: true
+
+rdv_listing_pro:
+    path: /listing_pro
+    defaults: { _controller: RdvBundle:ListingPro:index }
+         
+rdv_user_list_pro:
+    path:      /rdv_user_list
+    controller: RdvBundle:RdvUserList:index
+
+user_pro_list:
+    path:      /user_pro_list
+    controller: RdvBundle:UserProList:index
+    
