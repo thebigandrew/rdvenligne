@@ -5,9 +5,10 @@
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
         <li class="header">Menu</li>       
-        <li class="{{ route starts with 'dashboard' ? 'active' }}"><a href="{{ url('dashboard') }}"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
+{#         <li class="{{ route starts with 'dashboard' ? 'active' }}"><a href="{{ url('dashboard') }}"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
         <li class="{{ route starts with 'dunno' ? 'active' }}"><a href="{{ url('dunno') }}"><i class="fa fa-bar-chart"></i><span>Dunno</span></a></li>
-        <li class="{{ route starts with 'Dunni' ? 'active' }}"><a href="{{ url('Dunni') }}"><i class="fa fa-area-chart"></i> <span>Dunni</span></a></li>
+        <li class="{{ route starts with 'Dunni' ? 'active' }}"><a href="{{ url('Dunni') }}"><i class="fa fa-area-chart"></i> <span>Dunni</span></a></li> #}
+        <li class="active"><a href="{{ url('dashboard') }}"><i class="fa fa-pie-chart"></i> <span>Dashboard</span></a></li>
         <li style="background-color: #262526" class="header">Version 1.4.3</li>
     </ul>
     <!-- /.sidebar-menu -->
