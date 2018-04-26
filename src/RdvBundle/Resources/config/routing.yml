@@ -17,3 +17,11 @@ rdv_validation_pro:
 rdv_listing_pro:
     path: /listing_pro
     defaults: { _controller: RdvBundle:ListingPro:index }
+        
+rdv_user_list_pro:
+    path:      /rdv_user_list
+    controller: RdvBundle:RdvUserList:index
+    
+user_pro_list:
+    path:      /user_pro_list
+    controller: RdvBundle:UserProList:index

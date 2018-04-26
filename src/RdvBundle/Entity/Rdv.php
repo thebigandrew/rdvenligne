@@ -44,13 +44,13 @@ class Rdv {
 
     
     /**
-     * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\user")
+     * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
     
     /**
-     * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\user")
+     * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\User")
      * @ORM\JoinColumn(name="pro_id", referencedColumnName="id")
      */
     private $proId;
