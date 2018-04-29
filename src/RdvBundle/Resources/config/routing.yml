@@ -5,3 +5,11 @@ rdv_homepage:
 dashboard:
     path:   /home
     controller: RdvBundle\Controller\DefaultController::testLayout
+
+logina:
+    path:   /logina
+    controller: RdvBundle\Controller\DefaultController::login
+
+signupa:
+    path:   /signupa
+    controller: RdvBundle\Controller\DefaultController::signup    

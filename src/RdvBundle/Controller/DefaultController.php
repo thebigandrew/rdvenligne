@@ -15,4 +15,12 @@ class DefaultController extends Controller
     public function testLayout(){
         return $this->render('@Rdv/Default/dashboard.twig');
     }
+
+    public function signup(){
+        return $this->render('@Rdv/signup.twig');
+    }
+
+    public function login(){
+        return $this->render('@Rdv/login.twig');
+    }
 }
