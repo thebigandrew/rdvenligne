@@ -58,4 +58,12 @@ class DefaultController extends Controller
         }
         return $this->render('RdvBundle:Default:typerdvaddupdate.html.twig', array('form' => $form->createView()));
     }
+
+    public function signup(){
+        return $this->render('@Rdv/signup.twig');
+    }
+
+    public function login(){
+        return $this->render('@Rdv/login.twig');
+    }
 }
