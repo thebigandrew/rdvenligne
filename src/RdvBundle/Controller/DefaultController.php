@@ -15,6 +15,11 @@ class DefaultController extends Controller
         return $this->render('RdvBundle:Default:index.html.twig');
     }
     
+    public function dashboardAction()
+    {
+        return $this->render('RdvBundle:Default:dashboard.twig');
+    }
+    
     public function userProfileAction(Request $request){
         $entityManager = $this->getDoctrine()->getManager();
         $oUser = $this->getUser();
