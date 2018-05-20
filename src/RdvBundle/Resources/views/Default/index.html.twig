@@ -1,5 +1,5 @@
 {# Voila comment faire pour intérgé le layout de base : extend le layout et mettre le contenu dans le block content #}
-{% extends "layout.twig" %}
+{% extends "@Rdv/layout.twig" %}
 {% block content %}
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <a href="{{ path('rdv_user_profile') }}">Profil</a>
