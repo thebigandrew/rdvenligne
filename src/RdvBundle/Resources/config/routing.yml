@@ -43,3 +43,7 @@ user_pro_list:
 dashboard:
     path: /dashboard
     controller: RdvBundle:Default:dashboard
+
+create_planning_default:
+    path: /create_planning_default
+    controller: RdvBundle:Planning:createDefault
