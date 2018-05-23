@@ -39,7 +39,7 @@ class TypeRdv {
     private $duree;
 
     /**
-     * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\user")
+     * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
