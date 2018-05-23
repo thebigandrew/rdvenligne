@@ -15,11 +15,6 @@ class DefaultController extends Controller
         return $this->render('RdvBundle:Default:index.html.twig');
     }
     
-    public function dashboardAction()
-    {
-        return $this->render('RdvBundle:Default:dashboard.twig');
-    }
-    
     public function userProfileAction(Request $request){
         $entityManager = $this->getDoctrine()->getManager();
         $oUser = $this->getUser();
@@ -62,13 +57,5 @@ class DefaultController extends Controller
             return $this->render('RdvBundle:Default:typerdv.html.twig', array('tTypeRdv' => $tTypeRdv));
         }
         return $this->render('RdvBundle:Default:typerdvaddupdate.html.twig', array('form' => $form->createView()));
-    }
-
-    public function signup(){
-        return $this->render('@Rdv/signup.twig');
-    }
-
-    public function login(){
-        return $this->render('@Rdv/login.twig');
     }
 }

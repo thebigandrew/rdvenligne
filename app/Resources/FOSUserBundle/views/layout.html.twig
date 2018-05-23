@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+            <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+        	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+        	<link rel="stylesheet" type="text/css" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+        	<link rel="stylesheet" type="text/css" href="{{ asset('fonts/iconic/css/material-design-iconic-font.min.css') }}">
+        	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/animate/animate.css') }}">
+        	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/css-hamburgers/hamburgers.min.css') }}">
+        	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/animsition/css/animsition.min.css') }}">
+        	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/select2.min.css') }}">
+        	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/daterangepicker/daterangepicker.css') }}">
+        	<link rel="stylesheet" type="text/css" href="{{ asset('css/util.css') }}">
+        	<link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
         {% endblock %}
     </head>
     <body>
-        <div>
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <a href="{{ path('fos_user_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                </a>
-            {% else %}
-                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-            {% endif %}
-        </div>
-
         {% if app.request.hasPreviousSession %}
             {% for type, messages in app.session.flashbag.all() %}
                 {% for message in messages %}
@@ -27,15 +26,17 @@
                 {% endfor %}
             {% endfor %}
         {% endif %}
-
-        <div>
-            {% block fos_user_content %}
-            {% endblock fos_user_content %}
-        </div>
-        
-        {% block javascripts %}
-            <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        {% endblock %}
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+        <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    	<script src="{{ asset('vendor/animsition/js/animsition.min.js') }}"></script>
+    	<script src="{{ asset('vendor/bootstrap/js/popper.js') }}"></script>
+    	<script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    	<script src="{{ asset('vendor/select2/select2.min.js') }}"></script>
+    	<script src="{{ asset('vendor/daterangepicker/moment.min.js') }}"></script>
+    	<script src="{{ asset('vendor/daterangepicker/daterangepicker.js') }}"></script>
+    	<script src="{{ asset('vendor/countdowntime/countdowntime.js') }}"></script>
+		<script src="{{ asset('js/main.js') }}"></script>
     </body>
 </html>

@@ -19,3 +19,4 @@
 !/vendor/friendsofsymfony/user-bundle/Controller/RegistrationController.php
 /web/bundles/
 /nbproject/
+/vendor/
