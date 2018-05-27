@@ -1,6 +1,7 @@
 <?php
 namespace RdvBundle\Repository;
 use Doctrine\ORM\EntityRepository as Repository;
+
 /**
  * UserRepository
  */

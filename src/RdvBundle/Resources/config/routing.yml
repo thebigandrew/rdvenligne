@@ -39,3 +39,15 @@ rdv_user_list_pro:
 user_pro_list:
     path:      /user_pro_list
     controller: RdvBundle:UserProList:index
+    
+pagePerso:
+    path:     /pagePerso/{id}
+    defaults: { _controller: RdvBundle:Default:pagePerso } 
+    requirements:
+        page: '\d+'
+    options:
+        expose: true
+    
+pagePerso_update:
+    path:     /pagePerso/update/{id}
+    defaults: { _controller: RdvBundle:Default:pagePersoAddUpdate, id:null }

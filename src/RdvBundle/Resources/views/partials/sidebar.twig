@@ -2,40 +2,40 @@
 
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-<!-- Brand Logo -->
-<a href="index3.html" class="brand-link">
-    <span class="brand-text font-weight-light">RDV en Ligne</span>
-</a>
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+        <span class="brand-text font-weight-light">RDV en Ligne</span>
+    </a>
 
-<!-- Sidebar -->
-<div class="sidebar">
-    <!-- Sidebar user panel (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-    <div class="image">
-        <img src="{{ asset('dist/img/avatar5.png') }}" class="img-circle elevation-2" alt="User Image">
-    </div>
-    <div class="info">
-        <a href="#" class="d-block">Vincent ABET</a>
-    </div>
-    </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="{{ asset('dist/img/avatar5.png') }}" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">Vincent ABET</a>
+            </div>
+        </div>
 
-    <!-- Sidebar Menu -->
-    <nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item has-treeview menu-open">
-        <li class="nav-header">Admin</li>
-        <li class="nav-item"><a href="{{ url('rdv_validation_admin') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Validation Professionel</p></a></li>
-        <li class="nav-item"><a href="{{ url('rdv_listing_pro') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Liste Professionel</p></a></li>
-        
-        <li class="nav-header">Professionel</li>       
-        <li class="nav-item"><a href="{{ url('rdv_user_list_pro') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Listing client</p></a></li>
-        <li class="nav-item"><a href="{{ url('rdv_type_rdv') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Types de RDV</p></a></li>
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item has-treeview menu-open">
+                <li class="nav-header">Admin</li>
+                <li class="nav-item"><a href="{{ url('rdv_validation_admin') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Validation Professionel</p></a></li>
+                <li class="nav-item"><a href="{{ url('rdv_listing_pro') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Liste Professionel</p></a></li>
 
-		<li class="nav-header">Client</li>       
-        <li class="nav-item"><a href="{{ url('rdv_user_profile') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Profil client</p></a></li>
-    </ul>
-    </nav>
-    <!-- /.sidebar-menu -->
-</div>
-<!-- /.sidebar -->
+                <li class="nav-header">Professionel</li>       
+                <li class="nav-item"><a href="{{ url('rdv_user_list_pro') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Listing client</p></a></li>
+                <li class="nav-item"><a href="{{ url('rdv_type_rdv') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Types de RDV</p></a></li>
+
+                <li class="nav-header">Client</li>       
+                <li class="nav-item"><a href="{{ url('rdv_user_profile') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Profil client</p></a></li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
 </aside>
