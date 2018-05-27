@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
 class UserProfileType extends AbstractType
 {
@@ -19,7 +19,7 @@ class UserProfileType extends AbstractType
                 ->add('lastName', TextType::class, ['label'=>'Nom'])
                 ->add('email', TextType::class, ['label'=>'Email'])
                 ->add('telephone', TextType::class, ['label'=>'Téléphone'])
-                ->add('dateNaissance', DateType::class, ['label'=>'Date de naissance']);
+                ->add('dateNaissance', BirthdayType::class, ['label'=>'Date de naissance']);
     }
  
    public function getBlockPrefix()
