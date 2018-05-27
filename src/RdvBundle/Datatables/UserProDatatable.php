@@ -40,6 +40,7 @@ class UserProDatatable extends AbstractDatatable {
         ));
 
         $this->options->set(array(
+            'classes' => Style::BOOTSTRAP_4_STYLE,
             'individual_filtering' => true,
             'individual_filtering_position' => 'head',
             'order_cells_top' => true,
