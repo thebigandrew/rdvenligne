@@ -1,8 +1,9 @@
 {% extends "@Rdv/layout.twig" %}
 {% block content %}
 	<h1>Liste des types de rdv</h1>
+	<a href="{{ path('rdv_type_rdv_update') }}" class="float-right"><i class="fa fa-plus"></i>Add</a>
     {% if tTypeRdv is defined %}
-    	<table>
+    	<table class="table">
     		<thead>
     			<td>Libell&eacute;</td>
     			<td>Tarif</td>
@@ -15,11 +16,12 @@
     					<td>{{ typeRdv.type }}</td>
     					<td>{{ typeRdv.tarif }} &euro;</td>
     					<td>{{ typeRdv.duree|date('H:i:s') }}</td>
-    					<td><a href="{{ path('rdv_type_rdv_update', {'id':typeRdv.id}) }}">edit</a></td>
+    					<td>
+  							<a href="{{ path('rdv_type_rdv_update', {'id':typeRdv.id}) }}"><i class="fa fa-edit"></i></a>
+						</td>
     				</tr>
     			{% endfor %}
     		</tbody>	
     	</table>
-    	<a href="{{ path('rdv_type_rdv_update') }}">add</a>
     {% endif %}
 {% endblock %}
