@@ -1,25 +1,6 @@
 {% extends "@Rdv/layout.twig" %}
 {% block content %}
-	<h1>Liste des types de rdv</h1>
-    {% if tTypeRdv is defined %}
-    	<table>
-    		<thead>
-    			<td>Libell&eacute;</td>
-    			<td>Tarif</td>
-    			<td>Dur&eacute;e</td>
-    			<td>Action</td>
-    		</thead>
-    		<tbody>
-    			{% for typeRdv in tTypeRdv %}
-    				<tr>
-    					<td>{{ typeRdv.type }}</td>
-    					<td>{{ typeRdv.tarif }} &euro;</td>
-    					<td>{{ typeRdv.duree|date('H:i:s') }}</td>
-    					<td><a href="{{ path('rdv_type_rdv_update', {'id':typeRdv.id}) }}">edit</a></td>
-    				</tr>
-    			{% endfor %}
-    		</tbody>	
-    	</table>
-    	<a href="{{ path('rdv_type_rdv_update') }}">add</a>
-    {% endif %}
+	<div class="rdv-datatable-div">
+        {{ sg_datatables_render_html(datatable) }}
+    </div>
 {% endblock %}

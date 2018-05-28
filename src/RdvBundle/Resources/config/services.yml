@@ -10,3 +10,7 @@ services:
     app.datatable.userprolist:
         class: RdvBundle\Datatables\UserProDatatable
         parent: sg_datatables.datatable.abstract
+        
+    app.datatable.typerdv:
+        class: RdvBundle\Datatables\TypeRdvDatatable
+        parent: sg_datatables.datatable.abstract

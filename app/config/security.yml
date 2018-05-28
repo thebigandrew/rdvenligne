@@ -15,7 +15,9 @@ security:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-            logout:       true
+            logout:
+                path: /logout
+                target: /login
             anonymous:    true
 
     access_control:
