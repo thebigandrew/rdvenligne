@@ -1,4 +1,8 @@
-{% extends "@Rdv/layout.twig" %}
+{% extends "@Rdv/partials/datatables.twig" %}
+{% block javascripts %}
+    {{ parent() }}    
+    {{ sg_datatables_render_js(datatable) }}
+{% endblock %}
 {% block content %}
 	<div class="rdv-datatable-div">
         {{ sg_datatables_render_html(datatable) }}

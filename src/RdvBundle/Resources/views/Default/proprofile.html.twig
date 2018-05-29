@@ -52,4 +52,50 @@
         </div>
         <input type="submit" value="Enregister" />
     {{ form_end(form) }}
+	<div class="tableLieuRdv">
+        {% include '@Rdv/Default/tablelieurdv.html.twig' %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+	<script>
+		function addLieuRdv(idUser){
+			var strNom = $('#nomLieuRdv').val();
+			var strAdr = $('#adresseLieuRdv').val();
+			$.ajax({
+	            url: "{{ path('add_lieu_rdv') }}",
+	            type: 'POST',
+	            data: "idUser="+idUser+"&strNom="+strNom+"&strAdr="+strAdr,
+	            dataType: 'html',
+	            success: function(reponse) {
+	    			$('.tableLieuRdv').html(reponse);
+	            }
+	        });
+		}
+
+		function addLieuRdv(idUser){
+			var strNom = $('#nomLieuRdv').val();
+			var strAdr = $('#adresseLieuRdv').val();
+			$.ajax({
+	            url: "{{ path('add_lieu_rdv') }}",
+	            type: 'POST',
+	            data: "idUser="+idUser+"&strNom="+strNom+"&strAdr="+strAdr,
+	            dataType: 'html',
+	            success: function(reponse) {
+	    			$('.tableLieuRdv').html(reponse);
+	            }
+	        });
+		}
+
+		function deleteLieuRdv(idLieuRdv){
+			$.ajax({
+	            url: "{{ path('supp_lieu_rdv') }}",
+	            type: 'POST',
+	            data: "idLieuRdv="+idLieuRdv,
+	            dataType: 'html',
+	            success: function(reponse) {
+	    			$('.tableLieuRdv').html(reponse);
+	            }
+	        });
+		}
+	</script>
 {% endblock %}

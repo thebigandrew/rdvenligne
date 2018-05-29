@@ -43,3 +43,11 @@ user_pro_list:
 rdv_pro_profile:
     path:      /rdv_pro_profile
     controller: RdvBundle:Default:proProfile
+
+add_lieu_rdv:
+    path: /add/lieurdv
+    controller: RdvBundle:Default:addLieuRdv
+    
+supp_lieu_rdv:
+    path: /supp/lieurdv
+    controller: RdvBundle:Default:deleteLieuRdv

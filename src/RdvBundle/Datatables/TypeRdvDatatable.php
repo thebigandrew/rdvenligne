@@ -59,10 +59,9 @@ class TypeRdvDatatable extends AbstractDatatable {
                 ->add('tarif', Column::class, array(
                     'title' => 'Tarif',
                 ))
-                ->add('duree', Column::class, array(
-                    'title' => 'Duree',
-                ))
-        ;
+                ->add('duree', DateTimeColumn::class, array(
+                    'title' => 'Duree'
+                ));
     }
 
     /**

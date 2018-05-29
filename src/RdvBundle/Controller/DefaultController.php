@@ -4,6 +4,7 @@ namespace RdvBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use RdvBundle\Entity\LieuRdv;
 use RdvBundle\Entity\TypeRdv;
 use RdvBundle\Form\ProProfileType;
 use RdvBundle\Form\TypeRdvType;
@@ -98,6 +99,8 @@ class DefaultController extends Controller
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $entityManager = $this->getDoctrine()->getManager();
             $oUser = $this->getUser();
+            $repositoryLieuRdv = $entityManager->getRepository(LieuRdv::class);
+            $tLieuRdv = $repositoryLieuRdv->findBy(array('proId' => $oUser->getId(), 'valide' => true));
             $form = $this->createForm(ProProfileType::class, $oUser);
             $form->handleRequest($request);
             if ($form->isSubmitted() and $form->isValid()) {
@@ -109,11 +112,37 @@ class DefaultController extends Controller
                 $oUser->setUsername($form['userName']->getData());
                 $oUser->setMetier($form['metier']->getData());
                 $entityManager->flush();
-                return $this->render('RdvBundle:Default:proprofile.html.twig', array('form' => $form->createView()));
+                return $this->render('RdvBundle:Default:proprofile.html.twig', array('form' => $form->createView(), 'tLieuRdv' => $tLieuRdv));
             }
-            return $this->render('RdvBundle:Default:proprofile.html.twig', array('form' => $form->createView()));
+            return $this->render('RdvBundle:Default:proprofile.html.twig', array('form' => $form->createView(), 'tLieuRdv' => $tLieuRdv));
         }else{
             return $this->redirectToRoute('fos_user_security_login');
         }
+    }
+    
+    public function addLieuRdvAction(Request $request){
+        $entityManager = $this->getDoctrine()->getManager();
+        $oUser = $this->getUser();
+        $oLieuRdv = new LieuRdv();
+        $oLieuRdv->setNom($_POST['strNom']);
+        $oLieuRdv->setAdresse($_POST['strAdr']);
+        $oLieuRdv->setProId($oUser);
+        $oLieuRdv->setValide(true);
+        $entityManager->persist($oLieuRdv);
+        $entityManager->flush();
+        $repositoryLieuRdv = $entityManager->getRepository(LieuRdv::class);
+        $tLieuRdv = $repositoryLieuRdv->findBy(array('proId' => $_POST['idUser'], 'valide' => true));
+        return $this->render('RdvBundle:Default:tablelieurdv.html.twig', array('tLieuRdv' => $tLieuRdv));
+    }
+    
+    public function deleteLieuRdvAction(Request $request){
+        $entityManager = $this->getDoctrine()->getManager();
+        $oUser = $this->getUser();
+        $repositoryLieuRdv = $entityManager->getRepository(LieuRdv::class);
+        $oLieuRdv = $repositoryLieuRdv->findOneBy(array('id' => $_POST['idLieuRdv']));
+        $oLieuRdv->setValide(false);
+        $entityManager->flush();
+        $tLieuRdv = $repositoryLieuRdv->findBy(array('proId' => $oUser, 'valide' => true));
+        return $this->render('RdvBundle:Default:tablelieurdv.html.twig', array('tLieuRdv' => $tLieuRdv));
     }
 }

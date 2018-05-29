@@ -1,0 +1,29 @@
+<table class="table">
+	<thead>
+		<tr>
+			<td>Nom lieu de RDV</td>
+			<td>Adresse</td>
+			<td>Action</td>
+		</tr>
+	</thead>
+	<tbody>
+		{% for lieuRdv in tLieuRdv %}
+    		<tr>
+    			<td>{{ lieuRdv.nom }}</td>
+    			<td>{{ lieuRdv.adresse }}</td>
+    			<td><button id="supp" onclick="deleteLieuRdv('{{ lieuRdv.id }}')">Delete</button></td>
+    		</tr>
+		{% endfor %}
+		<tr>
+			<td>
+				<input type="text" name="nomLieuRdv" id="nomLieuRdv"/>	
+			</td>
+			<td>
+				<input type="text" name="adresseLieuRdv"s id="adresseLieuRdv"/>
+			</td>
+			<td>
+				<button id="add" onclick="addLieuRdv('{{ app.user.id }}')">Add</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
