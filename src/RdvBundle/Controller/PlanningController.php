@@ -21,7 +21,7 @@ class PlanningController extends Controller
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($planningDefault);
                 $entityManager->flush();
-                return $this->redirectToRoute('rdv_homepage');
+                return $this->redirectToRoute('rdv_pro_profile');
             }
         }
         
