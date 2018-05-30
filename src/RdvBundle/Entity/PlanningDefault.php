@@ -37,8 +37,8 @@ class PlanningDefault
     private $heureFin;
 
     /**
-     * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\User")
-     * @ORM\JoinColumn(name="pro_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="RdvBundle\Entity\User")
+     * @ORM\JoinColumn(name="pro_id", referencedColumnName="id", nullable=false)
      */
     private $proId;
     
@@ -116,7 +116,7 @@ class PlanningDefault
      * @return Rdv
      */
     public function setProId($proId) {
-        $this->userId = $proId;
+        $this->proId = $proId;
 
         return $this;
     }
@@ -139,5 +139,15 @@ class PlanningDefault
         $this->planningDays[] = $planningDay;
         $planningDay->setPlanningDefaultId( $this );
         return $this;
+    }
+    
+    public function setPlanningDays($planningDays)
+    {
+       $this->planningDays = $planningDays;
+       
+       for($i = 0; $i < count($this->planningDays); $i++)
+       {
+           $this->planningDays[$i]->setPlanningDefaultId($this);
+       }
     }
 }

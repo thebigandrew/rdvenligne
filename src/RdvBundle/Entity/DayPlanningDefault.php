@@ -30,7 +30,7 @@ class DayPlanningDefault
 
     /**
      * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\PlanningDefault", inversedBy="planningDays")
-     * @ORM\JoinColumn(name="planning_default_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="planning_default_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $planningDefaultId;
     

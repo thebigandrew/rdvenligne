@@ -20,11 +20,18 @@ class PlanningDefaultType extends AbstractType
                 ->add('heureFin', TimeType::class, ['label'=>'heure fin'])
                 ->add('planningDays', CollectionType::class, array(
                     'entry_type' => DayPlanningDefaultType::class,
-                    'label' => 'jours'
+                    'label' => 'Jours de la semaine',
+                    'allow_add' => true,/*
+                    'prototype' => true,
+                    'prototype_name' => 'week_days'*/
+                    'entry_options' => [
+                        'label_format' => 'week_days.%name%'
+                    ]
                 ))
-                ->add('save', SubmitType::class, array(
-                    'attr' => array('class' => 'save'),
-                ));
+                ->add('save', SubmitType::class, [
+                    'attr' => ['class' => 'save'],
+                    'label' => 'Sauvegarder'
+                ]);
     }/**
      * {@inheritdoc}
      */
