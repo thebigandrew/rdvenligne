@@ -44,7 +44,7 @@ pagePerso:
     path:     /pagePerso/{id}
     defaults: { _controller: RdvBundle:Default:pagePerso } 
     requirements:
-        page: '\d+'
+        id: '\d+'
     options:
         expose: true
     

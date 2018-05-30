@@ -1,6 +1,7 @@
 {% extends "@Rdv/layout.twig" %}
 {% block content %}
     <h1>Page Perso</h1>
+    <a href="{{ path('pagePerso_update') }}">add</a>
     {% if tParagraphe is defined %}
         {% for paragraphe in tParagraphe %}
             <div class="card col-10">
