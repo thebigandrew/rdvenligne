@@ -51,3 +51,7 @@ add_lieu_rdv:
 supp_lieu_rdv:
     path: /supp/lieurdv
     controller: RdvBundle:Default:deleteLieuRdv
+
+create_planning_default:
+    path: /create_planning_default
+    controller: RdvBundle:Planning:createDefault
