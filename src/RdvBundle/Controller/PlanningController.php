@@ -18,6 +18,7 @@ class PlanningController extends Controller
             $form = $form = $this->createForm(PlanningDefaultType::class, $planningDefault);
             $form->handleRequest($request);
             if ($form->isSubmitted() and $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($planningDefault);
                 $entityManager->flush();
                 return $this->redirectToRoute('rdv_homepage');

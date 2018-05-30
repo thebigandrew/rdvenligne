@@ -90,7 +90,7 @@ class DayPlanningDefault
      * @return int
      */
     public function getPlanningDefaultId() {
-        return $this->proId;
+        return $this->planningDefaultId;
     }
     
     /**

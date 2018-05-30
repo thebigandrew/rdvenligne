@@ -43,7 +43,7 @@ class PlanningDefault
     private $proId;
     
     /**
-     * @ORM\OneToMany(targetEntity="RdvBundle\Entity\User", mappedBy="planningDefaultId")
+     * @ORM\OneToMany(targetEntity="RdvBundle\Entity\DayPlanningDefault", mappedBy="planningDefaultId", cascade={"persist", "remove"})
      */
     private $planningDays;
     
