@@ -60,7 +60,8 @@ class TypeRdvDatatable extends AbstractDatatable {
                     'title' => 'Tarif',
                 ))
                 ->add('duree', DateTimeColumn::class, array(
-                    'title' => 'Duree'
+                    'title' => 'Duree',
+                    'date_format' => 'h [heure(s)] mm [minute(s)]'
                 ));
     }
 
