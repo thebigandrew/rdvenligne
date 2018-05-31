@@ -55,3 +55,15 @@ supp_lieu_rdv:
 create_planning_default:
     path: /create_planning_default
     controller: RdvBundle:Planning:createDefault
+
+pagePerso:
+    path:     /pagePerso/{id}
+    defaults: { _controller: RdvBundle:Default:pagePerso } 
+    requirements:
+        id: '\d+'
+    options:
+        expose: true
+    
+pagePerso_update:
+    path:     /pagePerso/update/{id}
+    defaults: { _controller: RdvBundle:Default:pagePersoAddUpdate, id:null }

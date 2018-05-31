@@ -5,9 +5,9 @@ namespace RdvBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Professionnel_Localisation
+ * Paragraphe
  *
- * @ORM\Table(name="Paragraphe")
+ * @ORM\Table(name="paragraphe")
  * @ORM\Entity(repositoryClass="RdvBundle\Repository\ParagrapheRepository")
  */
 class Paragraphe {
@@ -32,18 +32,27 @@ class Paragraphe {
      */
     private $text;
 
-    /**
-     * @var integer
-     * @ORM\Column(name="ordre", type="integer")
-     */
-    private $ordre;
-
-    /**
+       /**
+     * @var int
+     *
      * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\user")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="professionnel_id", referencedColumnName="id")
      */
-    private $userId;
+    private $professionnelId;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCreation", type="datetime")
+     */
+    private $dateCreation;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateModification", type="datetime")
+     */
+    private $dateModification;
     /**
      * Get id
      * @return int
@@ -87,41 +96,77 @@ class Paragraphe {
     public function getText() {
         return $this->text;
     }
-    /**
-     * Set ordre
-     * @param string $ordre
-     * @return Paragraphe
-     */
-    public function setOrdre($ordre) {
-        $this->ordre = $ordre;
-        return $this;
-    }
 
     /**
-     * Get ordre
-     * @return string
-     */
-    public function getOrdre() {
-        return $this->ordre;
-    }
-
-    /**
-     * Set userId
-     * @param integer $userId
+     * Set professionnelId
+     *
+     * @param integer professionnelId
+     *
      * @return Paragraphe
      */
-    public function setUserId($userId) {
-        $this->userId = $userId;
+    public function setProfessionnelId($professionnelId)
+    {
+        $this->professionnelId = $professionnelId;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get professionnelId
+     *
      * @return int
      */
-    public function getUserId() {
-        return $this->userId;
+    public function getProfessionnelId()
+    {
+        return $this->professionnelId;
+    }
+    
+    
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Paragraphe
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
     }
 
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
+
+    /**
+     * Set dateModification
+     *
+     * @param \DateTime $dateModification
+     *
+     * @return Paragraphe
+     */
+    public function setDateModification($dateModification)
+    {
+        $this->dateModification = $dateModification;
+
+        return $this;
+    }
+
+    /**
+     * Get dateModification
+     *
+     * @return \DateTime
+     */
+    public function getDateModification()
+    {
+        return $this->dateModification;
+    }
 }

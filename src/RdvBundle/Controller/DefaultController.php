@@ -9,6 +9,8 @@ use RdvBundle\Entity\TypeRdv;
 use RdvBundle\Form\ProProfileType;
 use RdvBundle\Form\TypeRdvType;
 use RdvBundle\Form\UserProfileType;
+use RdvBundle\Entity\Paragraphe;
+use RdvBundle\Form\ParagrapheType;
 
 class DefaultController extends Controller
 {
@@ -144,5 +146,38 @@ class DefaultController extends Controller
         $entityManager->flush();
         $tLieuRdv = $repositoryLieuRdv->findBy(array('proId' => $oUser, 'valide' => true));
         return $this->render('RdvBundle:Default:tablelieurdv.html.twig', array('tLieuRdv' => $tLieuRdv));
+    }
+    
+    public function pagePersoAction(Request $request, $id) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $repositoryParagraphe = $entityManager->getRepository(Paragraphe::class);
+        $tParagraphe = $repositoryParagraphe->findBy(['professionnelId' => $id], ['id' => 'ASC']);
+        return $this->render('RdvBundle:Default:pagePerso.html.twig', array('tParagraphe' => $tParagraphe));
+    }
+    public function pagePersoAddUpdateAction(Request $request, $id) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $repositoryParagraphe = $entityManager->getRepository(Paragraphe::class);
+        if ($id != null) {
+            $oParagraphe = $repositoryParagraphe->findOneBy(array('id' => $id));
+        } else {
+            $oParagraphe = new Paragraphe();
+        }
+        $form = $this->createForm(ParagrapheType::class, $oParagraphe);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() and $form->isValid()) {
+            $idPro = $this->get('security.token_storage')->getToken()->getUser()->getId();
+            if ($id != null) {
+                $oParagraphe->setDateModification(new \DateTime("now"));
+                $oParagraphe->setProfessionnelId($this->getUser());
+            } else {
+                $oParagraphe->setDateCreation(new \DateTime("now"));
+                $oParagraphe->setDateModification(new \DateTime("now"));
+                $oParagraphe->setProfessionnelId($this->getUser());
+            }
+            $entityManager->persist($oParagraphe);
+            $entityManager->flush();
+            return $this->redirectToRoute('pagePerso', ['id' => $idPro]);
+        }
+        return $this->render('RdvBundle:Default:paragrapheaddupdate.html.twig', array('form' => $form->createView()));
     }
 }
