@@ -1,0 +1,21 @@
+{% extends "@Rdv/layout.twig" %}
+{% block content %}
+    <h1>Page Perso</h1>
+    <a href="{{ path('pagePerso_update') }}">add</a>
+    {% if tParagraphe is defined %}
+        {% for paragraphe in tParagraphe %}
+            <div class="card col-10">
+                <div class="card-header text-white bg-info"><h4>{{ paragraphe.titre|nl2br }}</h4></div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ paragraphe.text|nl2br }}</h5><br/>
+                    <p class="card-text" style='text-align: right;'>
+                        <a href="{{ path('pagePerso_update', {'id':paragraphe.id}) }}">edit</a><br/>
+                        <i>
+                            Date Création : {{ paragraphe.dateCreation|date('d/m/Y H:i:s') }} | Date Modification : {{ paragraphe.dateModification|date('d/m/Y H:i:s') }}
+                        </i>
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

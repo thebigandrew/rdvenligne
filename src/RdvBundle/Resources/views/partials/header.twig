@@ -7,8 +7,14 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{ path('rdv_homepage') }}" class="nav-link">Home</a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ path('fos_user_security_login') }}" class="nav-link">SignUp/Login</a>
-      </li>
+      {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('fos_user_security_login') }}" class="nav-link">Login</a>
+          </li>
+      {% else %}
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('fos_user_security_logout') }}" class="nav-link">Logout</a>
+          </li>
+      {% endif %}
     </ul>
   </nav>

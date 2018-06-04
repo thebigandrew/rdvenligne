@@ -39,3 +39,31 @@ rdv_user_list_pro:
 user_pro_list:
     path:      /user_pro_list
     controller: RdvBundle:UserProList:index
+    
+rdv_pro_profile:
+    path:      /rdv_pro_profile
+    controller: RdvBundle:Default:proProfile
+
+add_lieu_rdv:
+    path: /add/lieurdv
+    controller: RdvBundle:Default:addLieuRdv
+    
+supp_lieu_rdv:
+    path: /supp/lieurdv
+    controller: RdvBundle:Default:deleteLieuRdv
+
+create_planning_default:
+    path: /create_planning_default
+    controller: RdvBundle:Planning:createDefault
+
+pagePerso:
+    path:     /pagePerso/{id}
+    defaults: { _controller: RdvBundle:Default:pagePerso } 
+    requirements:
+        id: '\d+'
+    options:
+        expose: true
+    
+pagePerso_update:
+    path:     /pagePerso/update/{id}
+    defaults: { _controller: RdvBundle:Default:pagePersoAddUpdate, id:null }
