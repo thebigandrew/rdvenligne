@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
@@ -17,7 +18,10 @@ class DayPlanningDefaultType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('jourSemaine', HiddenType::class, ['label'=>'jour semaine'])
-                ->add('activeDay', CheckboxType::class, ['label'=>'Ce jour est ouvré']);
+                ->add('activeDay', CheckboxType::class, ['label'=>'Ce jour est ouvré', 'required' => false])
+                ->add('heureDebut', TimeType::class, ['label'=>'heure debut', 'required' => false])
+                ->add('heureFin', TimeType::class, ['label'=>'heure fin', 'required' => false])
+                ->add('nbcreneaux', IntegerType::class, ['label'=>'Nb creneaux', 'required' => false]);
     }/**
      * {@inheritdoc}
      */

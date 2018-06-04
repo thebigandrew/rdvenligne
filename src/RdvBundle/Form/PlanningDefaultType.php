@@ -2,11 +2,11 @@
 
 namespace RdvBundle\Form;
 
+use RdvBundle\Entity\DayPlanningDefault;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PlanningDefaultType extends AbstractType
@@ -16,14 +16,10 @@ class PlanningDefaultType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('heureDebut', TimeType::class, ['label'=>'heure debut'])
-                ->add('heureFin', TimeType::class, ['label'=>'heure fin'])
-                ->add('planningDays', CollectionType::class, array(
+        $builder->add('planningDays', CollectionType::class, array(
                     'entry_type' => DayPlanningDefaultType::class,
-                    'label' => 'Jours de la semaine',
-                    'allow_add' => true,/*
-                    'prototype' => true,
-                    'prototype_name' => 'week_days'*/
+                    'label' => 'Semaine type',
+                    'allow_add' => true,
                     'entry_options' => [
                         'label_format' => 'week_days.%name%'
                     ]
@@ -49,6 +45,4 @@ class PlanningDefaultType extends AbstractType
     {
         return 'rdvbundle_planningdefault';
     }
-
-
 }

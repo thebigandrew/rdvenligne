@@ -18,6 +18,7 @@ use FOS\UserBundle\Form\Factory\FactoryInterface;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
+use RdvBundle\Entity\PlanningDefault;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -27,6 +28,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use RdvBundle\Entity\DayPlanningDefault;
 
 /**
  * Controller managing the registration.
@@ -83,7 +85,22 @@ class RegistrationController extends Controller
                 $user->setRoles(array($form['role']->getData()));
                 $user->setEnabled(1);
                 $this->userManager->updateUser($user);
-
+                $em = $this->getDoctrine()->getManager();
+                $oPlanningDefault = new PlanningDefault();
+                $oPlanningDefault->setProId($user);
+                $em->persist($oPlanningDefault);
+                $i = null;
+                for($i == 1; $i < 7; $i++){
+                    $oJourDefault = new DayPlanningDefault();
+                    $oJourDefault->setActiveDay(true);
+                    $oJourDefault->setHeureDebut(new \DateTime('00:00:00'));
+                    $oJourDefault->setHeureFin(new \DateTime('00:00:00'));
+                    $oJourDefault->setJourSemaine($i);
+                    $oJourDefault->setNbcreneaux(1);
+                    $oJourDefault->setPlanningDefaultId($oPlanningDefault);
+                    $em->persist($oJourDefault);
+                }
+                $em->flush();
                 if (null === $response = $event->getResponse()) {
                     $url = $this->generateUrl('rdv_homepage');
                     $response = new RedirectResponse($url);
