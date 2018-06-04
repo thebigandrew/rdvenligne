@@ -17,8 +17,6 @@ class ParagrapheType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('titre', TextType::class, ['label' => 'titre'])
-                ->add('dateCreation', DateTimeType::class, ['label' => 'dateCreation'])
-                ->add('dateModification', DateTimeType::class, ['label' => 'dateModification'])
                 ->add('text', TextareaType::class, ['label' => 'texte']);
     }
 
