@@ -1,5 +1,6 @@
 {% extends "@Rdv/layout.twig" %}
 {% block content %}
+<div class="container">
     {{ form_start(form) }}
         <div class="form-group">
             <label for="username" class="col-sm-2 control-label">{{ form_label(form.type) }}</label>
@@ -22,6 +23,7 @@
                 {{ form_widget(form.duree) }}
             </div>
         </div>
-        <input type="submit" value="Enregister" />
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Enregister</button>
     {{ form_end(form) }}
+</div>
 {% endblock %}
