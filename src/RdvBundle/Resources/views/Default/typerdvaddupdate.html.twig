@@ -1,40 +1,32 @@
 {% extends "@Rdv/layout.twig" %}
 {% block content %}
-    <section class="content">
-        {{ form_start(form) }}
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title"> Edition profil </h3>
+<div class="container">
+    {{ form_start(form) }}
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Edition/Création type de rendez vous</h3>
+        </div>
+        <div class="card-body">
+            {{ form_label(form.type) }}
+            <div>
+                {{ form_errors(form.type) }}
+                {{ form_widget(form.type) }}
             </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="type" class="col-12 control-label">{{ form_label(form.type) }}</label>
-                    <div class="col-11 offset-1">
-                        {{ form_errors(form.type) }}
-                        {{ form_widget(form.type) }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="tarif" class="col-12 control-label">{{ form_label(form.tarif) }}</label>
-                    <div class="col-11 offset-1">
-                        {{ form_errors(form.tarif) }}
-                        {{ form_widget(form.tarif) }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="duree" class="col-12 control-label">{{ form_label(form.duree) }}</label>
-                    <div class="col-11 offset-1">
-                        {{ form_errors(form.duree) }}
-                        {{ form_widget(form.duree) }}
-                    </div>
-                </div>
+            {{ form_label(form.tarif) }}
+            <div>
+                {{ form_errors(form.tarif) }}
+                {{ form_widget(form.tarif) }}
             </div>
-            <div class="card-footer">
-                <div class="col-sm-2 offset-10">
-                    {{ form_widget(form.Enregistrer, { 'label': 'Enregistrer' }) }}
-                </div>
+            {{ form_label(form.duree) }}
+            <div>
+                {{ form_errors(form.duree) }}
+                {{ form_widget(form.duree) }}
             </div>
         </div>
-        {{ form_end(form) }}
-    </section>
+        <div class="card-footer">
+            <button class="btn btn-info pull-right" type="submit">Enregister</button>
+        </div>
+    {{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}
