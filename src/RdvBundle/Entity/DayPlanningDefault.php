@@ -24,7 +24,7 @@ class DayPlanningDefault
     /**
      * @var int
      * lundi = 1, dimanche = 7
-     * @ORM\Column(name="jourSemaine", type="integer")
+     * @ORM\Column(name="jourSemaine", type="integer", nullable=true)
      */
     private $jourSemaine;
 
@@ -39,6 +39,27 @@ class DayPlanningDefault
      * @ORM\Column(name="active_day", type="boolean")
      */
     private $activeDay;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="heureDebut", type="time", nullable=true)
+     */
+    private $heureDebut;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="heureFin", type="time", nullable=true)
+     */
+    private $heureFin;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbcreneaux", type="integer", nullable=true)
+     */
+    private $nbcreneaux;
     
     /**
      * Get id
@@ -111,5 +132,76 @@ class DayPlanningDefault
     public function getActiveDay() {
         return $this->activeDay;
     }
-}
 
+    /**
+     * Set heureDebut
+     *
+     * @param \DateTime $heureDebut
+     *
+     * @return DayPlanningDefault
+     */
+    public function setHeureDebut($heureDebut)
+    {
+        $this->heureDebut = $heureDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get heureDebut
+     *
+     * @return \DateTime
+     */
+    public function getHeureDebut()
+    {
+        return $this->heureDebut;
+    }
+
+    /**
+     * Set heureFin
+     *
+     * @param \DateTime $heureFin
+     *
+     * @return DayPlanningDefault
+     */
+    public function setHeureFin($heureFin)
+    {
+        $this->heureFin = $heureFin;
+
+        return $this;
+    }
+
+    /**
+     * Get heureFin
+     *
+     * @return \DateTime
+     */
+    public function getHeureFin()
+    {
+        return $this->heureFin;
+    }
+
+    /**
+     * Set nbcreneaux
+     *
+     * @param integer $nbcreneaux
+     *
+     * @return DayPlanningDefault
+     */
+    public function setNbcreneaux($nbcreneaux)
+    {
+        $this->nbcreneaux = $nbcreneaux;
+
+        return $this;
+    }
+
+    /**
+     * Get nbcreneaux
+     *
+     * @return integer
+     */
+    public function getNbcreneaux()
+    {
+        return $this->nbcreneaux;
+    }
+}
