@@ -41,9 +41,8 @@ class UserDatatable extends AbstractDatatable
         ));
 
         $this->options->set(array(
-            'classes' => Style::BOOTSTRAP_4_STYLE,
-            'individual_filtering' => true,
-            'individual_filtering_position' => 'head',
+            'classes' => Style::BOOTSTRAP_3_STYLE,
+            'individual_filtering' => false,
             'order_cells_top' => true,
         ));
 
@@ -51,20 +50,17 @@ class UserDatatable extends AbstractDatatable
         ));
 
         $this->columnBuilder
-            ->add('id', Column::class, array(
-                'title' => 'Id',
-                ))
             ->add('lastname', Column::class, array(
-                'title' => 'Lastname',
+                'title' => 'Nom',
                 ))
             ->add('firstname', Column::class, array(
-                'title' => 'Firstname',
+                'title' => 'Prénom',
                 ))
             ->add('telephone', Column::class, array(
-                'title' => 'Telephone',
+                'title' => 'Téléphone',
                 ))
             ->add('dateNaissance', DateTimeColumn::class, array(
-                'title' => 'DateNaissance',
+                'title' => 'Date de naissance',
                 ))
             ->add(null, ActionColumn::class, array(
                 'title' => $this->translator->trans('sg.datatables.actions.title'),

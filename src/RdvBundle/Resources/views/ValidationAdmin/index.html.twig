@@ -5,9 +5,22 @@
     {{ sg_datatables_render_js(datatable) }}
 {% endblock %}
 {% block content %}
-    <div class="rdv-datatable-div">
-        {{ sg_datatables_render_html(datatable) }}
-    </div>
+    <section class="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Validation des professionnel</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="rdv-datatable-div">
+                            {{ sg_datatables_render_html(datatable) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
    
 {% endblock %}
 

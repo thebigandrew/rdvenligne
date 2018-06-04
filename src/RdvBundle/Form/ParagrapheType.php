@@ -17,7 +17,9 @@ class ParagrapheType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('titre', TextType::class, ['label' => 'titre'])
-                ->add('text', TextareaType::class, ['label' => 'texte']);
+                ->add('text', TextareaType::class, [
+                    'label' => 'texte'
+                ]);
     }
 
     public function getBlockPrefix() {

@@ -1,0 +1,21 @@
+#sg-datatables-user_datatable_paginate {
+    float: right;
+}
+
+.pageName {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    font-family: 'Source Sans Pro',sans-serif;
+}
+
+.dataTables_filter {
+    float: right;
+}
+
+#sg-datatables-typerdv_datatable_paginate {
+    float: right;
+}
+
+.dataTables_paginate paging_simple_numbers {
+    float: right;
+}
