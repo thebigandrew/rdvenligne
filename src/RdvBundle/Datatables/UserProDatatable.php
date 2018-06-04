@@ -53,17 +53,23 @@ class UserProDatatable extends AbstractDatatable {
                 ->add('id', Column::class, array(
                     'title' => 'Id',
                 ))
-                ->add('proId.lastname', Column::class, array(
-                    'title' => 'Pro. Nom',
+                ->add('userId.lastname', Column::class, array(
+                    'title' => 'User. Nom',
                 ))
-                ->add('proId.firstname', Column::class, array(
-                    'title' => 'Pro. Prénom',
+                ->add('userId.firstname', Column::class, array(
+                    'title' => 'User. Prénom',
                 ))
-                ->add('proId.telephone', Column::class, array(
-                    'title' => 'Pro. Telephone',
+                ->add('userId.telephone', Column::class, array(
+                    'title' => 'User. Telephone',
                 ))
                 ->add('typeId.type', Column::class, array(
                     'title' => 'Type RDV',
+                ))
+                ->add('creneauxDebut', DateTimeColumn::class, array(
+                    'title' => 'Creneaux Debut',
+                ))
+                ->add('creneauxFin', DateTimeColumn::class, array(
+                    'title' => 'Creneaux Fin',
                 ))
         ;
     }

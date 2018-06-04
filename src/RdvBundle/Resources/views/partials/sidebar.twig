@@ -41,6 +41,7 @@
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_PRO') %}
             <li class="nav-header">Professionel</li>
             <li class="nav-item"><a href="{{ url('rdv_type_rdv') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Types de RDV</p></a></li>
+            <li class="nav-item"><a href="{{ url('user_pro_list') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Liste des clients</p></a></li>
         {% elseif  is_granted('ROLE_USER') %}
             <li class="nav-header">Utilisateur</li>
             <li class="nav-item"><a href="{{ url('rdv_user_list_pro') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Listing RDV</p></a></li>
