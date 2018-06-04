@@ -41,8 +41,7 @@ class RdvDatatable extends AbstractDatatable {
 
         $this->options->set(array(
             'classes' => Style::BOOTSTRAP_4_STYLE,
-            'individual_filtering' => true,
-            'individual_filtering_position' => 'head',
+            'individual_filtering' => false,
             'order_cells_top' => true,
         ));
 
@@ -50,9 +49,6 @@ class RdvDatatable extends AbstractDatatable {
         ));
 
         $this->columnBuilder
-                ->add('id', Column::class, array(
-                    'title' => 'Id',
-                ))
                 ->add('creneauxDebut', DateTimeColumn::class, array(
                     'title' => 'Creneaux Debut',
                 ))

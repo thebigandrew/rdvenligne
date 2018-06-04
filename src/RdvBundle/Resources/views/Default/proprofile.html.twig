@@ -4,50 +4,38 @@
 	{{ form_start(form) }}
 		<div class="card-body">
 			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label">{{ form_label(form.userName) }}</label>
-				<div class="col-sm-10">
+				{{ form_label(form.userName) }}
+				<div>
 					{{ form_errors(form.userName) }}
 					{{ form_widget(form.userName) }}
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label">{{ form_label(form.firstName) }}</label>
-				<div class="col-sm-10">
+				{{ form_label(form.firstName) }}
+				<div>
 					{{ form_errors(form.firstName) }}
 					{{ form_widget(form.firstName) }}
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label">{{ form_label(form.lastName) }}</label>
-				<div class="col-sm-10">
+				{{ form_label(form.lastName) }}
+				<div>
 					{{ form_errors(form.lastName) }}
 					{{ form_widget(form.lastName) }}
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label">{{ form_label(form.email) }}</label>
-				<div class="col-sm-10">
+				{{ form_label(form.email) }}
+				<div>
 					{{ form_errors(form.email) }}
 					{{ form_widget(form.email) }}
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label">{{ form_label(form.telephone) }}</label>
-				<div class="col-sm-10">
+				{{ form_label(form.telephone) }}
+				<div>
 					{{ form_errors(form.telephone) }}
 					{{ form_widget(form.telephone) }}
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label">{{ form_label(form.dateNaissance) }}</label>
-				<div class="col-sm-10">
+				{{ form_label(form.dateNaissance) }}
+				<div>
 					{{ form_errors(form.dateNaissance) }}
 					{{ form_widget(form.dateNaissance) }}
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label">{{ form_label(form.metier) }}</label>
-				<div class="col-sm-10">
+				{{ form_label(form.metier) }}
+				<div>
 					{{ form_errors(form.metier) }}
 					{{ form_widget(form.metier) }}
 				</div>

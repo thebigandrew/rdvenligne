@@ -41,18 +41,14 @@ class UserProDatatable extends AbstractDatatable {
 
         $this->options->set(array(
             'classes' => Style::BOOTSTRAP_4_STYLE,
-            'individual_filtering' => true,
-            'individual_filtering_position' => 'head',
-            'order_cells_top' => true,
+            'individual_filtering' => false,
+            'order_cells_top' => false,
         ));
 
         $this->features->set(array(
         ));
 
         $this->columnBuilder
-                ->add('id', Column::class, array(
-                    'title' => 'Id',
-                ))
                 ->add('userId.lastname', Column::class, array(
                     'title' => 'User. Nom',
                 ))
