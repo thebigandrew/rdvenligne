@@ -28,7 +28,7 @@ class TypeRdv {
     
     /**
      * @var float
-     * @ORM\Column(name="tarif", type="float")
+     * @ORM\Column(name="tarif", type="decimal", precision=10, scale=2).
      */
     private $tarif;
     
@@ -40,9 +40,9 @@ class TypeRdv {
 
     /**
      * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="pro_id", referencedColumnName="id")
      */
-    private $userId;
+    private $proId;
 
     /**
      * Get id
@@ -72,21 +72,21 @@ class TypeRdv {
     }
 
     /**
-     * Set userId
-     * @param integer $userId
+     * Set proId
+     * @param integer $proId
      * @return TypeRdv
      */
-    public function setUserId($userId) {
-        $this->userId = $userId;
+    public function setProId($proId) {
+        $this->proId = $proId;
         return $this;
     }
 
     /**
-     * Get userId
+     * Get proId
      * @return int
      */
-    public function getUserId() {
-        return $this->userId;
+    public function getProIdId() {
+        return $this->proId;
     }
 
 

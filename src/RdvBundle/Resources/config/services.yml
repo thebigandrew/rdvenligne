@@ -3,11 +3,15 @@ services:
         class: RdvBundle\Datatables\UserDatatable
         parent: sg_datatables.datatable.abstract
         
-    app.datatable.rdvuserlist:
-        class: RdvBundle\Datatables\RdvDatatable
+    app.datatable.user_rdv_list:
+        class: RdvBundle\Datatables\UserRdvDatatable
         parent: sg_datatables.datatable.abstract
         
-    app.datatable.userprolist:
+    app.datatable.pro_rdv_list:
+        class: RdvBundle\Datatables\ProRdvDatatable
+        parent: sg_datatables.datatable.abstract
+        
+    app.datatable.user_pro_datatable:
         class: RdvBundle\Datatables\UserProDatatable
         parent: sg_datatables.datatable.abstract
         

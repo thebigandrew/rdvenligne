@@ -89,8 +89,7 @@ class RegistrationController extends Controller
                 $oPlanningDefault = new PlanningDefault();
                 $oPlanningDefault->setProId($user);
                 $em->persist($oPlanningDefault);
-                $i = null;
-                for($i == 1; $i < 7; $i++){
+                for($i = 1; $i <= 7; $i++){
                     $oJourDefault = new DayPlanningDefault();
                     $oJourDefault->setActiveDay(true);
                     $oJourDefault->setHeureDebut(new \DateTime('00:00:00'));

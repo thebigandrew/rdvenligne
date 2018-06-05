@@ -15,7 +15,7 @@ class UserProListController extends Controller {
         //$datatable->buildDatatable();
         // or use the DatatableFactory
         /** @var DatatableInterface $datatable */
-        $datatable = $this->get('app.datatable.userprolist');
+        $datatable = $this->get('app.datatable.user_pro_datatable');
         $datatable->buildDatatable();
 
         if ($isAjax) {
@@ -25,8 +25,9 @@ class UserProListController extends Controller {
             $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
 
             $qb = $datatableQueryBuilder->getQb();
-            $qb->andWhere("rdv.proId = '" . $id . "'")
-                ->distinct('rdv.userId');
+            $qb->select('userId.lastname, userId.firstname, userId.telephone, MAX(rdv.creneauxDebut) as creneauxDebut, MAX(rdv.creneauxFin) as creneauxFin')
+                    ->andWhere("rdv.proId = '" . $id . "'")
+                    ->groupBy('rdv.userId');
 
             return $responseService->getResponse();
         }

@@ -25,7 +25,7 @@ use Sg\DatatablesBundle\Datatable\Editable\TextEditable;
  *
  * @package RdvBundle\Datatables
  */
-class RdvDatatable extends AbstractDatatable {
+class ProRdvDatatable extends AbstractDatatable {
 
     /**
      * {@inheritdoc}
@@ -50,15 +50,6 @@ class RdvDatatable extends AbstractDatatable {
         ));
 
         $this->columnBuilder
-                ->add('id', Column::class, array(
-                    'title' => 'Id',
-                ))
-                ->add('creneauxDebut', DateTimeColumn::class, array(
-                    'title' => 'Creneaux Debut',
-                ))
-                ->add('creneauxFin', DateTimeColumn::class, array(
-                    'title' => 'Creneaux Fin',
-                ))
                 ->add('proId.lastname', Column::class, array(
                     'title' => 'Pro. Nom',
                 ))
@@ -67,6 +58,12 @@ class RdvDatatable extends AbstractDatatable {
                 ))
                 ->add('proId.telephone', Column::class, array(
                     'title' => 'Pro. Telephone',
+                ))
+                ->add('creneauxDebut', DateTimeColumn::class, array(
+                    'title' => 'Creneaux Debut',
+                ))
+                ->add('creneauxFin', DateTimeColumn::class, array(
+                    'title' => 'Creneaux Fin',
                 ))
                 ->add('typeId.type', Column::class, array(
                     'title' => 'Type RDV',
@@ -91,7 +88,7 @@ class RdvDatatable extends AbstractDatatable {
      * {@inheritdoc}
      */
     public function getName() {
-        return 'rdv_datatable';
+        return 'pro_rdv_datatable';
     }
 
 }

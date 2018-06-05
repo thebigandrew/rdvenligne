@@ -41,9 +41,9 @@ class UserDatatable extends AbstractDatatable
         ));
 
         $this->options->set(array(
-            'classes' => Style::BOOTSTRAP_3_STYLE,
+            'classes' => Style::BOOTSTRAP_4_STYLE,
             'individual_filtering' => false,
-            'order_cells_top' => true,
+            'order_cells_top' => true
         ));
 
         $this->features->set(array(
