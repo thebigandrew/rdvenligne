@@ -24,7 +24,9 @@
             </div>
         </div>
         <div class="card-footer">
-            <button class="btn btn-info pull-right" type="submit">Enregister</button>
+            <div class="col-sm-2 offset-10">
+                {{ form_widget(form.Enregistrer) }}
+            </div>
         </div>
     {{ form_end(form) }}
     </div>
