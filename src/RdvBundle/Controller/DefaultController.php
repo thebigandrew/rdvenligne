@@ -167,11 +167,15 @@ class DefaultController extends Controller {
                 $repositoryParagraphe = $entityManager->getRepository(Paragraphe::class);
                 $tParagraphe = $repositoryParagraphe->findBy(['professionnelId' => $id], ['id' => 'ASC']);
 
+                $toto = $entityManager->getRepository(TypeRdv::class);
+                $typerdv = $toto->findBy(['proId' => $id]);
+
                 return $this->render('RdvBundle:Default:pagePerso.html.twig', array(
                             'tPro' => $tUser,
                             'tParagraphe' => $tParagraphe,
                             'datatableTypeRdv' => $datatableTypeRdv,
-                            'is_user' => ($id == $this->get('security.token_storage')->getToken()->getUser()->getId())
+                            'is_user' => ($id == $this->get('security.token_storage')->getToken()->getUser()->getId()),
+                            'typerdv' => $typerdv
                 ));
             } else {
                 return $this->redirectToRoute('rdv_homepage');
