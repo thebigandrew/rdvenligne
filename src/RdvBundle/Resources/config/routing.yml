@@ -24,17 +24,17 @@ rdv_validation_pro:
     path:      /admin/validation_pro/{id}
     controller: RdvBundle:ValidationAdmin:validation
     requirements:
-        page: '\d+'
+        id: '\d+'
     options:
         expose: true
 
 rdv_listing_pro:
     path: /listing_pro
-    defaults: { _controller: RdvBundle:ListingPro:index }
+    defaults: { _controller: RdvBundle:Default:ListingPro }
          
 rdv_user_list_pro:
     path:      /rdv_user_list
-    controller: RdvBundle:RdvUserList:index
+    controller: RdvBundle:Default:UserRdv
 
 user_pro_list:
     path:      /user_pro_list
@@ -58,7 +58,7 @@ create_planning_default:
 
 pagePerso:
     path:     /pagePerso/{id}
-    defaults: { _controller: RdvBundle:Default:pagePerso } 
+    defaults: { _controller: RdvBundle:Default:pagePerso , id:null }
     requirements:
         id: '\d+'
     options:

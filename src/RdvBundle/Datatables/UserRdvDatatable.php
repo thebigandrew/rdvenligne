@@ -25,7 +25,7 @@ use Sg\DatatablesBundle\Datatable\Editable\TextEditable;
  *
  * @package RdvBundle\Datatables
  */
-class UserProDatatable extends AbstractDatatable {
+class UserRdvDatatable extends AbstractDatatable {
 
     /**
      * {@inheritdoc}
@@ -50,20 +50,29 @@ class UserProDatatable extends AbstractDatatable {
         ));
 
         $this->columnBuilder
-                ->add('userId.lastname', Column::class, array(
-                    'title' => 'User. Nom',
+                ->add('proId.lastname', Column::class, array(
+                    'title' => 'Pro. Nom',
                 ))
-                ->add('userId.firstname', Column::class, array(
-                    'title' => 'User. Prénom',
+                ->add('proId.firstname', Column::class, array(
+                    'title' => 'Pro. Prénom',
                 ))
-                ->add('userId.telephone', Column::class, array(
-                    'title' => 'User. Telephone',
+                ->add('proId.telephone', Column::class, array(
+                    'title' => 'Pro. Telephone',
                 ))
                 ->add('creneauxDebut', DateTimeColumn::class, array(
-                    'title' => 'Dernier Creneaux Debut',
+                    'title' => 'Creneaux Debut',
                 ))
                 ->add('creneauxFin', DateTimeColumn::class, array(
-                    'title' => 'Dernier Creneaux Fin',
+                    'title' => 'Creneaux Fin',
+                ))
+                ->add('typeId.type', Column::class, array(
+                    'title' => 'Type RDV',
+                ))
+                ->add('validation', BooleanColumn::class, array(
+                    'title' => 'Validation',
+                ))
+                ->add('statut', BooleanColumn::class, array(
+                    'title' => 'Statut',
                 ))
         ;
     }
@@ -79,7 +88,7 @@ class UserProDatatable extends AbstractDatatable {
      * {@inheritdoc}
      */
     public function getName() {
-        return 'user_pro_datatable';
+        return 'rdv_datatable';
     }
 
 }

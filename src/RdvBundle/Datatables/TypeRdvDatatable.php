@@ -41,27 +41,24 @@ class TypeRdvDatatable extends AbstractDatatable {
 
         $this->options->set(array(
             'classes' => Style::BOOTSTRAP_4_STYLE,
-            'individual_filtering' => true,
-            'individual_filtering_position' => 'head',
+            'individual_filtering' => false,
             'order_cells_top' => true,
+            'dom' => 't'
         ));
 
         $this->features->set(array(
         ));
 
         $this->columnBuilder
-                ->add('id', Column::class, array(
-                    'title' => 'Id',
-                ))
                 ->add('type', Column::class, array(
                     'title' => 'Type',
                 ))
                 ->add('tarif', Column::class, array(
-                    'title' => 'Tarif',
+                    'title' => 'Tarif'
                 ))
                 ->add('duree', DateTimeColumn::class, array(
                     'title' => 'Duree',
-                    'date_format' => 'h [heure(s)] mm [minute(s)]'
+                    'date_format' => 'hh [h] mm'
                 ));
     }
 

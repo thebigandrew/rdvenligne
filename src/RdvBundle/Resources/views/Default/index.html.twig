@@ -1,5 +1,48 @@
 {# Voila comment faire pour intérgé le layout de base : extend le layout et mettre le contenu dans le block content #}
-{% extends "@Rdv/layout.twig" %}
+{% extends "@Rdv/partials/datatables.twig" %}
+{% block javascripts %}
+    {{ parent() }}    
+    {{ sg_datatables_render_js(datatable) }}
+{% endblock %}
+
 {% block content %}
+    <section class="content">
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_PRO') %}
+            <div class="input-group input-group-sm col-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"> Mes prochains RDV : </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="rdv-datatable-div">
+                            {{ sg_datatables_render_html(datatable) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_USER') %}
+            {{ form_start(form) }}
+            <div class="input-group input-group-sm offset-3 col-6">
+                {{ form_widget(form.text) }}
+                <span class="input-group-btn">
+                    {{ form_widget(form.recherche) }}
+                </span>
+            </div>
+            {{ form_end(form) }}
+            <br/>
+            <div class="input-group input-group-sm col-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"> Mes prochains RDV : </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="rdv-datatable-div">
+                            {{ sg_datatables_render_html(datatable) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </section>
 {% endblock %}
 
