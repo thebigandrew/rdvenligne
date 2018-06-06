@@ -163,6 +163,9 @@ class DefaultController extends Controller {
                 $repositoryRdv = $entityManager->getRepository(Rdv::class);
                 $nbUser = $repositoryRdv->getNb($id);
 
+                $toto = $entityManager->getRepository(TypeRdv::class);
+                $typerdv = $toto->findBy(['proId' => $id]);
+
                 return $this->render('RdvBundle:Default:pagePerso.html.twig', array(
                             'tPro' => $tUser,
                             'tParagraphe' => $tParagraphe,
