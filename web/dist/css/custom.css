@@ -23,3 +23,9 @@
 #sg-datatables-rdv_datatable_paginate {
     float: right;
 }
+
+#button-box-typerdv {
+    position: absolute;
+    right: 7%;
+    bottom: 28%;
+}

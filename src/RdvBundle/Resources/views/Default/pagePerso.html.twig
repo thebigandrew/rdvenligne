@@ -91,14 +91,17 @@
                     <div class="card-body">
                         {% if tTypeRdv is defined %}
                             {% for typeRdv in tTypeRdv %}
-                                <div class="row">
-                                    <div class='col-6'>{{ typeRdv.type |nl2br }}</div>
-                                    <div class='col-2'>{{ typeRdv.duree |date('H') }}h{{ typeRdv.duree |date('i') }}</div>
-                                    <div class='col-2'>{{ typeRdv.tarif |nl2br }}€</div>
-                                    <div class='col-2'>
+
+                                <div class="info-box" style="position: relative">
+                                    <span class="info-box-icon bg-info"><i class="fa fa-calendar"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">{{ typeRdv.type |nl2br }}</span>
+                                        <span class="info-box-number">{{ typeRdv.duree |date('H') }}h{{ typeRdv.duree |date('i') }} - {{ typeRdv.tarif |nl2br }}€</span>
                                         {% if is_user %}
-                                            <a href="{{ path('type_rdv_update', {'id':typeRdv.id}) }}"><i class="fa fa-edit"></i></a>
-                                            <a href="{{ path('type_rdv_update', {'id':typeRdv.id}) }}"><i class="fa fa-trash-o"></i></a>
+                                            <div class='pull-right' id="button-box-typerdv">
+                                                    <a class="btn btn-default" href="{{ path('type_rdv_update', {'id':typeRdv.id}) }}"><i class="fa fa-edit"></i></a>
+                                                    <a class="btn btn-danger" href="{{ path('type_rdv_update', {'id':typeRdv.id}) }}"><i class="fa fa-trash-o"></i></a>
+                                            </div>
                                         {% endif %}
                                     </div>
                                 </div>
