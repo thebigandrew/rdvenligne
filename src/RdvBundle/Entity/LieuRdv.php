@@ -48,6 +48,11 @@ class LieuRdv
      */
     private $valide;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="RdvBundle\Entity\TypeRdv")
+     * @ORM\JoinColumn(name="typeRdv", referencedColumnName="id")
+     */
+    private $typeRdv;
 
     /**
      * Get id
@@ -153,5 +158,29 @@ class LieuRdv
     public function getValide()
     {
         return $this->valide;
+    }
+    
+    /**
+     * Set typeRdv
+     *
+     * @param integer $typeRdv
+     *
+     * @return LieuRdv
+     */
+    public function setTypeRdv($typeRdv)
+    {
+        $this->typeRdv = $typeRdv;
+
+        return $this;
+    }
+
+    /**
+     * Get typeRdv
+     *
+     * @return typeRdv
+     */
+    public function getTypeRdv()
+    {
+        return $this->typeRdv;
     }
 }

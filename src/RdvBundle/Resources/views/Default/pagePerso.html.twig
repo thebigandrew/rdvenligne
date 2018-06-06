@@ -1,37 +1,6 @@
-{% extends "@Rdv/partials/datatables.twig" %}
-{% block javascripts %}
-    {{ parent() }}    
-    {{ sg_datatables_render_js(datatableTypeRdv) }}
-{% endblock %}
+{% extends "@Rdv/layout.twig" %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-12">
-            <h1>{{ tPro.firstname |nl2br }} {{ tPro.lastname |nl2br }}</h1>
-        </div>
-        <div class="col-3 offset-9">
-            {% if is_user %}
-                <div class="col-12">
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle col-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Options
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{ path('pagePerso_update') }}">Ajouter un paragraphe</a>
-                            <a class="dropdown-item" href="{{ path('rdv_type_rdv_update') }}">Ajouter un Type RDV</a>
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <div class="col-12">
-                    <a class="dropdown-item" href="{{ path('pagePerso_update') }}">
-                        <button class="btn btn-primary col-12" type="button">Réservation d'un RDV</button>
-                    </a>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-    <br/>
     <div class="row">
         <div class="col-8">
             <div class="col-12">
@@ -44,9 +13,9 @@
                                         <h3 class="card-title">{{ paragraphe.titre|nl2br }}</h3>
                                     </div>
                                 </div>
-                            </div>
+                            </div>  
                             <div class="card-body">
-                                <div class="rdv-datatable-div">
+                                <div class="rdv-datatable-div" style='text-align: justify;'>
                                     {{ paragraphe.text|nl2br }}
                                 </div>
                             </div>
@@ -69,43 +38,110 @@
             <div class="col-12">
                 <div class="card card-warning">
                     <div class="card-header">
-                        <h3 class="card-title">{{ tPro.firstname |nl2br }} {{ tPro.lastname |nl2br }}</h3>
+                        <h1 class="card-title">
+                            <div class='col-12'><h1 class="headline">{{ tPro.firstname |nl2br }} {{ tPro.lastname |nl2br }}</h1></div>
+                            <div class='col-12'><i>{{ tPro.metier |nl2br }}</i></div>
+                        </h1>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class='col-4'>Métier</div>
-                            <div class='col-8'>{{ tPro.metier |nl2br }}</div>
+                            <div class='col-1'><span class='fa fa-envelope'/></div>
+                            <div class='col-11'>{{ tPro.email |nl2br }}</div>
                         </div>
                         <div class="row">
-                            <div class='col-4'>Email</div>
-                            <div class='col-8'>{{ tPro.email |nl2br }}</div>
-                        </div>
-                        <div class="row">
-                            <div class='col-4'>Téléphone</div>
-                            <div class='col-8'>{{ tPro.telephone |nl2br }}</div>
+                            <div class='col-1'><span class='fa fa-phone-square'/></div>
+                            <div class='col-11'>{{ tPro.telephone |nl2br }}</div>
                         </div>
                     </div>
-                </div>
-                <div class="card card-warning">
-                    <div class="card-header">
-                        <h3 class="card-title">Liste des types de rdv</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="rdv-datatable-div">
-                            {% for type in typerdv %}
-                                <div class="info-box">
-                                    <span class="info-box-icon bg-info"><i class="fa fa-calendar"></i></span>
 
-                                    <div class="info-box-content">
-                                        <span class="info-box-text">{{ type.type }}</span>
-                                        <span class="info-box-number">{{ type.tarif }}€  -  {{ type.duree|date('H:i') }}</span>
+                    <div class="card-footer">
+                        <div class="row">
+                            {% if is_user %}
+                                <div class="col-12">
+                                    <div class="dropdown">
+                                        <button class="btn btn-warning dropdown-toggle col-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Options
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="{{ path('pagePerso_update') }}">Ajouter un Paragraphe</a>
+                                            <a class="dropdown-item" href="{{ path('lieu_rdv_update') }}">Ajouter un Lieu</a>
+                                            <a class="dropdown-item" href="{{ path('type_rdv_update') }}">Ajouter un Type RDV</a>
+                                        </div>
                                     </div>
-                                    <!-- /.info-box-content -->
                                 </div>
-                            {% endfor %}
+                            {% else %}
+                                <div class="col-12">
+                                    <a class="dropdown-item" href="{{ path('pagePerso_update') }}">
+                                        <button class="btn btn-primary col-12" type="button">Réservation d'un RDV</button>
+                                    </a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-12">
+                <div class="card card-success card-solid">
+                    <div class="card-header with-border">
+                        <div class="row">
+                            <h1 class="card-title"><div class='col-12'>Type de RDV</div></h1>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% if tTypeRdv is defined %}
+                            {% for typeRdv in tTypeRdv %}
+                                <div class="row">
+                                    <div class='col-6'>{{ typeRdv.type |nl2br }}</div>
+                                    <div class='col-2'>{{ typeRdv.duree |date('H') }}h{{ typeRdv.duree |date('i') }}</div>
+                                    <div class='col-2'>{{ typeRdv.tarif |nl2br }}€</div>
+                                    <div class='col-2'>
+                                        {% if is_user %}
+                                            <a href="{{ path('type_rdv_update', {'id':typeRdv.id}) }}">Editer</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-warning"><i class="fa fa-star-o"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Nombre d'Utilisateur</span>
+                        <span class="info-box-number">{{ nbUser }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                {% if tLieuRdv is defined %}
+                    {% for lieuRdv in tLieuRdv %}
+                        <div class="card card-primary card-solid">
+                            <div class="card-header with-border">
+                                <div class="row">
+                                    <h1 class="card-title"><div class='col-12'>{{ lieuRdv.nom |nl2br }}</div></h1>
+                                    <div class='col-12'><i>{{ lieuRdv.adresse |nl2br }}</i></div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% for lieuRdv_typeRdv in lieuRdv.typeRdv %}
+                                    <div class="row">
+                                        <div class='col-8'>{{ lieuRdv_typeRdv.type |nl2br }}</div>
+                                        <div class='col-2'>{{ lieuRdv_typeRdv.duree |date('H') }}h{{ lieuRdv_typeRdv.duree |date('i') }}</div>
+                                        <div class='col-2'>{{ lieuRdv_typeRdv.tarif |nl2br }}€</div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if is_user %}
+                                <div class="card-footer">
+                                    <a href="{{ path('lieu_rdv_update', {'id':lieuRdv.id}) }}">Editer</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}
