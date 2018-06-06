@@ -7,11 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 use RdvBundle\Entity\User;
 use RdvBundle\Entity\LieuRdv;
 use RdvBundle\Entity\TypeRdv;
+use RdvBundle\Entity\Rdv;
+use RdvBundle\Entity\Paragraphe;
 use RdvBundle\Form\ProProfileType;
 use RdvBundle\Form\SearchType;
+use RdvBundle\Form\LieuRdvType;
 use RdvBundle\Form\TypeRdvType;
 use RdvBundle\Form\UserProfileType;
-use RdvBundle\Entity\Paragraphe;
 use RdvBundle\Form\ParagrapheType;
 
 class DefaultController extends Controller {
@@ -143,42 +145,35 @@ class DefaultController extends Controller {
 
     public function pagePersoAction(Request $request, $id) {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $isAjax = $request->isXmlHttpRequest();
             $entityManager = $this->getDoctrine()->getManager();
             $repositoryUser = $entityManager->getRepository(User::class);
             $id = ($id == NULL ? $this->get('security.token_storage')->getToken()->getUser()->getId() : $id);
             $tUser = $repositoryUser->findOneBy(['id' => $id]);
-            if ($tUser != NULL && $tUser->hasRole('ROLE_PRO')) {
-                $datatableTypeRdv = $this->get('app.datatable.typerdv');
-                $datatableTypeRdv->buildDatatable();
-                $responseService = $this->get('sg_datatables.response');
-                if ($isAjax) {
-                    $responseService = $this->get('sg_datatables.response');
-                    $responseService->setDatatable($datatableTypeRdv);
-                    $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
-
-                    $qb = $datatableQueryBuilder->getQb();
-                    $qb->andWhere("typerdv.proId = :proId");
-                    $qb->setParameter('proId', $id);
-
-                    return $responseService->getResponse();
-                }
-
+            if ($tUser->hasRole('ROLE_PRO')) {
+                $myId = $this->get('security.token_storage')->getToken()->getUser()->getId();
                 $repositoryParagraphe = $entityManager->getRepository(Paragraphe::class);
                 $tParagraphe = $repositoryParagraphe->findBy(['professionnelId' => $id], ['id' => 'ASC']);
+
+                $repositoryLieuRdv = $entityManager->getRepository(LieuRdv::class);
+                $tLieuRdv = $repositoryLieuRdv->findBy(['proId' => $id], ['id' => 'ASC']);
+
+                $repositoryTypeRdv = $entityManager->getRepository(TypeRdv::class);
+                $tTypeRdv = $repositoryTypeRdv->findBy(['proId' => $id], ['id' => 'ASC']);
+
+                $repositoryRdv = $entityManager->getRepository(Rdv::class);
+                $nbUser = $repositoryRdv->getNb($id);
 
                 return $this->render('RdvBundle:Default:pagePerso.html.twig', array(
                             'tPro' => $tUser,
                             'tParagraphe' => $tParagraphe,
-                            'datatableTypeRdv' => $datatableTypeRdv,
-                            'is_user' => ($id == $this->get('security.token_storage')->getToken()->getUser()->getId())
+                            'tLieuRdv' => $tLieuRdv,
+                            'nbUser' => $nbUser,
+                            'tTypeRdv' => $tTypeRdv,
+                            'is_user' => ($id == $myId)
                 ));
-            } else {
-                return $this->redirectToRoute('rdv_homepage');
             }
-        } else {
-            return $this->redirectToRoute('fos_user_security_login');
         }
+        return $this->redirectToRoute('fos_user_security_login');
     }
 
     public function pagePersoAddUpdateAction(Request $request, $id) {
@@ -274,6 +269,31 @@ class DefaultController extends Controller {
         return $this->render('RdvBundle:ListingPro:index.html.twig', array(
                     'datatable' => $datatable,
         ));
+    }
+
+    public function lieuRdvAddUpdateAction(Request $request, $id) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $idPro = $this->get('security.token_storage')->getToken()->getUser()->getId();
+            $entityManager = $this->getDoctrine()->getManager();
+            $repositoryLieuRdv = $entityManager->getRepository(LieuRdv::class);
+            if ($id != null) {
+                $oLieuRdv = $repositoryLieuRdv->findOneBy(array('id' => $id));
+            } else {
+                $oLieuRdv = new LieuRdv();
+            }
+            $form = $this->createForm(LieuRdvType::class, $oLieuRdv, array('idPro' => $idPro));
+            $form->handleRequest($request);
+            if ($form->isSubmitted() and $form->isValid()) {
+                $oLieuRdv->setProId($this->getUser());
+                $oLieuRdv->setValide(TRUE);
+                $entityManager->persist($oLieuRdv);
+                $entityManager->flush();
+                return $this->redirectToRoute('pagePerso', ['id' => $idPro]);
+            }
+            return $this->render('RdvBundle:Default:lieurdvaddupdate.html.twig', array('form' => $form->createView()));
+        } else {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
     }
 
 }

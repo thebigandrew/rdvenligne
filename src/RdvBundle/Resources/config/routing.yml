@@ -5,12 +5,8 @@ rdv_homepage:
 rdv_user_profile:
     path:     /profile
     defaults: { _controller: RdvBundle:Default:userProfile } 
-    
-rdv_type_rdv:
-    path:     /typerdv
-    defaults: { _controller: RdvBundle:Default:typeRdv } 
-    
-rdv_type_rdv_update:
+        
+type_rdv_update:
     path:     /typerdv/update/{id}
     defaults: { _controller: RdvBundle:Default:typeRdvAddUpdate, id:null }
     
@@ -67,3 +63,7 @@ pagePerso:
 pagePerso_update:
     path:     /pagePerso/update/{id}
     defaults: { _controller: RdvBundle:Default:pagePersoAddUpdate, id:null }
+    
+lieu_rdv_update:
+    path:     /lieurdv/update/{id}
+    defaults: { _controller: RdvBundle:Default:lieuRdvAddUpdate, id:null }
