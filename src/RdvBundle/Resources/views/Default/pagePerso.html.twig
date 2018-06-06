@@ -21,7 +21,8 @@
                             </div>
                             <div class="card-footer">
                                 {% if is_user %}
-                                    <a href="{{ path('pagePerso_update', {'id':paragraphe.id}) }}">Editer</a>
+                                    <a href="{{ path('pagePerso_update', {'id':paragraphe.id}) }}"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ path('pagePerso_update', {'id':paragraphe.id}) }}"><i class="fa fa-trash-o"></i></a>
                                 {% endif %}
                                 <div class="card-text" style='float: right;'>
                                     <i>
@@ -96,7 +97,8 @@
                                     <div class='col-2'>{{ typeRdv.tarif |nl2br }}€</div>
                                     <div class='col-2'>
                                         {% if is_user %}
-                                            <a href="{{ path('type_rdv_update', {'id':typeRdv.id}) }}">Editer</a>
+                                            <a href="{{ path('type_rdv_update', {'id':typeRdv.id}) }}"><i class="fa fa-edit"></i></a>
+                                            <a href="{{ path('type_rdv_update', {'id':typeRdv.id}) }}"><i class="fa fa-trash-o"></i></a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -135,7 +137,8 @@
                             </div>
                             {% if is_user %}
                                 <div class="card-footer">
-                                    <a href="{{ path('lieu_rdv_update', {'id':lieuRdv.id}) }}">Editer</a>
+                                    <a href="{{ path('lieu_rdv_update', {'id':lieuRdv.id}) }}"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ path('lieu_rdv_update', {'id':lieuRdv.id}) }}"><i class="fa fa-trash-o"></i></a>
                                 </div>
                             {% endif %}
                         </div>
