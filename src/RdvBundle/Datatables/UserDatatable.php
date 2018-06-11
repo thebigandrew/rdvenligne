@@ -73,7 +73,7 @@ class UserDatatable extends AbstractDatatable
                         'label' => 'Valider',
                         'attributes' => array(
                             'rel' => 'tooltip',
-                            'title' => $this->translator->trans('sg.datatables.actions.show'),
+                            'title' => 'Valider',
                             'class' => 'btn btn-primary btn-xs',
                             'role' => 'button'
                         ),

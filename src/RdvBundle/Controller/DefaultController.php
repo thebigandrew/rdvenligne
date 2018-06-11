@@ -17,7 +17,6 @@ use RdvBundle\Form\UserProfileType;
 use RdvBundle\Form\ParagrapheType;
 
 class DefaultController extends Controller {
-
     public function indexAction(Request $request) {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $isAjax = $request->isXmlHttpRequest();
@@ -41,7 +40,7 @@ class DefaultController extends Controller {
                 return $this->render('RdvBundle:Default:index.html.twig', array(
                             'datatable' => $datatable,
                 ));
-            } elseif ($user->hasRole('ROLE_USER')) {
+            } elseif ($user->hasRole('ROLE_CLIENT')) {
                 $datatable = $this->get('app.datatable.user_rdv_list');
                 $datatable->buildDatatable();
                 $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -298,5 +297,4 @@ class DefaultController extends Controller {
             return $this->redirectToRoute('fos_user_security_login');
         }
     }
-
 }

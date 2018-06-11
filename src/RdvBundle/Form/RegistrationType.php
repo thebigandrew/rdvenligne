@@ -20,7 +20,7 @@ class RegistrationType extends AbstractType
                 ->add('lastName', TextType::class, ['label'=>'rdvenligne.last_name','translation_domain' => 'messages'])
                 ->add('telephone', TextType::class, ['label'=>'rdvenligne.phone','translation_domain' => 'messages'])
                 ->add('dateNaissance', DateType::class, ['label'=>'rdvenligne.birth_date','translation_domain' => 'messages', 'years' => range(date('Y'), 1910)])
-                ->add('role', ChoiceType::class, array('mapped' => false, 'choices'  => array('Client' => 'ROLE_USER','Professionnel' => 'ROLE_PRO')));
+                ->add('role', ChoiceType::class, array('placeholder' => 'Choisir un profil', 'mapped' => false, 'choices'  => array('Client' => 'ROLE_CLIENT','Professionnel' => 'ROLE_PRO')));
     }
 
    public function getParent()

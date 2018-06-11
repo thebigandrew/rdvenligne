@@ -77,7 +77,7 @@ class RegistrationController extends Controller
             if ($form->isValid()) {
                 $event = new FormEvent($form, $request);
                 //$this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
-                if($form['role']->getData() == "ROLE_USER"){
+                if($form['role']->getData() == "ROLE_CLIENT"){
                     $user->setValidationAdmin(true);
                 }else{
                     $user->setValidationAdmin(false);
