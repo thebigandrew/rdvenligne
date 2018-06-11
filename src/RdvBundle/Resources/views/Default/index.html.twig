@@ -1,8 +1,10 @@
 {# Voila comment faire pour intérgé le layout de base : extend le layout et mettre le contenu dans le block content #}
 {% extends "@Rdv/partials/datatables.twig" %}
 {% block javascripts %}
-    {{ parent() }}    
-    {{ sg_datatables_render_js(datatable) }}
+    {{ parent() }}
+    {% if datatable is defined %}
+        {{ sg_datatables_render_js(datatable) }}
+    {% endif %}
 {% endblock %}
 
 {% block content %}

@@ -20,7 +20,9 @@ class ValidationAdminController extends Controller
         // or use the DatatableFactory
         /** @var DatatableInterface $datatable */
         $datatable = $this->get('rdv.datatable.user');
-        $datatable->buildDatatable();
+        $datatable->buildDatatable([
+            'dt-type' => 'validate-pro'
+        ]);
 
         if ($isAjax) {
             $responseService = $this->get('sg_datatables.response');
