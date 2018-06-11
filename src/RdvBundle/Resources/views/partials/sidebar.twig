@@ -10,7 +10,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_USER') and not is_granted('ROLE_PRO') %}
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_CLIENT') and not is_granted('ROLE_PRO') %}
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
                     <img src="{{ asset('dist/img/avatar5.png') }}" class="img-circle elevation-2" alt="User Image">
@@ -41,7 +41,7 @@
                     <li class="nav-item"><a href="{{ url('pagePerso') }}" class="nav-link"><i class="nav-icon fa fa-user"></i><p>Ma Page Perso</p></a></li>
                     <li class="nav-item"><a href="{{ url('user_pro_list') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Liste des clients</p></a></li>
                     <li class="nav-item"><a href="{{ url('create_planning_default') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Planning par d&eacute;faut</p></a></li>
-                            {% elseif  is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_USER')  and not is_granted('ROLE_PRO') %}
+                            {% elseif  is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_CLIENT') and not is_granted('ROLE_PRO') %}
                     <li class="nav-item"><a href="{{ url('rdv_user_list_pro') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Listing RDV</p></a></li>
                             {% endif %}
 

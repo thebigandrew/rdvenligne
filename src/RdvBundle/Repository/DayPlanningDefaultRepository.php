@@ -5,5 +5,6 @@ namespace RdvBundle\Repository;
 /**
  * DayPlanningDefaultRepository
  */
-class DayRdvDefaultRepository extends \Doctrine\ORM\EntityRepository {
+class DayPlanningDefaultRepository extends \Doctrine\ORM\EntityRepository {
+    
 }

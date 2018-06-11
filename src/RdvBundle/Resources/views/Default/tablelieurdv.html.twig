@@ -1,29 +1,33 @@
-<table class="table">
-    <thead>
-        <tr>
-            <td>Nom lieu de RDV</td>
-            <td>Adresse</td>
-            <td>Action</td>
-        </tr>
-    </thead>
-    <tbody>
-        {% for lieuRdv in tLieuRdv %}
-            <tr>
-                <td>{{ lieuRdv.nom }}</td>
-                <td>{{ lieuRdv.adresse }}</td>
-                <td><button id="supp" onclick="deleteLieuRdv('{{ lieuRdv.id }}')">Delete</button></td>
-            </tr>
-        {% endfor %}
-        <tr>
-            <td>
-                <input type="text" name="nomLieuRdv" id="nomLieuRdv"/>	
-            </td>
-            <td>
-                <input type="text" name="adresseLieuRdv"s id="adresseLieuRdv"/>
-            </td>
-            <td>
-                <button id="add" onclick="addLieuRdv('{{ app.user.id }}')">Add</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="card card-primary">
+	<div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Nom lieu de RDV</td>
+                    <td>Adresse</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lieuRdv in tLieuRdv %}
+                    <tr>
+                        <td>{{ lieuRdv.nom }}</td>
+                        <td>{{ lieuRdv.adresse }}</td>
+                        <td><button id="supp" class="btn btn-danger pull-right" onclick="deleteLieuRdv('{{ lieuRdv.id }}')">Delete</button></td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td>
+                        <input type="text" name="nomLieuRdv" id="nomLieuRdv"/>	
+                    </td>
+                    <td>
+                        <input type="text" name="adresseLieuRdv"s id="adresseLieuRdv"/>
+                    </td>
+                    <td>
+                        <button id="add" class="btn btn-info pull-right" onclick="addLieuRdv('{{ app.user.id }}')">Ajouter</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

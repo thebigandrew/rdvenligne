@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>
-        {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_USER') %}
+        {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_CLIENT') %}
             {{ form_start(form) }}
             <div class="input-group input-group-sm offset-3 col-6">
                 {{ form_widget(form.text) }}
