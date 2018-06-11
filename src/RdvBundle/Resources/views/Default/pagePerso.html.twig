@@ -37,47 +37,71 @@
         </div>
         <div class="col-4">
             <div class="col-12">
-                <div class="card card-warning">
-                    <div class="card-header">
-                        <h1 class="card-title">
-                            <div class='col-12'><h1 class="headline">{{ tPro.firstname |nl2br }} {{ tPro.lastname |nl2br }}</h1></div>
-                            <div class='col-12'><i>{{ tPro.metier |nl2br }}</i></div>
-                        </h1>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class='col-1'><span class='fa fa-envelope'/></div>
-                            <div class='col-11'>{{ tPro.email |nl2br }}</div>
+                <div class="card card-widget widget-user-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-warning">
+                        <div class="widget-user-image">
+                            <img class="img-circle elevation-2" src="{{ asset('dist/img/avatar5.png') }}" alt="User Avatar">
                         </div>
-                        <div class="row">
-                            <div class='col-1'><span class='fa fa-phone-square'/></div>
-                            <div class='col-11'>{{ tPro.telephone |nl2br }}</div>
-                        </div>
+                        <!-- /.widget-user-image -->
+                        <h3 class="widget-user-username">{{ tPro.firstname |nl2br }} {{ tPro.lastname |nl2br }}</h3>
+                        <h5 class="widget-user-desc">{{ tPro.metier }}</h5>
                     </div>
+                    <div class="card-body p-0">
 
+                        <div class="row">
+                            <div class="col-sm-4 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">{{ tPro.email |nl2br }}</h5>
+                                    <span class="description-text">MAIL</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">{{ tPro.telephone |nl2br }}</h5>
+                                    <span class="description-text">PHONE</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4">
+                                <div class="description-block">
+                                    <h5 class="description-header">{{ nbUser }}</h5>
+                                    <span class="description-text">USERS</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+
+                        {#<i class="nav-icon fa fa-mail-forward"></i> #}
+                        {#<i class="nav-icon fa fa-phone"></i> {{ tPro.telephone |nl2br }}#}
+                    </div>
                     <div class="card-footer">
                         <div class="row">
-                            {% if is_user %}
-                                <div class="col-12">
-                                    <div class="dropdown">
-                                        <button class="btn btn-warning dropdown-toggle col-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Options
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ path('pagePerso_update') }}">Ajouter un Paragraphe</a>
-                                            <a class="dropdown-item" href="{{ path('lieu_rdv_update') }}">Ajouter un Lieu</a>
-                                            <a class="dropdown-item" href="{{ path('type_rdv_update') }}">Ajouter un Type RDV</a>
-                                        </div>
+                        {% if is_user %}
+                            <div class="col-12">
+                                <div class="dropdown">
+                                    <button class="btn btn-warning dropdown-toggle col-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Options
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="{{ path('pagePerso_update') }}">Ajouter un Paragraphe</a>
+                                        <a class="dropdown-item" href="{{ path('lieu_rdv_update') }}">Ajouter un Lieu</a>
+                                        <a class="dropdown-item" href="{{ path('type_rdv_update') }}">Ajouter un Type RDV</a>
                                     </div>
                                 </div>
-                            {% else %}
-                                <div class="col-12">
-                                    <a class="dropdown-item" href="{{ path('pagePerso_update') }}">
-                                        <button class="btn btn-primary col-12" type="button">Réservation d'un RDV</button>
-                                    </a>
-                                </div>
-                            {% endif %}
-                        </div>
+                            </div>
+                        {% else %}
+                            <div class="col-12">
+                                <a class="dropdown-item" href="{{ path('pagePerso_update') }}">
+                                    <button class="btn btn-primary col-12" type="button">Réservation d'un RDV</button>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
                     </div>
                 </div>
             </div>
@@ -129,19 +153,30 @@
                                     <div class='col-12'><i>{{ lieuRdv.adresse |nl2br }}</i></div>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body p-0">
+                                <ul class="products-list product-list-in-card pl-2 pr-2">
                                 {% for lieuRdv_typeRdv in lieuRdv.typeRdv %}
-                                    <div class="row">
-                                        <div class='col-8'>{{ lieuRdv_typeRdv.type |nl2br }}</div>
-                                        <div class='col-2'>{{ lieuRdv_typeRdv.duree |date('H') }}h{{ lieuRdv_typeRdv.duree |date('i') }}</div>
-                                        <div class='col-2'>{{ lieuRdv_typeRdv.tarif |nl2br }}€</div>
-                                    </div>
+                                    <li class="item">
+                                        {#<div class="product-img">#}
+                                            {#<span class="info-box-icon bg-info elevation-1"><i class="fa fa-gear"></i></span>#}
+                                        {#</div>#}
+                                        <div class='product-info'>
+                                            <span class="product-title">
+                                                {{ lieuRdv_typeRdv.type |nl2br }}
+                                                <span class="badge badge-warning float-right">{{ lieuRdv_typeRdv.tarif |nl2br }}€</span>
+                                            </span>
+                                            <span class='product-description'>{{ lieuRdv_typeRdv.duree |date('H') }}h{{ lieuRdv_typeRdv.duree |date('i') }}</span>
+                                        </div>
+                                    </li>
                                 {% endfor %}
+                                </ul>
                             </div>
                             {% if is_user %}
                                 <div class="card-footer">
-                                    <a href="{{ path('lieu_rdv_update', {'id':lieuRdv.id}) }}"><i class="fa fa-edit"></i></a>
-                                    <a href="{{ path('lieu_rdv_update', {'id':lieuRdv.id}) }}"><i class="fa fa-trash-o"></i></a>
+                                    <div class="pull-right">
+                                    <a class="btn btn-default" href="{{ path('lieu_rdv_update', {'id':lieuRdv.id}) }}"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger" href="{{ path('lieu_rdv_update', {'id':lieuRdv.id}) }}"><i class="fa fa-trash-o"></i></a>
+                                    </div>
                                 </div>
                             {% endif %}
                         </div>
