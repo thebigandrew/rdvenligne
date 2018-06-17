@@ -10,6 +10,10 @@ type_rdv_update:
     path:     /typerdv/update/{id}
     defaults: { _controller: RdvBundle:Default:typeRdvAddUpdate, id:null }
     
+type_rdv_delete:
+    path:     /typerdv/delete/{id}
+    defaults: { _controller: RdvBundle:Default:typeRdvDelete, id:null }
+    
 rdv_validation_admin:
     path: /validation_admin
     path: /admin/validation_admin
@@ -44,10 +48,6 @@ add_lieu_rdv:
     path: /add/lieurdv
     controller: RdvBundle:Default:addLieuRdv
     
-supp_lieu_rdv:
-    path: /supp/lieurdv
-    controller: RdvBundle:Default:deleteLieuRdv
-
 create_planning_default:
     path: /create_planning_default
     controller: RdvBundle:Planning:createDefault
@@ -64,6 +64,14 @@ pagePerso_update:
     path:     /pagePerso/update/{id}
     defaults: { _controller: RdvBundle:Default:pagePersoAddUpdate, id:null }
     
+pagePerso_delete:
+    path:     /pagePerso/delete/{id}
+    defaults: { _controller: RdvBundle:Default:pagePersoDelete, id:null }
+    
 lieu_rdv_update:
     path:     /lieurdv/update/{id}
     defaults: { _controller: RdvBundle:Default:lieuRdvAddUpdate, id:null }
+    
+lieu_rdv_delete:
+    path:     /lieurdv/delete/{id}
+    defaults: { _controller: RdvBundle:Default:lieuRdvDelete, id:null }

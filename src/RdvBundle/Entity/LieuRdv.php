@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="lieu_rdv")
  * @ORM\Entity(repositoryClass="RdvBundle\Repository\LieuRdvRepository")
  */
-class LieuRdv
-{
+class LieuRdv {
+
     /**
      * @var int
      *
@@ -34,19 +34,19 @@ class LieuRdv
      * @ORM\Column(name="adresse", type="string", length=255)
      */
     private $adresse;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\User")
      * @ORM\JoinColumn(name="pro_id", referencedColumnName="id")
      */
     private $proId;
-    
+
     /**
      * @var boolean
      *
-     * @ORM\Column(name="valide", type="boolean")
+     * @ORM\Column(name="enable", type="boolean")
      */
-    private $valide;
+    private $enable;
 
     /**
      * @ORM\ManyToMany(targetEntity="RdvBundle\Entity\TypeRdv")
@@ -59,8 +59,7 @@ class LieuRdv
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -71,8 +70,7 @@ class LieuRdv
      *
      * @return LieuRdv
      */
-    public function setNom($nom)
-    {
+    public function setNom($nom) {
         $this->nom = $nom;
 
         return $this;
@@ -83,8 +81,7 @@ class LieuRdv
      *
      * @return string
      */
-    public function getNom()
-    {
+    public function getNom() {
         return $this->nom;
     }
 
@@ -95,8 +92,7 @@ class LieuRdv
      *
      * @return LieuRdv
      */
-    public function setAdresse($adresse)
-    {
+    public function setAdresse($adresse) {
         $this->adresse = $adresse;
 
         return $this;
@@ -107,8 +103,7 @@ class LieuRdv
      *
      * @return string
      */
-    public function getAdresse()
-    {
+    public function getAdresse() {
         return $this->adresse;
     }
 
@@ -119,8 +114,7 @@ class LieuRdv
      *
      * @return LieuRdv
      */
-    public function setProId(\RdvBundle\Entity\User $proId = null)
-    {
+    public function setProId(\RdvBundle\Entity\User $proId = null) {
         $this->proId = $proId;
 
         return $this;
@@ -131,35 +125,32 @@ class LieuRdv
      *
      * @return \RdvBundle\Entity\User
      */
-    public function getProId()
-    {
+    public function getProId() {
         return $this->proId;
     }
 
     /**
-     * Set valide
+     * Set enable
      *
-     * @param boolean $valide
+     * @param boolean $enable
      *
      * @return LieuRdv
      */
-    public function setValide($valide)
-    {
-        $this->valide = $valide;
+    public function setEnable($enable) {
+        $this->enable = $enable;
 
         return $this;
     }
 
     /**
-     * Get valide
+     * Get enable
      *
      * @return boolean
      */
-    public function getValide()
-    {
-        return $this->valide;
+    public function getEnable() {
+        return $this->enable;
     }
-    
+
     /**
      * Set typeRdv
      *
@@ -167,8 +158,7 @@ class LieuRdv
      *
      * @return LieuRdv
      */
-    public function setTypeRdv($typeRdv)
-    {
+    public function setTypeRdv($typeRdv) {
         $this->typeRdv = $typeRdv;
 
         return $this;
@@ -179,8 +169,12 @@ class LieuRdv
      *
      * @return typeRdv
      */
-    public function getTypeRdv()
-    {
+    public function getTypeRdv() {
         return $this->typeRdv;
     }
+
+    public function removeTypeRdv(TypeRdv $typeRdv) {
+        $this->typeRdv->removeElement($typeRdv);
+    }
+
 }

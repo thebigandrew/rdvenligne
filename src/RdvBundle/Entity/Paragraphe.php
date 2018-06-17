@@ -32,14 +32,14 @@ class Paragraphe {
      */
     private $text;
 
-       /**
+    /**
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\user")
      * @ORM\JoinColumn(name="professionnel_id", referencedColumnName="id")
      */
     private $professionnelId;
-    
+
     /**
      * @var \DateTime
      *
@@ -53,6 +53,14 @@ class Paragraphe {
      * @ORM\Column(name="dateModification", type="datetime")
      */
     private $dateModification;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enable", type="boolean")
+     */
+    private $enable;
+
     /**
      * Get id
      * @return int
@@ -104,8 +112,7 @@ class Paragraphe {
      *
      * @return Paragraphe
      */
-    public function setProfessionnelId($professionnelId)
-    {
+    public function setProfessionnelId($professionnelId) {
         $this->professionnelId = $professionnelId;
 
         return $this;
@@ -116,12 +123,10 @@ class Paragraphe {
      *
      * @return int
      */
-    public function getProfessionnelId()
-    {
+    public function getProfessionnelId() {
         return $this->professionnelId;
     }
-    
-    
+
     /**
      * Set dateCreation
      *
@@ -129,8 +134,7 @@ class Paragraphe {
      *
      * @return Paragraphe
      */
-    public function setDateCreation($dateCreation)
-    {
+    public function setDateCreation($dateCreation) {
         $this->dateCreation = $dateCreation;
 
         return $this;
@@ -141,8 +145,7 @@ class Paragraphe {
      *
      * @return \DateTime
      */
-    public function getDateCreation()
-    {
+    public function getDateCreation() {
         return $this->dateCreation;
     }
 
@@ -153,8 +156,7 @@ class Paragraphe {
      *
      * @return Paragraphe
      */
-    public function setDateModification($dateModification)
-    {
+    public function setDateModification($dateModification) {
         $this->dateModification = $dateModification;
 
         return $this;
@@ -165,8 +167,30 @@ class Paragraphe {
      *
      * @return \DateTime
      */
-    public function getDateModification()
-    {
+    public function getDateModification() {
         return $this->dateModification;
     }
+
+    /**
+     * Set enable
+     *
+     * @param boolean $enable
+     *
+     * @return Paragraphe
+     */
+    public function setEnable($enable) {
+        $this->enable = $enable;
+
+        return $this;
+    }
+
+    /**
+     * Get enable
+     *
+     * @return boolean
+     */
+    public function getEnable() {
+        return $this->enable;
+    }
+
 }

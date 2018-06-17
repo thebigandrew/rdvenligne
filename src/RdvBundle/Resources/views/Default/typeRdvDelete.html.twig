@@ -1,0 +1,21 @@
+{% extends "@Rdv/layout.twig" %}
+{% block content %}
+    <section class="content">
+        {{ form_start(form) }}
+        <div class="card card-warning">
+            <div class="card-header">
+                <h3 class="card-title"> Edition type de rendez vous </h3>
+            </div>
+            <div class="card-body">
+                Etes-vous sûr de vouloir supprimer ce type de rdv ?<br/>
+                <i>Attention, cette action est irréversible !</i>
+            </div>
+            <div class="card-footer">
+                <div class="col-sm-2 offset-10">
+                    {{ form_widget(form.Delete) }}
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}
