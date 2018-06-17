@@ -50,14 +50,14 @@ class ProRdvDatatable extends AbstractDatatable {
         ));
 
         $this->columnBuilder
-                ->add('proId.lastname', Column::class, array(
-                    'title' => 'Pro. Nom',
+                ->add('userId.lastname', Column::class, array(
+                    'title' => 'User. Nom',
                 ))
-                ->add('proId.firstname', Column::class, array(
-                    'title' => 'Pro. Prénom',
+                ->add('userId.firstname', Column::class, array(
+                    'title' => 'User. Prénom',
                 ))
-                ->add('proId.telephone', Column::class, array(
-                    'title' => 'Pro. Telephone',
+                ->add('userId.telephone', Column::class, array(
+                    'title' => 'User. Telephone',
                 ))
                 ->add('creneauxDebut', DateTimeColumn::class, array(
                     'title' => 'Creneaux Debut',
