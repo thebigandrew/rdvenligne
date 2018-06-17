@@ -21,8 +21,8 @@
                             </div>
                             <div class="card-footer">
                                 {% if is_user %}
-                                    <a href="{{ path('pagePerso_update', {'id':paragraphe.id}) }}"><i class="fa fa-edit"></i></a>
-                                    <a href="{{ path('pagePerso_delete', {'id':paragraphe.id}) }}"><i class="fa fa-trash-o"></i></a>
+                                    <a class="btn btn-default" href="{{ path('pagePerso_update', {'id':paragraphe.id}) }}"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger" href="{{ path('pagePerso_delete', {'id':paragraphe.id}) }}"><i class="fa fa-trash-o"></i></a>
                                     {% endif %}
                                 <div class="card-text" style='float: right;'>
                                     <i>
