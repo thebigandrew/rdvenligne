@@ -179,14 +179,12 @@ class DefaultController extends Controller {
         $form = $this->createForm(ParagrapheType::class, $oParagraphe);
         $form->handleRequest($request);
         if ($form->isSubmitted() and $form->isValid()) {
-            if ($id != null) {
-                $oParagraphe->setDateModification(new \DateTime("now"));
-                $oParagraphe->setProfessionnelId($this->getUser());
-            } else {
+            if ($id == null) {
                 $oParagraphe->setDateCreation(new \DateTime("now"));
-                $oParagraphe->setDateModification(new \DateTime("now"));
                 $oParagraphe->setProfessionnelId($this->getUser());
+                $oParagraphe->setEnable(TRUE);
             }
+            $oParagraphe->setDateModification(new \DateTime("now"));
             $entityManager->persist($oParagraphe);
             $entityManager->flush();
             $idPro = $this->get('security.token_storage')->getToken()->getUser()->getId();
@@ -227,6 +225,7 @@ class DefaultController extends Controller {
             $form->handleRequest($request);
             if ($form->isSubmitted() and $form->isValid()) {
                 $oTypeRdv->setProId($this->getUser());
+                $oTypeRdv->setEnable(TRUE);
                 $entityManager->persist($oTypeRdv);
                 $entityManager->flush();
                 $idPro = $this->get('security.token_storage')->getToken()->getUser()->getId();
