@@ -43,6 +43,13 @@ class TypeRdv {
      * @ORM\JoinColumn(name="pro_id", referencedColumnName="id")
      */
     private $proId;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enable", type="boolean")
+     */
+    private $enable;
 
     /**
      * Get id
@@ -136,5 +143,27 @@ class TypeRdv {
     public function getDuree()
     {
         return $this->duree;
+    }
+    
+    /**
+     * Set enable
+     *
+     * @param boolean $enable
+     *
+     * @return TypeRdv
+     */
+    public function setEnable($enable) {
+        $this->enable = $enable;
+
+        return $this;
+    }
+
+    /**
+     * Get enable
+     *
+     * @return boolean
+     */
+    public function getEnable() {
+        return $this->enable;
     }
 }

@@ -22,8 +22,8 @@
                             <div class="card-footer">
                                 {% if is_user %}
                                     <a href="{{ path('pagePerso_update', {'id':paragraphe.id}) }}"><i class="fa fa-edit"></i></a>
-                                    <a href="{{ path('pagePerso_update', {'id':paragraphe.id}) }}"><i class="fa fa-trash-o"></i></a>
-                                {% endif %}
+                                    <a href="{{ path('pagePerso_delete', {'id':paragraphe.id}) }}"><i class="fa fa-trash-o"></i></a>
+                                    {% endif %}
                                 <div class="card-text" style='float: right;'>
                                     <i>
                                         Date Création : {{ paragraphe.dateCreation|date('d/m/Y H:i:s') }} | Date Modification : {{ paragraphe.dateModification|date('d/m/Y H:i:s') }}
@@ -91,7 +91,6 @@
                     <div class="card-body">
                         {% if tTypeRdv is defined %}
                             {% for typeRdv in tTypeRdv %}
-
                                 <div class="info-box" style="position: relative">
                                     <span class="info-box-icon bg-info"><i class="fa fa-calendar"></i></span>
                                     <div class="info-box-content">
@@ -99,8 +98,8 @@
                                         <span class="info-box-number">{{ typeRdv.duree |date('H') }}h{{ typeRdv.duree |date('i') }} - {{ typeRdv.tarif |nl2br }}€</span>
                                         {% if is_user %}
                                             <div class='pull-right' id="button-box-typerdv">
-                                                    <a class="btn btn-default" href="{{ path('type_rdv_update', {'id':typeRdv.id}) }}"><i class="fa fa-edit"></i></a>
-                                                    <a class="btn btn-danger" href="{{ path('type_rdv_update', {'id':typeRdv.id}) }}"><i class="fa fa-trash-o"></i></a>
+                                                <a class="btn btn-default" href="{{ path('type_rdv_update', {'id':typeRdv.id}) }}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-danger" href="{{ path('type_rdv_delete', {'id':typeRdv.id}) }}"><i class="fa fa-trash-o"></i></a>
                                             </div>
                                         {% endif %}
                                     </div>
@@ -140,8 +139,8 @@
                             </div>
                             {% if is_user %}
                                 <div class="card-footer">
-                                    <a href="{{ path('lieu_rdv_update', {'id':lieuRdv.id}) }}"><i class="fa fa-edit"></i></a>
-                                    <a href="{{ path('lieu_rdv_update', {'id':lieuRdv.id}) }}"><i class="fa fa-trash-o"></i></a>
+                                    <a class="btn btn-default" href="{{ path('lieu_rdv_update', {'id':lieuRdv.id}) }}"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger" href="{{ path('lieu_rdv_delete', {'id':lieuRdv.id}) }}"><i class="fa fa-trash-o"></i></a>
                                 </div>
                             {% endif %}
                         </div>

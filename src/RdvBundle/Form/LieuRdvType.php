@@ -26,6 +26,7 @@ class LieuRdvType extends AbstractType {
                     'query_builder' => function(EntityRepository $er) use($options) {
                         return $er->createQueryBuilder('g')
                                 ->andWhere('g.proId = :idPro')
+                                ->andWhere('g.enable = TRUE')
                                 ->setParameter('idPro', $options['idPro']);
                     },
                     'choice_label' => function ($choiceValue, $key, $value) {
