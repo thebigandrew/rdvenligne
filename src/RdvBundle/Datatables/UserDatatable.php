@@ -33,8 +33,8 @@ class UserDatatable extends AbstractDatatable
     public function buildDatatable(array $options = array())
     {
         $this->language->set(array(
-            'cdn_language_by_locale' => true
-            //'language' => 'de'
+            //'cdn_language_by_locale' => true,
+            'language' => 'fr_FR'
         ));
 
         $this->ajax->set(array(
@@ -77,7 +77,7 @@ class UserDatatable extends AbstractDatatable
                             'label' => 'Valider',
                             'attributes' => array(
                                 'rel' => 'tooltip',
-                                'title' => 'Valider',
+                                'title' => 'Autoriser ce professionnel',
                                 'class' => 'btn btn-primary btn-xs',
                                 'role' => 'button'
                             ),
