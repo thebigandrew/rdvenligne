@@ -21,7 +21,7 @@ class ProProfileType extends AbstractType
                 ->add('email', TextType::class, ['label'=>'Email'])
                 ->add('telephone', TextType::class, ['label'=>'Téléphone'])
                 ->add('dateNaissance', BirthdayType::class, ['label'=>'Date de naissance'])
-                ->add('metier', TextType::class, ['label'=>'Métier']);
+                ->add('metier', TextType::class, ['label'=>'Spécialité']);
     }
  
    public function getBlockPrefix()

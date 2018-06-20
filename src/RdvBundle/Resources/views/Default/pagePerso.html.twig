@@ -58,17 +58,14 @@
                     <div class="card-footer">
                         <div class="row">
                             {% if is_user %}
-                                <div class="col-12">
-                                    <div class="dropdown">
-                                        <button class="btn btn-warning dropdown-toggle col-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Options
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ path('pagePerso_update') }}">Ajouter un Paragraphe</a>
-                                            <a class="dropdown-item" href="{{ path('lieu_rdv_update') }}">Ajouter un Lieu</a>
-                                            <a class="dropdown-item" href="{{ path('type_rdv_update') }}">Ajouter un Type RDV</a>
-                                        </div>
-                                    </div>
+                                <div class="col-4">
+                                    <a class="dropdown-item" href="{{ path('pagePerso_update') }}"><button class="btn btn-warning col-12" type="button">+ Paragraphe</button></a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="dropdown-item" href="{{ path('lieu_rdv_update') }}"><button class="btn btn-warning col-12" type="button">+ Lieu</button></a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="dropdown-item" href="{{ path('type_rdv_update') }}"><button class="btn btn-warning col-12" type="button">+ Type RDV</button></a>
                                 </div>
                             {% else %}
                                 <div class="col-12">
