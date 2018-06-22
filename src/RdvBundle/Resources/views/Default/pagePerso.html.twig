@@ -54,27 +54,37 @@
                             <div class='col-11'>{{ tPro.telephone |nl2br }}</div>
                         </div>
                     </div>
-
                     <div class="card-footer">
-                        <div class="row">
-                            {% if is_user %}
-                                <div class="col-4">
-                                    <a class="dropdown-item" href="{{ path('pagePerso_update') }}"><button class="btn btn-warning col-12" type="button">+ Paragraphe</button></a>
+                        {% if is_user %}
+                            <div class="row">
+                            	<div class="col-12">
+                                    <a class="dropdown-item" href="{{ path('pagePerso_update') }}"><button class="btn btn-warning col-12" type="button">Ajouter un Paragraphe</button></a>  
+                                </div>   
+                            </div>
+                            <div class="row">
+                                <div class="col-12">                
+                                    <a class="dropdown-item" href="{{ path('lieu_rdv_update') }}"><button class="btn btn-warning col-12" type="button">Ajouter un Lieu</button></a>
                                 </div>
-                                <div class="col-4">
-                                    <a class="dropdown-item" href="{{ path('lieu_rdv_update') }}"><button class="btn btn-warning col-12" type="button">+ Lieu</button></a>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">                                                              
+                                    <a class="dropdown-item" href="{{ path('type_rdv_update') }}"><button class="btn btn-warning col-12" type="button">Ajouter un Type RDV</button></a>    
+                                </div>                         
+                            </div>
+                            <div class="row">
+                            	<div class="col-12">
+                                	<a class="dropdown-item" href="{{ path('add_rdv_pro') }}"><button class="btn btn-primary col-12" type="button">Ajouter un RDV</button></a>
                                 </div>
-                                <div class="col-4">
-                                    <a class="dropdown-item" href="{{ path('type_rdv_update') }}"><button class="btn btn-warning col-12" type="button">+ Type RDV</button></a>
-                                </div>
-                            {% else %}
+                            </div>
+                        {% else %}
+                        	<div class="row">
                                 <div class="col-12">
                                     <a class="dropdown-item" href="{{ path('pagePerso_update') }}">
                                         <button class="btn btn-primary col-12" type="button">Réservation d'un RDV</button>
                                     </a>
                                 </div>
-                            {% endif %}
-                        </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
