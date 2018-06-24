@@ -62,6 +62,12 @@ class Rdv {
     private $typeId;
     
     /**
+     * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\LieuRdv")
+     * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id")
+     */
+    private $lieu;
+    
+    /**
      * @var string
      * @ORM\Column(name="commentaire", type="text", nullable=true)
      */
@@ -169,5 +175,77 @@ class Rdv {
     public function getCommentaire()
     {
         return $this->commentaire;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param \RdvBundle\Entity\User $userId
+     *
+     * @return Rdv
+     */
+    public function setUserId(\RdvBundle\Entity\User $userId = null)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return \RdvBundle\Entity\User
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set proId
+     *
+     * @param \RdvBundle\Entity\User $proId
+     *
+     * @return Rdv
+     */
+    public function setProId(\RdvBundle\Entity\User $proId = null)
+    {
+        $this->proId = $proId;
+
+        return $this;
+    }
+
+    /**
+     * Get proId
+     *
+     * @return \RdvBundle\Entity\User
+     */
+    public function getProId()
+    {
+        return $this->proId;
+    }
+
+    /**
+     * Set typeId
+     *
+     * @param \RdvBundle\Entity\TypeRdv $typeId
+     *
+     * @return Rdv
+     */
+    public function setTypeId(\RdvBundle\Entity\TypeRdv $typeId = null)
+    {
+        $this->typeId = $typeId;
+
+        return $this;
+    }
+
+    /**
+     * Get typeId
+     *
+     * @return \RdvBundle\Entity\TypeRdv
+     */
+    public function getTypeId()
+    {
+        return $this->typeId;
     }
 }

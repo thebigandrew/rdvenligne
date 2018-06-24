@@ -28,6 +28,11 @@ class RdvType extends AbstractType
                                                                                                                                                     ->where('t.proId = :user')
                                                                                                                                                     ->setParameter('user', $u);
                                                                                                                                       }))
+                ->add('lieu', EntityType::class, array('label' => 'Lieu de RDV', 'class' => 'RdvBundle:LieuRdv', 'choice_label' => 'nom', 'query_builder' => function(EntityRepository $er) use ($u){
+                                                                                                                                          return $er->createQueryBuilder('l')
+                                                                                                                                                  ->where('l.proId = :user')
+                                                                                                                                                  ->setParameter('user', $u);
+                                                                                                                                      }))
                 ->add('Enregistrer', SubmitType::class, [
                     'attr' => array('class' => 'btn btn-info pull-right col-sm-12')
                 ]);
