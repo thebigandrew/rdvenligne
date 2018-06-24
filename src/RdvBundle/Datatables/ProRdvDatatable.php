@@ -26,6 +26,24 @@ use Sg\DatatablesBundle\Datatable\Editable\TextEditable;
  * @package RdvBundle\Datatables
  */
 class ProRdvDatatable extends AbstractDatatable {
+    
+    public function getLineFormatter()
+    {
+        $formatter = function($row) {
+            if( $row['userId'] === null)
+            {
+                $row['ClientDescription'] = $row['commentaire'];
+            }
+            else
+            {
+                $row['ClientDescription'] = $row['userId']['firstname'] . ' ' . $row['userId']['lastname'] . ' - ' . $row['userId']['telephone'];
+            }
+            
+            return $row;
+        };
+
+        return $formatter;
+    }
 
     /**
      * {@inheritdoc}
@@ -50,14 +68,28 @@ class ProRdvDatatable extends AbstractDatatable {
         ));
 
         $this->columnBuilder
+                ->add('ClientDescription', VirtualColumn::class, array(
+                    'title' => 'Client/Description',
+                    'searchable' => false,
+                    'orderable' => false,/*
+                    'order_column' => 'createdBy.username', // use the 'createdBy.username' column for ordering
+                    'search_column' => 'createdBy.username', // use the 'createdBy.username' column for searching
+                     */
+                ))
                 ->add('userId.lastname', Column::class, array(
                     'title' => 'User. Nom',
+                    'visible' => false,
+                    'default_content' => ''
                 ))
                 ->add('userId.firstname', Column::class, array(
                     'title' => 'User. Prénom',
+                    'visible' => false,
+                    'default_content' => ''
                 ))
                 ->add('userId.telephone', Column::class, array(
                     'title' => 'User. Telephone',
+                    'visible' => false,
+                    'default_content' => ''
                 ))
                 ->add('creneauxDebut', DateTimeColumn::class, array(
                     'title' => 'Creneaux Debut',
@@ -73,6 +105,9 @@ class ProRdvDatatable extends AbstractDatatable {
                 ))
                 ->add('statut', BooleanColumn::class, array(
                     'title' => 'Statut',
+                ))
+                ->add('commentaire', Column::class, array(
+                    'visible' => false
                 ))
         ;
     }
