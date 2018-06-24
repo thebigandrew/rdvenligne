@@ -62,6 +62,12 @@ class Rdv {
     private $typeId;
     
     /**
+     * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\LieuRdv")
+     * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id")
+     */
+    private $lieu;
+    
+    /**
      * @var string
      * @ORM\Column(name="commentaire", type="text", nullable=true)
      */
@@ -241,5 +247,29 @@ class Rdv {
     public function getTypeId()
     {
         return $this->typeId;
+    }
+
+    /**
+     * Set lieu
+     *
+     * @param \RdvBundle\Entity\LieuRdv $lieu
+     *
+     * @return Rdv
+     */
+    public function setLieu(\RdvBundle\Entity\LieuRdv $lieu = null)
+    {
+        $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    /**
+     * Get lieu
+     *
+     * @return \RdvBundle\Entity\LieuRdv
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
     }
 }
