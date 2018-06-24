@@ -16,13 +16,23 @@ type_rdv_delete:
     
 rdv_validation_admin:
     path: /validation_admin
-    path: /admin/validation_admin
     defaults: { _controller: RdvBundle:ValidationAdmin:index }
+    
+rdv_invalidation_admin:
+    path: /invalidation_admin
+    defaults: { _controller: RdvBundle:ValidationAdmin:invalidation }
  
 rdv_validation_pro:
-    path:      /validation_pro/{id}
-    path:      /admin/validation_pro/{id}
-    controller: RdvBundle:ValidationAdmin:validation
+    path: /validation_pro/{id}
+    controller: RdvBundle:ValidationAdmin:validationPro
+    requirements:
+        id: '\d+'
+    options:
+        expose: true
+
+rdv_invalidation_pro:
+    path: /invalidation_pro/{id}
+    controller: RdvBundle:ValidationAdmin:invalidationPro
     requirements:
         id: '\d+'
     options:
