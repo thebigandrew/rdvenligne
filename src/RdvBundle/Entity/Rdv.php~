@@ -148,58 +148,26 @@ class Rdv {
     }
 
     /**
-     * Set userId
-     * @param integer $userId
+     * Set commentaire
+     *
+     * @param string $commentaire
+     *
      * @return Rdv
      */
-    public function setUserId($userId) {
-        $this->userId = $userId;
+    public function setCommentaire($commentaire)
+    {
+        $this->commentaire = $commentaire;
 
         return $this;
     }
 
     /**
-     * Get userId
-     * @return int
+     * Get commentaire
+     *
+     * @return string
      */
-    public function getUserId() {
-        return $this->userId;
-    }
-
-    /**
-     * Set proId
-     * @param integer $proId
-     * @return Rdv
-     */
-    public function setProId($proId) {
-        $this->userId = $proId;
-
-        return $this;
-    }
-
-    /**
-     * Get proId
-     * @return int
-     */
-    public function getProId() {
-        return $this->proId;
-    }
-
-    /**
-     * Set typeId
-     * @param integer $typeId
-     * @return Rdv
-     */
-    public function setTypeId($typeId) {
-        $this->typeId = $typeId;
-        return $this;
-    }
-
-    /**
-     * Get typeId
-     * @return int
-     */
-    public function getTypeId() {
-        return $this->typeId;
+    public function getCommentaire()
+    {
+        return $this->commentaire;
     }
 }

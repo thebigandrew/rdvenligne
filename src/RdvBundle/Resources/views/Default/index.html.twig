@@ -9,6 +9,13 @@
 
 {% block content %}
     <section class="content">
+    	{% for message in app.flashes('success') %}
+        	<div class="row">
+                <div class="alert-success">
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_PRO') %}
             <div class="input-group input-group-sm col-12">
                 <div class="card card-primary">

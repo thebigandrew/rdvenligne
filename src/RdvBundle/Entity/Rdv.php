@@ -148,62 +148,6 @@ class Rdv {
     }
 
     /**
-     * Set userId
-     * @param integer $userId
-     * @return Rdv
-     */
-    public function setUserId($userId) {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     * @return int
-     */
-    public function getUserId() {
-        return $this->userId;
-    }
-
-    /**
-     * Set proId
-     * @param integer $proId
-     * @return Rdv
-     */
-    public function setProId($proId) {
-        $this->userId = $proId;
-
-        return $this;
-    }
-
-    /**
-     * Get proId
-     * @return int
-     */
-    public function getProId() {
-        return $this->proId;
-    }
-
-    /**
-     * Set typeId
-     * @param integer $typeId
-     * @return Rdv
-     */
-    public function setTypeId($typeId) {
-        $this->typeId = $typeId;
-        return $this;
-    }
-
-    /**
-     * Get typeId
-     * @return int
-     */
-    public function getTypeId() {
-        return $this->typeId;
-    }
-
-    /**
      * Set commentaire
      *
      * @param string $commentaire
@@ -225,5 +169,77 @@ class Rdv {
     public function getCommentaire()
     {
         return $this->commentaire;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param \RdvBundle\Entity\User $userId
+     *
+     * @return Rdv
+     */
+    public function setUserId(\RdvBundle\Entity\User $userId = null)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return \RdvBundle\Entity\User
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set proId
+     *
+     * @param \RdvBundle\Entity\User $proId
+     *
+     * @return Rdv
+     */
+    public function setProId(\RdvBundle\Entity\User $proId = null)
+    {
+        $this->proId = $proId;
+
+        return $this;
+    }
+
+    /**
+     * Get proId
+     *
+     * @return \RdvBundle\Entity\User
+     */
+    public function getProId()
+    {
+        return $this->proId;
+    }
+
+    /**
+     * Set typeId
+     *
+     * @param \RdvBundle\Entity\TypeRdv $typeId
+     *
+     * @return Rdv
+     */
+    public function setTypeId(\RdvBundle\Entity\TypeRdv $typeId = null)
+    {
+        $this->typeId = $typeId;
+
+        return $this;
+    }
+
+    /**
+     * Get typeId
+     *
+     * @return \RdvBundle\Entity\TypeRdv
+     */
+    public function getTypeId()
+    {
+        return $this->typeId;
     }
 }

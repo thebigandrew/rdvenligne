@@ -4,6 +4,7 @@ namespace RdvBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use RdvBundle\Entity\User;
 use RdvBundle\Entity\LieuRdv;
 use RdvBundle\Entity\TypeRdv;
@@ -377,11 +378,30 @@ class DefaultController extends Controller {
             }else{
                 $oRdv = new Rdv();
             }
-            $form = $this->createForm(RdvType::class, $oRdv);
+            $form = $this->createForm(RdvType::class, $oRdv, array('user' => $this->getUser()));
             $form->handleRequest($request);
+            $oDateTimeCurrent = new \DateTime('now');
+            $session = new Session();
             if ($form->isSubmitted() and $form->isValid()) {
-                $entityManager->persist($oRdv);
-                $entityManager->flush();
+                if($oRdv->getCreneauxDebut() < $oRdv->getCreneauxFin() and $oRdv->getCreneauxDebut() > $oDateTimeCurrent 
+                and $oRdv->getCreneauxDebut()->format('Y-m-d') == $oRdv->getCreneauxFin()->format('Y-m-d')){
+                    $oRdv->setValidation(true);
+                    $oRdv->setStatut(true);
+                    $oRdv->setProId($this->getUser());
+                    $entityManager->persist($oRdv);
+                    $entityManager->flush();
+                    $session->getFlashBag()->add(
+                        'success',
+                        'RDV ajouté avec succès'
+                        );
+                    return $this->redirectToRoute('rdv_homepage');
+                }else{
+                    $session->getFlashBag()->add(
+                        'error',
+                        'Les dates saisies sont invalides'
+                        );
+                    return $this->render('RdvBundle:Default:rdvaddupdate.html.twig', array('form' => $form->createView()));
+                }
             }
             return $this->render('RdvBundle:Default:rdvaddupdate.html.twig', array('form' => $form->createView()));
         } else {
