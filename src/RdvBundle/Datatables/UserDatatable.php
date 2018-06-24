@@ -86,6 +86,29 @@ class UserDatatable extends AbstractDatatable
                 ))
             ;
         }
+        else if(array_key_exists('dt-type', $options) && $options['dt-type'] === 'invalidate-pro')
+        {
+            $this->columnBuilder
+                ->add(null, ActionColumn::class, array(
+                    'title' => $this->translator->trans('sg.datatables.actions.title'),
+                    'actions' => array(
+                        array(
+                            'route' => 'rdv_invalidation_pro',
+                            'route_parameters' => array(
+                                'id' => 'id'
+                            ),
+                            'label' => 'Invalider',
+                            'attributes' => array(
+                                'rel' => 'tooltip',
+                                'title' => 'Invalider ce professionnel',
+                                'class' => 'btn btn-primary btn-xs',
+                                'role' => 'button'
+                            ),
+                        )
+                    )
+                ))
+            ;
+        }
 
     }
 
