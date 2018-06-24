@@ -4,12 +4,15 @@ namespace RdvBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use RdvBundle\Entity\User;
 use RdvBundle\Entity\LieuRdv;
 use RdvBundle\Entity\TypeRdv;
 use RdvBundle\Entity\Rdv;
 use RdvBundle\Entity\Paragraphe;
 use RdvBundle\Form\ProProfileType;
+
+use RdvBundle\Form\RdvType;
 use RdvBundle\Form\SearchType;
 use RdvBundle\Form\LieuRdvType;
 use RdvBundle\Form\LieuRdvDeleteType;
@@ -335,30 +338,74 @@ class DefaultController extends Controller {
     }
 
     public function lieuRdvDeleteAction(Request $request, $id) {
-        $idPro = $this->get('security.token_storage')->getToken()->getUser()->getId();
-        $entityManager = $this->getDoctrine()->getManager();
-        $repositoryTypeRdv = $entityManager->getRepository(LieuRdv::class);
-        if ($id != null) {
-            $oLieuRdv = $repositoryTypeRdv->findOneBy(array('id' => $id));
-            $form = $this->createForm(LieuRdvDeleteType::class, $oLieuRdv);
-            $form->handleRequest($request);
-            if ($form->isSubmitted() and $form->isValid()) {
-                $oLieuRdv->setEnable(FALSE);
-                $entityManager->persist($oLieuRdv);
-
-                $oTypeRdv = $entityManager->getRepository(TypeRdv::class)->findBy(array('proId' => $idPro));
-                foreach ($oTypeRdv as $idTypeRdv) {
-                    $oTypeRdv2 = $entityManager->getRepository(TypeRdv::class)->find($idTypeRdv);
-                    $oLieuRdv->removeTypeRdv($oTypeRdv2);
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $idPro = $this->get('security.token_storage')->getToken()->getUser()->getId();
+            $entityManager = $this->getDoctrine()->getManager();
+            $repositoryTypeRdv = $entityManager->getRepository(LieuRdv::class);
+            if ($id != null) {
+                $oLieuRdv = $repositoryTypeRdv->findOneBy(array('id' => $id));
+                $form = $this->createForm(LieuRdvDeleteType::class, $oLieuRdv);
+                $form->handleRequest($request);
+                if ($form->isSubmitted() and $form->isValid()) {
+                    $oLieuRdv->setEnable(FALSE);
                     $entityManager->persist($oLieuRdv);
+    
+                    $oTypeRdv = $entityManager->getRepository(TypeRdv::class)->findBy(array('proId' => $idPro));
+                    foreach ($oTypeRdv as $idTypeRdv) {
+                        $oTypeRdv2 = $entityManager->getRepository(TypeRdv::class)->find($idTypeRdv);
+                        $oLieuRdv->removeTypeRdv($oTypeRdv2);
+                        $entityManager->persist($oLieuRdv);
+                    }
+    
+                    $entityManager->flush();
+                    return $this->redirectToRoute('pagePerso', ['id' => $idPro]);
                 }
-
-                $entityManager->flush();
-                return $this->redirectToRoute('pagePerso', ['id' => $idPro]);
+                return $this->render('RdvBundle:Default:lieuRdvDelete.html.twig', array('form' => $form->createView(), 'id' => $id));
             }
-            return $this->render('RdvBundle:Default:lieuRdvDelete.html.twig', array('form' => $form->createView(), 'id' => $id));
+            return $this->redirectToRoute('pagePerso', ['id' => $idPro]);
+        } else {
+            return $this->redirectToRoute('fos_user_security_login');
         }
-        return $this->redirectToRoute('pagePerso', ['id' => $idPro]);
     }
 
+    
+    public function addRdvProAction(Request $request, $id){
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $repositoryRdv = $entityManager->getRepository(Rdv::class);
+            if($id != null){
+                $oRdv = $repositoryRdv->findOneBy(array('id' => $id));
+            }else{
+                $oRdv = new Rdv();
+            }
+            $form = $this->createForm(RdvType::class, $oRdv, array('user' => $this->getUser()));
+            $form->handleRequest($request);
+            $oDateTimeCurrent = new \DateTime('now');
+            $session = new Session();
+            if ($form->isSubmitted() and $form->isValid()) {
+                if($oRdv->getCreneauxDebut() < $oRdv->getCreneauxFin() and $oRdv->getCreneauxDebut() > $oDateTimeCurrent 
+                and $oRdv->getCreneauxDebut()->format('Y-m-d') == $oRdv->getCreneauxFin()->format('Y-m-d')){
+                    $oRdv->setValidation(true);
+                    $oRdv->setStatut(true);
+                    $oRdv->setProId($this->getUser());
+                    $entityManager->persist($oRdv);
+                    $entityManager->flush();
+                    $session->getFlashBag()->add(
+                        'success',
+                        'RDV ajouté avec succès'
+                        );
+                    return $this->redirectToRoute('rdv_homepage');
+                }else{
+                    $session->getFlashBag()->add(
+                        'error',
+                        'Les dates saisies sont invalides'
+                        );
+                    return $this->render('RdvBundle:Default:rdvaddupdate.html.twig', array('form' => $form->createView()));
+                }
+            }
+            return $this->render('RdvBundle:Default:rdvaddupdate.html.twig', array('form' => $form->createView()));
+        } else {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+    }
 }

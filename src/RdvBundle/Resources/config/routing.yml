@@ -75,3 +75,7 @@ lieu_rdv_update:
 lieu_rdv_delete:
     path:     /lieurdv/delete/{id}
     defaults: { _controller: RdvBundle:Default:lieuRdvDelete, id:null }
+    
+add_rdv_pro:
+    path: /add/rdv/{id}
+    defaults: { _controller: RdvBundle:Default:addRdvPro, id:null }
