@@ -89,3 +89,7 @@ lieu_rdv_delete:
 add_rdv_pro:
     path: /add/rdv/{id}
     defaults: { _controller: RdvBundle:Default:addRdvPro, id:null }
+    
+planning_hebdo:
+    path: /planning/hebdo
+    defaults: { _controller: RdvBundle:Default:planningHebdo }
