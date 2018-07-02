@@ -5,6 +5,7 @@ namespace RdvBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use RdvBundle\Entity\User;
 use RdvBundle\Entity\LieuRdv;
 use RdvBundle\Entity\TypeRdv;
@@ -409,16 +410,21 @@ class DefaultController extends Controller {
         }
     }
     
-    public function planningHebdoAction(){
+    public function planningHebdoAction(Request $request){
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $repositoryRdv = $entityManager->getRepository(Rdv::class);
-            $oDateCurrent = new \DateTime('now');
-            $oDateDeb = clone $oDateCurrent->modify('Monday this week');   
-            $oDateFin = clone $oDateCurrent->modify('Sunday this week');   
-            $tRdv = $repositoryRdv->getRdvBetweenDates($oDateDeb, $oDateFin, $this->getUser());
-            dump($tRdv);die;
-            return $this->render('RdvBundle:Default:planninghebdo.html.twig', array('tRdv' => $tRdv));
+            
+            if($request->isXmlHttpRequest()){
+                $entityManager = $this->getDoctrine()->getManager();
+                $repositoryRdv = $entityManager->getRepository(Rdv::class);
+                $oDateCurrent = new \DateTime('now');
+                $oDateDeb = clone $oDateCurrent->modify('Monday this week');   
+                $oDateFin = clone $oDateCurrent->modify('Sunday this week');   
+                $tRdv = $repositoryRdv->getRdvBetweenDates($oDateDeb, $oDateFin, $this->getUser());
+                
+                return new JsonResponse($tRdv);
+            } else {
+                return $this->render('RdvBundle:Default:planninghebdo.html.twig');
+            }
         }else {
             return $this->redirectToRoute('fos_user_security_login');
         }

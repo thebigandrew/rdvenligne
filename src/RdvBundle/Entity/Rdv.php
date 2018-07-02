@@ -3,13 +3,14 @@
 namespace RdvBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
  * Rdv
  * @ORM\Table(name="rdv")
  * @ORM\Entity(repositoryClass="RdvBundle\Repository\RdvRepository")
  */
-class Rdv {
+class Rdv implements \JsonSerializable {
     /**
      * @var int
      * @ORM\Column(name="id", type="integer")
@@ -271,5 +272,23 @@ class Rdv {
     public function getLieu()
     {
         return $this->lieu;
+    }
+    
+    public function getDescription()
+    {
+        if( $this->userId === null){
+            return $this->commentaire;
+        } else {
+            return $this->userId->getFirstName() . ' ' . $this->userId->getLastName() . ' ' . $this->userId->getTelephone();
+        }
+    }
+    
+        public function jsonSerialize()
+    {
+        return [
+            'title' => $this->getDescription(),
+            'start' => $this->creneauxDebut->format('Y-m-d H:i:s'),
+            'end' => $this->creneauxFin->format('Y-m-d H:i:s')
+        ];
     }
 }
