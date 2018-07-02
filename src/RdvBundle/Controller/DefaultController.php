@@ -418,7 +418,7 @@ class DefaultController extends Controller {
             $oDateFin = clone $oDateCurrent->modify('Sunday this week');   
             $tRdv = $repositoryRdv->getRdvBetweenDates($oDateDeb, $oDateFin, $this->getUser());
             dump($tRdv);die;
-            return $this->render('RdvBundle:Default:planninghebdo.html.twig');
+            return $this->render('RdvBundle:Default:planninghebdo.html.twig', array('tRdv' => $tRdv));
         }else {
             return $this->redirectToRoute('fos_user_security_login');
         }
