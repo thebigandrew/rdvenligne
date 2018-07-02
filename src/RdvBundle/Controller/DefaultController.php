@@ -408,4 +408,19 @@ class DefaultController extends Controller {
             return $this->redirectToRoute('fos_user_security_login');
         }
     }
+    
+    public function planningHebdoAction(){
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $repositoryRdv = $entityManager->getRepository(Rdv::class);
+            $oDateCurrent = new \DateTime('now');
+            $oDateDeb = clone $oDateCurrent->modify('Monday this week');   
+            $oDateFin = clone $oDateCurrent->modify('Sunday this week');   
+            $tRdv = $repositoryRdv->getRdvBetweenDates($oDateDeb, $oDateFin, $this->getUser());
+            dump($tRdv);die;
+            return $this->render('RdvBundle:Default:planninghebdo.html.twig', array('tRdv' => $tRdv));
+        }else {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+    }
 }
