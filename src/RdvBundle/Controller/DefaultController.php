@@ -43,7 +43,7 @@ class DefaultController extends Controller {
                 $pieChart = new PieChart();
                 $data[] = ['Métier', 'Nombre'];
                 foreach ($arrayMetier as $id => $value) {
-                    $data[] = [0 => $value['metier'], 1 => (int) $value['nb']];
+                    $data[] = [0 => ($value['metier'] != '' ? $value['metier'] : "Non défini"), 1 => (int) $value['nb']];
                 }
                 $pieChart->getData()->setArrayToDataTable($data);
                 $pieChart->getOptions()->setTitle('Métier de mes Professionnels');
