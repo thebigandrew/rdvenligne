@@ -9,14 +9,61 @@
 
 {% block content %}
     <section class="content">
-    	{% for message in app.flashes('success') %}
-        	<div class="row">
+        {% for message in app.flashes('success') %}
+            <div class="row">
                 <div class="alert-success">
                     {{ message }}
                 </div>
             </div>
         {% endfor %}
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_PRO') %}
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_ADMIN') %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="col-lg-4 col-xs-6">
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{ nbPro }}</h3>
+                                <p>Nombre Professionnel</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-outlet"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xs-6">
+                        <div class="small-box bg-primary">
+                            <div class="inner">
+                                <h3>{{ nbClient }}</h3>
+                                <p>Nombre Clients</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-lg-offset-0 col-xs-6 col-xs-offset-3">
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{ nbRDV }}</h3>
+                                <p>Nombre RDV</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="div_chart" class="col-xs-6" style='height:500px;'></div>
+                <div id="div_chart2" class="col-xs-6" style='height:500px;'></div>
+            </div>
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+                {{ gc_draw(piechart, 'div_chart') }}
+                {{ gc_draw(columnChart, 'div_chart2') }}
+            </script>
+        {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_PRO') %}
             <div class="input-group input-group-sm col-12">
                 <div class="card card-primary">
                     <div class="card-header">

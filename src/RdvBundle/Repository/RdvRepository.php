@@ -17,4 +17,19 @@ class RdvRepository extends \Doctrine\ORM\EntityRepository {
                         ->getSingleScalarResult();
     }
 
+    public function getNbRDV() {
+        return $this->createQueryBuilder('l')
+                        ->select('COUNT(l)')
+                        ->getQuery()
+                        ->getSingleScalarResult();
+    }
+
+    public function getNbRDVDate() {
+        return $this->createQueryBuilder('l')
+                        ->select('MONTH(l.creneauxDebut) as month, COUNT(l.id) as nb')
+                        ->groupBy('l.creneauxDebut')
+                        ->getQuery()
+                        ->getArrayResult();
+    }
+
 }
