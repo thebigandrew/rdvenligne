@@ -16,7 +16,7 @@ class RdvRepository extends \Doctrine\ORM\EntityRepository {
                         ->getQuery()
                         ->getSingleScalarResult();
     }
-
+  
     public function getNbRDV() {
         return $this->createQueryBuilder('l')
                         ->select('COUNT(l)')
@@ -31,5 +31,18 @@ class RdvRepository extends \Doctrine\ORM\EntityRepository {
                         ->getQuery()
                         ->getArrayResult();
     }
-
+  
+    public function getRdvBetweenDates($oDateDeb, $oDateFin, $oUser){
+        $qb = $this->createQueryBuilder('r')
+                   ->select('r')
+                   ->andWhere('r.creneauxDebut > :oDateDeb')
+                   ->andWhere('r.creneauxFin < :oDateFin')
+                   ->andWhere('r.proId = :user')
+                   ->setParameter('oDateDeb', $oDateDeb)
+                   ->setParameter('oDateFin', $oDateFin)
+                   ->setParameter('user', $oUser)
+                   ->getQuery()
+                   ->getResult();
+        return $qb;
+    }
 }

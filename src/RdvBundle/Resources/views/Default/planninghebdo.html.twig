@@ -1,0 +1,61 @@
+{% extends "@Rdv/layout.twig" %}
+
+{% block stylesheets %}
+    <style>
+        .fc-time:before {
+            content:"" !important;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>Planning hebdomadaire</h1>
+    <div class="row">
+    	<div id="calendrierHebdo"></div>
+    </div>
+    <br/>
+    <div class="row">
+    	<div class="col-1">
+            <button class="btn btn-primary col-12" id="lastWeek" type="button">Prec.</button>
+        </div>
+        <div class="col-1 offset-10">
+            <button class="btn btn-primary col-12" id="nextWeek" type="button">Suiv.</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $('#calendrierHebdo').fullCalendar({
+                defaultView: 'agendaWeek',
+                firstDay: 1, // lundi
+                header: false,
+                lang: 'fr',
+                eventBackgroundColor: '#0000ff',
+                events: {
+                    url: '{{ path('planning_hebdo') }}',
+                    type: 'POST',
+                    data: {},
+                    headers: {
+                        'X-Requested-With':'XMLHttpRequest'
+                    },
+                    error: function() {
+                      alert('there was an error while fetching events!');
+                    }
+                },
+                themeSystem: 'bootstrap4'
+            });
+        });
+
+        $('#lastWeek').click(function() {
+    	  	$('#calendrierHebdo').fullCalendar('prev');
+    	});
+
+        $('#nextWeek').click(function() {
+    	  	$('#calendrierHebdo').fullCalendar('next');
+    	});
+    </script>
+{% endblock %}

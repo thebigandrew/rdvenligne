@@ -35,16 +35,17 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item has-treeview menu-open">
                     {% if  is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item"><a href="{{ url('rdv_validation_admin') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Validation Professionel</p></a></li>
-                    <li class="nav-item"><a href="{{ url('rdv_invalidation_admin') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Invalidation Professionel</p></a></li>
-                    <li class="nav-item"><a href="{{ url('rdv_listing_pro') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Liste Professionel</p></a></li>
-                            {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_PRO') %}
-                    <li class="nav-item"><a href="{{ url('pagePerso') }}" class="nav-link"><i class="nav-icon fa fa-user"></i><p>Ma Page Perso</p></a></li>
-                    <li class="nav-item"><a href="{{ url('user_pro_list') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Liste des clients</p></a></li>
-                    <li class="nav-item"><a href="{{ url('create_planning_default') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Planning par d&eacute;faut</p></a></li>
-                            {% elseif  is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_CLIENT') and not is_granted('ROLE_PRO') %}
-                    <li class="nav-item"><a href="{{ url('rdv_user_list_pro') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Listing RDV</p></a></li>
-                            {% endif %}
+                        <li class="nav-item"><a href="{{ url('rdv_validation_admin') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Validation Professionel</p></a></li>
+                        <li class="nav-item"><a href="{{ url('rdv_invalidation_admin') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Invalidation Professionel</p></a></li>
+                        <li class="nav-item"><a href="{{ url('rdv_listing_pro') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Liste Professionel</p></a></li>
+                    {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_PRO') %}
+                        <li class="nav-item"><a href="{{ url('pagePerso') }}" class="nav-link"><i class="nav-icon fa fa-user"></i><p>Ma Page Perso</p></a></li>
+                        <li class="nav-item"><a href="{{ url('planning_hebdo') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Planning hebdomadaire</p></a></li>
+                        <li class="nav-item"><a href="{{ url('user_pro_list') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Liste des clients</p></a></li>
+                        <li class="nav-item"><a href="{{ url('create_planning_default') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Planning par d&eacute;faut</p></a></li>
+                    {% elseif  is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_CLIENT') and not is_granted('ROLE_PRO') %}
+                    	<li class="nav-item"><a href="{{ url('rdv_user_list_pro') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Listing RDV</p></a></li>
+                    {% endif %}
 
             </ul>
         </nav>
