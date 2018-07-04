@@ -12,7 +12,6 @@ use RdvBundle\Entity\TypeRdv;
 use RdvBundle\Entity\Rdv;
 use RdvBundle\Entity\Paragraphe;
 use RdvBundle\Form\ProProfileType;
-
 use RdvBundle\Form\RdvType;
 use RdvBundle\Form\SearchType;
 use RdvBundle\Form\LieuRdvType;
@@ -22,6 +21,8 @@ use RdvBundle\Form\TypeRdvDeleteType;
 use RdvBundle\Form\UserProfileType;
 use RdvBundle\Form\ParagrapheType;
 use RdvBundle\Form\ParagrapheDeleteType;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\ColumnChart;
 
 class DefaultController extends Controller {
 
@@ -30,7 +31,61 @@ class DefaultController extends Controller {
             $isAjax = $request->isXmlHttpRequest();
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $datatable = null;
-            if ($user->hasRole('ROLE_PRO')) {
+            if ($user->hasRole('ROLE_ADMIN')) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $repositoryUser = $entityManager->getRepository(User::class);
+                $nbPro = $repositoryUser->getNbUser('ROLE_PRO');
+                $nbClient = $repositoryUser->getNbUser('ROLE_CLIENT');
+                $arrayMetier = $repositoryUser->getNbMetierUser();
+                $repositoryRDV = $entityManager->getRepository(RDV::class);
+                $nbRDV = $repositoryRDV->getNbRDV('ROLE_PRO');
+
+                $data = array();
+                $pieChart = new PieChart();
+                $data[] = ['Métier', 'Nombre'];
+                foreach ($arrayMetier as $id => $value) {
+                    $data[] = [0 => ($value['metier'] != '' ? $value['metier'] : "Non défini"), 1 => (int) $value['nb']];
+                }
+                $pieChart->getData()->setArrayToDataTable($data);
+                $pieChart->getOptions()->setTitle('Métier des Professionnels');
+                $pieChart->getOptions()->setIs3D(TRUE);
+                $pieChart->getOptions()->getTitleTextStyle()->setBold(true);
+                $pieChart->getOptions()->getTitleTextStyle()->setColor('#009900');
+                $pieChart->getOptions()->getTitleTextStyle()->setItalic(true);
+                $pieChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+                $pieChart->getOptions()->getTitleTextStyle()->setFontSize(20);
+
+                $arrayDateRDV = $repositoryRDV->getNbRDVDate();
+                foreach ($arrayDateRDV as $value) {
+                    $arrayRDV[$value['month']] = $value;
+                }
+                $data = array();
+                $columnChart = new ColumnChart();
+                $data[] = ['Date', 'Nombre de RDV'];
+                $month = ['', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+                $data[] = [0 => $month[date('n', strtotime('-5 MONTH'))], 1 => (int) (isset($arrayRDV[date('n', strtotime('-5 MONTH'))]['nb']) ? $arrayRDV[date('n', strtotime('-5 MONTH'))]['nb'] : 0)];
+                $data[] = [0 => $month[date('n', strtotime('-4 MONTH'))], 1 => (int) (isset($arrayRDV[date('n', strtotime('-4 MONTH'))]['nb']) ? $arrayRDV[date('n', strtotime('-4 MONTH'))]['nb'] : 0)];
+                $data[] = [0 => $month[date('n', strtotime('-3 MONTH'))], 1 => (int) (isset($arrayRDV[date('n', strtotime('-3 MONTH'))]['nb']) ? $arrayRDV[date('n', strtotime('-3 MONTH'))]['nb'] : 0)];
+                $data[] = [0 => $month[date('n', strtotime('-2 MONTH'))], 1 => (int) (isset($arrayRDV[date('n', strtotime('-2 MONTH'))]['nb']) ? $arrayRDV[date('n', strtotime('-2 MONTH'))]['nb'] : 0)];
+                $data[] = [0 => $month[date('n', strtotime('-1 MONTH'))], 1 => (int) (isset($arrayRDV[date('n', strtotime('-1 MONTH'))]['nb']) ? $arrayRDV[date('n', strtotime('-1 MONTH'))]['nb'] : 0)];
+                $data[] = [0 => $month[date('n')], 1 => (int) (isset($arrayRDV[date('n')]['nb']) ? $arrayRDV[date('n')]['nb'] : 0)];
+                $data[] = [0 => $month[date('n', strtotime('+1 MONTH'))], 1 => (int) (isset($arrayRDV[date('n', strtotime('+1 MONTH'))]['nb']) ? $arrayRDV[date('n', strtotime('+1 MONTH'))]['nb'] : 0)];
+
+                $columnChart->getData()->setArrayToDataTable($data);
+                $columnChart->getOptions()->setTitle('RDV des 5 derniers mois');
+                $columnChart->getOptions()->getTitleTextStyle()->setBold(true);
+                $columnChart->getOptions()->getTitleTextStyle()->setColor('#009900');
+                $columnChart->getOptions()->getTitleTextStyle()->setItalic(true);
+                $columnChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+                $columnChart->getOptions()->getTitleTextStyle()->setFontSize(20);
+                return $this->render('RdvBundle:Default:index.html.twig', array(
+                            'nbPro' => $nbPro,
+                            'nbClient' => $nbClient,
+                            'nbRDV' => $nbRDV,
+                            'piechart' => $pieChart,
+                            'columnChart' => $columnChart
+                ));
+            } elseif ($user->hasRole('ROLE_PRO')) {
                 $datatable = $this->get('app.datatable.pro_rdv_list');
                 $datatable->buildDatatable();
                 if ($isAjax) {
@@ -350,14 +405,14 @@ class DefaultController extends Controller {
                 if ($form->isSubmitted() and $form->isValid()) {
                     $oLieuRdv->setEnable(FALSE);
                     $entityManager->persist($oLieuRdv);
-    
+
                     $oTypeRdv = $entityManager->getRepository(TypeRdv::class)->findBy(array('proId' => $idPro));
                     foreach ($oTypeRdv as $idTypeRdv) {
                         $oTypeRdv2 = $entityManager->getRepository(TypeRdv::class)->find($idTypeRdv);
                         $oLieuRdv->removeTypeRdv($oTypeRdv2);
                         $entityManager->persist($oLieuRdv);
                     }
-    
+
                     $entityManager->flush();
                     return $this->redirectToRoute('pagePerso', ['id' => $idPro]);
                 }
@@ -369,14 +424,13 @@ class DefaultController extends Controller {
         }
     }
 
-    
-    public function addRdvProAction(Request $request, $id){
+    public function addRdvProAction(Request $request, $id) {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $entityManager = $this->getDoctrine()->getManager();
             $repositoryRdv = $entityManager->getRepository(Rdv::class);
-            if($id != null){
+            if ($id != null) {
                 $oRdv = $repositoryRdv->findOneBy(array('id' => $id));
-            }else{
+            } else {
                 $oRdv = new Rdv();
             }
             $form = $this->createForm(RdvType::class, $oRdv, array('user' => $this->getUser()));
@@ -384,23 +438,21 @@ class DefaultController extends Controller {
             $oDateTimeCurrent = new \DateTime('now');
             $session = new Session();
             if ($form->isSubmitted() and $form->isValid()) {
-                if($oRdv->getCreneauxDebut() < $oRdv->getCreneauxFin() and $oRdv->getCreneauxDebut() > $oDateTimeCurrent 
-                and $oRdv->getCreneauxDebut()->format('Y-m-d') == $oRdv->getCreneauxFin()->format('Y-m-d')){
+                if ($oRdv->getCreneauxDebut() < $oRdv->getCreneauxFin() and $oRdv->getCreneauxDebut() > $oDateTimeCurrent
+                        and $oRdv->getCreneauxDebut()->format('Y-m-d') == $oRdv->getCreneauxFin()->format('Y-m-d')) {
                     $oRdv->setValidation(true);
                     $oRdv->setStatut(true);
                     $oRdv->setProId($this->getUser());
                     $entityManager->persist($oRdv);
                     $entityManager->flush();
                     $session->getFlashBag()->add(
-                        'success',
-                        'RDV ajouté avec succès'
-                        );
+                            'success', 'RDV ajouté avec succès'
+                    );
                     return $this->redirectToRoute('rdv_homepage');
-                }else{
+                } else {
                     $session->getFlashBag()->add(
-                        'error',
-                        'Les dates saisies sont invalides'
-                        );
+                            'error', 'Les dates saisies sont invalides'
+                    );
                     return $this->render('RdvBundle:Default:rdvaddupdate.html.twig', array('form' => $form->createView()));
                 }
             }
