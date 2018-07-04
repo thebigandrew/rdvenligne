@@ -46,7 +46,7 @@ class DefaultController extends Controller {
                     $data[] = [0 => ($value['metier'] != '' ? $value['metier'] : "Non défini"), 1 => (int) $value['nb']];
                 }
                 $pieChart->getData()->setArrayToDataTable($data);
-                $pieChart->getOptions()->setTitle('Métier de mes Professionnels');
+                $pieChart->getOptions()->setTitle('Métier des Professionnels');
                 $pieChart->getOptions()->setIs3D(TRUE);
                 $pieChart->getOptions()->getTitleTextStyle()->setBold(true);
                 $pieChart->getOptions()->getTitleTextStyle()->setColor('#009900');
