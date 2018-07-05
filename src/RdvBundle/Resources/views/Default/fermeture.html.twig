@@ -1,0 +1,20 @@
+{% extends "@Rdv/partials/datatables.twig" %}
+{% block javascripts %}
+    {{ parent() }}    
+    {{ sg_datatables_render_js(datatable) }}
+{% endblock %}
+{% block content %}
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Liste des fermetures</h3>
+        </div>
+        <div class="card-body">
+            <div class="rdv-datatable-div">
+                {{ sg_datatables_render_html(datatable) }}
+            </div>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-info pull-right" href="{{ path('addupdate_fermeture') }}">Ajouter une fermeture</a>
+        </div>
+    </div>
+{% endblock %}
