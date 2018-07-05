@@ -10,9 +10,11 @@ use RdvBundle\Entity\User;
 use RdvBundle\Entity\LieuRdv;
 use RdvBundle\Entity\TypeRdv;
 use RdvBundle\Entity\Rdv;
+use RdvBundle\Entity\Fermeture;
 use RdvBundle\Entity\Paragraphe;
 use RdvBundle\Form\ProProfileType;
 use RdvBundle\Form\RdvType;
+use RdvBundle\Form\FermetureType;
 use RdvBundle\Form\SearchType;
 use RdvBundle\Form\LieuRdvType;
 use RdvBundle\Form\LieuRdvDeleteType;
@@ -486,4 +488,66 @@ class DefaultController extends Controller {
             return $this->redirectToRoute('fos_user_security_login');
         }
     }
+	
+	public function closeManagerAction(Request $request){
+		if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+			$isAjax = $request->isXmlHttpRequest();
+			$datatable = $this->get('app.datatable.fermeture');
+			$datatable->buildDatatable();
+
+			if ($isAjax) {
+				$id = $this->get('security.token_storage')->getToken()->getUser()->getId();
+				$responseService = $this->get('sg_datatables.response');
+				$responseService->setDatatable($datatable);
+				$datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
+
+				$qb = $datatableQueryBuilder->getQb();
+				$qb->andWhere("fermeture.user = '" . $id . "'");
+
+				return $responseService->getResponse();
+			}
+
+			return $this->render('RdvBundle:Default:fermeture.html.twig', array(
+						'datatable' => $datatable,
+			));
+		}else{
+			return $this->redirectToRoute('fos_user_security_login');
+		}
+	}
+	
+	public function addUpdateFermetureAction(Request $request, $id){
+		if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) { 
+			$entityManager = $this->getDoctrine()->getManager();
+            $repositoryFermeture = $entityManager->getRepository(Fermeture::class);
+            if ($id != null) {
+                $oFermeture = $repositoryFermeture->findOneBy(array('id' => $id));
+            } else {
+                $oFermeture = new Fermeture();
+            }
+            $form = $this->createForm(FermetureType::class, $oFermeture);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() and $form->isValid()) {
+				$oFermeture->setUser($this->getUser());
+                $entityManager->persist($oFermeture);
+                $entityManager->flush();
+                return $this->redirectToRoute('close_manager');
+            }
+            return $this->render('RdvBundle:Default:fermetureaddupdate.html.twig', array('form' => $form->createView()));
+		}else{
+			return $this->redirectToRoute('fos_user_security_login');
+		}
+	}
+	
+	public function deleteFermetureAction(Request $request, $id){
+		if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) { 
+			$entityManager = $this->getDoctrine()->getManager();
+			$repositoryFermeture = $entityManager->getRepository(Fermeture::class);
+			$oFermeture = $repositoryFermeture->findOneBy(array('id' => $id));
+			$entityManager->remove($oFermeture);
+			$entityManager->flush();
+			return $this->redirectToRoute('close_manager');
+		}else{
+			return $this->redirectToRoute('fos_user_security_login');
+		}
+	}
 }

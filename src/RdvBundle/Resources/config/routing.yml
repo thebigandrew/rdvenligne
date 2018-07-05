@@ -93,3 +93,15 @@ add_rdv_pro:
 planning_hebdo:
     path: /planning/hebdo
     defaults: { _controller: RdvBundle:Default:planningHebdo }
+    
+close_manager:
+    path: /close
+    defaults: { _controller: RdvBundle:Default:closeManager }
+    
+addupdate_fermeture:
+    path: /close/addupdate/{id}
+    defaults: { _controller: RdvBundle:Default:addUpdateFermeture, id:null }
+    
+delete_fermeture:
+    path: /close/delete/{id}
+    defaults: { _controller: RdvBundle:Default:deleteFermeture, id:null }

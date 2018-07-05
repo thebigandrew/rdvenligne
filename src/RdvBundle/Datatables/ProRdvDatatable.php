@@ -61,7 +61,7 @@ class ProRdvDatatable extends AbstractDatatable {
             'classes' => Style::BOOTSTRAP_4_STYLE,
             'individual_filtering' => true,
             'individual_filtering_position' => 'head',
-            'order_cells_top' => true,
+            'order_cells_top' => false,
         ));
 
         $this->features->set(array(

@@ -18,3 +18,7 @@ services:
     app.datatable.typerdv:
         class: RdvBundle\Datatables\TypeRdvDatatable
         parent: sg_datatables.datatable.abstract
+        
+    app.datatable.fermeture:
+        class: RdvBundle\Datatables\FermetureDatatable
+        parent: sg_datatables.datatable.abstract
