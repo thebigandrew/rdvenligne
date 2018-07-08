@@ -45,4 +45,25 @@ class RdvRepository extends \Doctrine\ORM\EntityRepository {
                    ->getResult();
         return $qb;
     }
+    
+    public function countOverlappingRdv($proId, $start, $end)
+    {
+        // Si rdv commence sur le créneaux, fini sur le crénaux ou l'englobe.
+        $whereClause = <<<EOT
+r.proId = :proId AND (
+    (r.creneauxDebut >= :start AND r.creneauxDebut <= :end) OR
+    (r.creneauxFin >= :start AND r.creneauxFin <= :end) OR
+    (r.creneauxDebut < :start AND r.creneauxFin > :end)
+)
+EOT;
+        $qb = $this->createQueryBuilder('r')
+                   ->select('count(r)')
+                   ->where($whereClause)
+                   ->setParameter('start', $start)
+                   ->setParameter('end', $end)
+                   ->setParameter('proId', $proId)
+                   ->getQuery()
+                   ->getSingleScalarResult();
+        return $qb;
+    }
 }

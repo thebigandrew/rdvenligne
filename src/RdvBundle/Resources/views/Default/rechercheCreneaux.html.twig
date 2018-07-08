@@ -1,0 +1,74 @@
+{% extends "@Rdv/layout.twig" %}
+
+{% block stylesheets %}
+    <style>
+        .fc-time:before {
+            content:"" !important;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>Recherche creneaux</h1>
+    {{ form(form) }}
+    <div class="row">
+    	<div id="calendrierCreneaux"></div>
+    </div>
+    <br/>
+    <div class="row">
+    	<div class="col-1">
+            <button class="btn btn-primary col-12" id="lastWeek" type="button">Prec.</button>
+        </div>
+        <div class="col-1 offset-10">
+            <button class="btn btn-primary col-12" id="nextWeek" type="button">Suiv.</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function changeTypeRdv() {
+            $('#calendrierCreneaux').fullCalendar('destroy');
+            $('#calendrierCreneaux').fullCalendar(generateCalendarConfig());
+        };
+        
+        function generateCalendarConfig()
+        {
+            return {
+                defaultView: 'agendaWeek',
+                firstDay: 1, // lundi
+                header: false,
+                lang: 'fr',
+                eventBackgroundColor: '#0000ff',
+                events: {
+                    url: '{{ path('recherche_creneaux_json') }}',
+                    type: 'POST',
+                    data: {
+                        typeRdvId: document.getElementById("form_typeDeRdv").value
+                    },
+                    headers: {
+                        'X-Requested-With':'XMLHttpRequest'
+                    },
+                    error: function() {
+                      alert('there was an error while fetching events!');
+                    }
+                },
+                themeSystem: 'bootstrap4'
+            };
+        }
+        
+        $(function() {
+            $('#calendrierCreneaux').fullCalendar(generateCalendarConfig());
+        });
+
+        $('#lastWeek').click(function() {
+    	  	$('#calendrierCreneaux').fullCalendar('prev');
+    	});
+
+        $('#nextWeek').click(function() {
+    	  	$('#calendrierCreneaux').fullCalendar('next');
+    	});
+    </script>
+{% endblock %}
