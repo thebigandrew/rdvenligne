@@ -6,12 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 use RdvBundle\Entity\User;
 use RdvBundle\Entity\LieuRdv;
 use RdvBundle\Entity\TypeRdv;
 use RdvBundle\Entity\Rdv;
 use RdvBundle\Entity\Fermeture;
 use RdvBundle\Entity\Paragraphe;
+use RdvBundle\Entity\PlanningDefault;
 use RdvBundle\Form\ProProfileType;
 use RdvBundle\Form\RdvType;
 use RdvBundle\Form\FermetureType;
@@ -25,6 +28,9 @@ use RdvBundle\Form\ParagrapheType;
 use RdvBundle\Form\ParagrapheDeleteType;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\ColumnChart;
+use \DateTime;
+use \DateInterval;
+use \DatePeriod;
 
 class DefaultController extends Controller {
 
@@ -550,4 +556,132 @@ class DefaultController extends Controller {
 			return $this->redirectToRoute('fos_user_security_login');
 		}
 	}
+        
+    public function rechercheCreneauxAction(Request $request){
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            
+            $proId = $this->getUser()->getId();
+            
+             $form = $this->createFormBuilder()
+            ->add('typeDeRdv', EntityType::class, [
+                'class' => TypeRdv::class,
+                'choice_label' => 'type',
+                'query_builder' => function(EntityRepository $er ) use ( $proId ) {
+                    return $er->createQueryBuilder('tr')
+                              ->where('tr.proId = :proId')
+                              ->setParameter('proId', $proId);
+                },
+                'attr' => array(
+                    'onChange' => 'changeTypeRdv()'
+                )
+            ])
+            ->getForm();
+
+            return $this->render('RdvBundle:Default:rechercheCreneaux.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        } else {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+    }
+        
+    public function rechercheCreneauxJsonAction(Request $request){
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) { 
+            
+            $joursSemaine = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+            
+            $em = $this->getDoctrine()->getManager();
+            $repositoryTypeRdv = $em->getRepository(TypeRdv::class);
+            $repositoryPlanningDefault = $em->getRepository(PlanningDefault::class);
+            $repositoryRdv = $em->getRepository(Rdv::class);
+            
+            // Récupération du rdv le plus cours.
+            $shortestTypeRdv = $repositoryTypeRdv->getShortestTypeRdvForPro( $this->getUser()->getId())[0];
+            
+            // Récupération du planning par défaut
+            $planning = $repositoryPlanningDefault->findOneByProId($this->getUser()->getId());
+            
+            $creneauxSemaineCourante = [];
+            
+            $i = 1;
+            
+            $start = new DateTime($_POST['start']);
+            
+            // On récupère l'id du type de rdv pour le lequel on veut les créneaux.
+            $idTypeRdv = $_POST['typeRdvId'];
+            
+            $typeRdv = $repositoryTypeRdv->findOneById($idTypeRdv);
+            
+            // Sert pour définir la fin des créneaux.
+            $typeRdvIntervalFormat = $typeRdv->getDuree()->format('\P\TH\Hi\M');
+            
+            // On définit le pas de début de créneaux.
+            $dateIntervalFormat = $shortestTypeRdv->getDuree()->format('\P\TH\Hi\M');
+            
+            foreach( $planning->getPlanningDays() as $day)
+            {
+                if($day->getActiveDay() == true)
+                {
+                    // ajuster l'heure de début
+                    $start->setTime(
+                        $day->getHeureDebut()->format('H'),
+                        $day->getHeureDebut()->format('m')
+                    );
+                    
+                    // enlever une minute pour corriger le bug qui fait que le premier crénaux débute 1 minute après le début de la journée
+                    $start->sub(new DateInterval('PT1M'));
+                    
+                    
+                    // obtenir le jour de la semaine correspondant example: 'this wednesday'.
+                    $end = clone $start;
+                    // ajuster l'heure de fin
+                    $end->setTime(
+                        $day->getHeureFin()->format('H'),
+                        $day->getHeureFin()->format('m')
+                    );
+                    
+                    // générer l'interval du jour en question
+                    $period = new DatePeriod(
+                        $start,
+                        new DateInterval( $dateIntervalFormat ),
+                        $end
+                    );
+                    
+                    // itérer sur tous les crénaux de la journée
+                    foreach($period as $value)
+                    {
+                        // le créneaux de fin est le créneaux de début + la durée du rdv que l'on recherche.
+                        $endCreneaux = clone $value;
+                        $endCreneaux->add(new DateInterval( $typeRdvIntervalFormat ));
+                        
+                        // Il ne faut pas qu'un rdv se termine après la fin de la journée
+                        if( $endCreneaux < $end )
+                        {
+                            $overlappingRdv = $repositoryRdv->countOverlappingRdv($this->getUser()->getId(), $value, $endCreneaux);
+                            dump( $start->format('Y-m-d') . ' ' . $overlappingRdv );
+                            if( $overlappingRdv < $day->getNbcreneaux())
+                            {
+                                array_push($creneauxSemaineCourante, [
+                                    'title' => 'crénaux ' . ($i++),
+                                    'start' => $value->format('Y-m-d H:i:s'),
+                                    'end' => $endCreneaux->format('Y-m-d H:i:s')
+                                ]);
+                            }
+                        }
+                        
+                        
+                        //dump( $value->format('Y-m-d H:i:s'));
+                    }
+                }
+                
+                // jour suivant
+                $start->add(new DateInterval('P1D'));
+            }
+
+            // tmp
+            return new JsonResponse($creneauxSemaineCourante);
+        } else {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+    }
 }

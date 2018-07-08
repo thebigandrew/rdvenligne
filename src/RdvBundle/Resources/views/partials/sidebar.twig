@@ -44,6 +44,7 @@
 						<li class="nav-item"><a href="{{ url('close_manager') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Fermetures</p></a></li>
                         <li class="nav-item"><a href="{{ url('user_pro_list') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Liste des clients</p></a></li>
                         <li class="nav-item"><a href="{{ url('create_planning_default') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Planning par d&eacute;faut</p></a></li>
+                        <li class="nav-item"><a href="{{ url('recherche_creneaux') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Recherche créneaux</p></a></li>
                     {% elseif  is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_CLIENT') and not is_granted('ROLE_PRO') %}
                     	<li class="nav-item"><a href="{{ url('rdv_user_list_pro') }}" class="nav-link"><i class="nav-icon fa fa-th"></i><p>Listing RDV</p></a></li>
                     {% endif %}

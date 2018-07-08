@@ -45,7 +45,7 @@ class UserRepository extends Repository {
                         ->andWhere("l.roles like :roles")
                         ->setParameter('roles', "%PRO%")
                         ->getQuery()
-                        ->getArrayResult();
+                        ->getOneOrNullResult();
     }
 
 }

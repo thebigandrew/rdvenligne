@@ -105,3 +105,11 @@ addupdate_fermeture:
 delete_fermeture:
     path: /close/delete/{id}
     defaults: { _controller: RdvBundle:Default:deleteFermeture, id:null }
+
+recherche_creneaux:
+    path: /recherche_creneaux
+    defaults: { _controller: RdvBundle:Default:rechercheCreneaux, id:null }
+    
+recherche_creneaux_json:
+    path: /recherche_creneaux_json
+    defaults: { _controller: RdvBundle:Default:rechercheCreneauxJson, id:null }
