@@ -602,6 +602,7 @@ class DefaultController extends Controller {
             $repositoryTypeRdv = $em->getRepository(TypeRdv::class);
             $repositoryPlanningDefault = $em->getRepository(PlanningDefault::class);
             $repositoryRdv = $em->getRepository(Rdv::class);
+            $repositoryFermeture = $em->getRepository(Fermeture::class);
             
             // Récupération du rdv le plus cours.
             $shortestTypeRdv = $repositoryTypeRdv->getShortestTypeRdvForPro( $this->getUser()->getId())[0];
@@ -665,10 +666,12 @@ class DefaultController extends Controller {
                         // Il ne faut pas qu'un rdv se termine après la fin de la journée
                         if( $endCreneaux < $end )
                         {
+                            // Récuperer le nombre de rdv qui s'overlap sur la période du créneaux.
                             $overlappingRdv = $repositoryRdv->countOverlappingRdv($this->getUser()->getId(), $value, $endCreneaux);
-                            dump( $start->format('Y-m-d') . ' ' . $overlappingRdv );
-                            if( $overlappingRdv < $day->getNbcreneaux())
+                            $nbFermeture = $repositoryFermeture->creneauxEstSurFermeture($this->getUser()->getId(), $value, $endCreneaux);
+                            if( ($overlappingRdv < $day->getNbcreneaux()) && ($nbFermeture == 0))
                             {
+                                // Le créneaux rempli toutes les conditions, on peut l'ajouter.
                                 array_push($creneauxSemaineCourante, [
                                     'title' => 'crénaux ' . ($i++),
                                     'start' => $value->format('Y-m-d H:i:s'),
