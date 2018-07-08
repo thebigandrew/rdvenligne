@@ -527,10 +527,18 @@ class DefaultController extends Controller {
             $form = $this->createForm(FermetureType::class, $oFermeture);
             $form->handleRequest($request);
             if ($form->isSubmitted() and $form->isValid()) {
-				$oFermeture->setUser($this->getUser());
-                $entityManager->persist($oFermeture);
-                $entityManager->flush();
-                return $this->redirectToRoute('close_manager');
+                $oCurrentDate = new \DateTime('now');
+                if($oFermeture->getDatedebut() > $oCurrentDate and $oFermeture->getDatefin() > $oFermeture->getDatedebut()){
+                    $oFermeture->setUser($this->getUser());
+                    $entityManager->persist($oFermeture);
+                    $entityManager->flush();
+                    return $this->redirectToRoute('close_manager');
+                }else{
+                    $session = new Session();
+                    $session->getFlashBag()->add('error', 'Dates invalides');
+                    return $this->render('RdvBundle:Default:fermetureaddupdate.html.twig', array('form' => $form->createView()));
+                }
+                
             }
             return $this->render('RdvBundle:Default:fermetureaddupdate.html.twig', array('form' => $form->createView()));
 		}else{
