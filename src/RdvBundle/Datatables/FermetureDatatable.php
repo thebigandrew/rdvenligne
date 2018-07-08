@@ -50,14 +50,11 @@ class FermetureDatatable extends AbstractDatatable {
         ));
 
         $this->columnBuilder
-                ->add('date', DateTimeColumn::class, array(
+                ->add('datedebut', DateTimeColumn::class, array(
                     'title' => 'Date'
                 ))
-                ->add('heureDebut', DateTimeColumn::class, array(
-                    'title' => 'Heure début'
-                ))
-                ->add('heureFin', DateTimeColumn::class, array(
-                    'title' => 'Heure fin'
+                ->add('datefin', DateTimeColumn::class, array(
+                    'title' => 'Date'
                 ))
 				->add(null, ActionColumn::class, array(
                     'title' => 'Modifier',

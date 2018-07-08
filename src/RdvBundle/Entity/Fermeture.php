@@ -24,23 +24,16 @@ class Fermeture
 	/**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="datedebut", type="datetime")
      */
-    private $date;
-	
-	/**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="heureDebut", type="time")
-     */
-    private $heureDebut;
+    private $datedebut;
     
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="heureFin", type="time")
+     * @ORM\Column(name="datefin", type="datetime")
      */
-    private $heureFin;
+    private $datefin;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\User")
@@ -59,76 +52,54 @@ class Fermeture
         return $this->id;
     }
 
+    
+
     /**
-     * Set date
+     * Set datedebut
      *
-     * @param \DateTime $date
+     * @param \DateTime $datedebut
      *
      * @return Fermeture
      */
-    public function setDate($date)
+    public function setDatedebut($datedebut)
     {
-        $this->date = $date;
+        $this->datedebut = $datedebut;
 
         return $this;
     }
 
     /**
-     * Get date
+     * Get datedebut
      *
      * @return \DateTime
      */
-    public function getDate()
+    public function getDatedebut()
     {
-        return $this->date;
+        return $this->datedebut;
     }
 
     /**
-     * Set heureDebut
+     * Set datefin
      *
-     * @param \DateTime $heureDebut
+     * @param \DateTime $datefin
      *
      * @return Fermeture
      */
-    public function setHeureDebut($heureDebut)
+    public function setDatefin($datefin)
     {
-        $this->heureDebut = $heureDebut;
+        $this->datefin = $datefin;
 
         return $this;
     }
 
     /**
-     * Get heureDebut
+     * Get datefin
      *
      * @return \DateTime
      */
-    public function getHeureDebut()
+    public function getDatefin()
     {
-        return $this->heureDebut;
-    }
-
-    /**
-     * Set heureFin
-     *
-     * @param \DateTime $heureFin
-     *
-     * @return Fermeture
-     */
-    public function setHeureFin($heureFin)
-    {
-        $this->heureFin = $heureFin;
-
-        return $this;
-    }
-
-    /**
-     * Get heureFin
-     *
-     * @return \DateTime
-     */
-    public function getHeureFin()
-    {
-        return $this->heureFin;
+        return $this->datefin;
     }
 
     /**

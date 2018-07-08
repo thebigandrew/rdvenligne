@@ -1,26 +1,28 @@
 {% extends "@Rdv/layout.twig" %}
 {% block content %}
 <div class="container">
+	{% for message in app.flashes('error') %}
+    	<div class="row">
+            <div class="alert-error">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
     {{ form_start(form) }}
     <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">Ajout / modification de fermeture</h3>
         </div>
         <div class="card-body">
-            {{ form_label(form.date) }}
+            {{ form_label(form.datedebut) }}
             <div>
-                {{ form_errors(form.date) }}
-                {{ form_widget(form.date) }}
+                {{ form_errors(form.datedebut) }}
+                {{ form_widget(form.datedebut) }}
             </div>
-            {{ form_label(form.heureDebut) }}
+            {{ form_label(form.datefin) }}
             <div>
-                {{ form_errors(form.heureDebut) }}
-                {{ form_widget(form.heureDebut) }}
-            </div>
-            {{ form_label(form.heureFin) }}
-            <div>
-                {{ form_errors(form.heureFin) }}
-                {{ form_widget(form.heureFin) }}
+                {{ form_errors(form.datefin) }}
+                {{ form_widget(form.datefin) }}
             </div>
         </div>
         <div class="card-footer">

@@ -24,23 +24,16 @@ class Fermeture
 	/**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="datedebut", type="date")
      */
-    private $date;
-	
-	/**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="heureDebut", type="time")
-     */
-    private $heureDebut;
+    private $datedebut;
     
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="heureFin", type="time")
+     * @ORM\Column(name="datefin", type="date")
      */
-    private $heureFin;
+    private $datefin;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\User")
@@ -59,75 +52,5 @@ class Fermeture
         return $this->id;
     }
 
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Fermeture
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * Set heureDebut
-     *
-     * @param \DateTime $heureDebut
-     *
-     * @return Fermeture
-     */
-    public function setHeureDebut($heureDebut)
-    {
-        $this->heureDebut = $heureDebut;
-
-        return $this;
-    }
-
-    /**
-     * Get heureDebut
-     *
-     * @return \DateTime
-     */
-    public function getHeureDebut()
-    {
-        return $this->heureDebut;
-    }
-
-    /**
-     * Set heureFin
-     *
-     * @param \DateTime $heureFin
-     *
-     * @return Fermeture
-     */
-    public function setHeureFin($heureFin)
-    {
-        $this->heureFin = $heureFin;
-
-        return $this;
-    }
-
-    /**
-     * Get heureFin
-     *
-     * @return \DateTime
-     */
-    public function getHeureFin()
-    {
-        return $this->heureFin;
-    }
+    
 }

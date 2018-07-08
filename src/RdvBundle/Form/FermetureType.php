@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class FermetureType extends AbstractType
 {
@@ -17,9 +18,8 @@ class FermetureType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('date', DateType::class, ['label' => 'Date', 'years' => range(date('Y'), date('Y') + 1),])
-				->add('heureDebut', TimeType::class, ['label' => 'Début'])
-                ->add('heureFin', TimeType::class, ['label' => 'Fin'])
+        $builder->add('datedebut', DateTimeType::class, ['label' => 'Date début', 'years' => range(date('Y'), date('Y') + 1),])
+                ->add('datefin', DateTimeType::class, ['label' => 'Date fin', 'years' => range(date('Y'), date('Y') + 1),])
                 ->add('Enregistrer', SubmitType::class, [
                     'attr' => array('class' => 'btn btn-info pull-right col-sm-12')
                 ]);
