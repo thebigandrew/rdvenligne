@@ -10,4 +10,23 @@ namespace RdvBundle\Repository;
  */
 class FermetureRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function creneauxEstSurFermeture($proId, $start, $end)
+    {
+                $whereClause = <<<EOT
+f.user = :proId AND (
+    (:start >= f.datedebut AND :start <= f.datefin) OR
+    (:end >= f.datedebut AND :end <= f.datefin) OR
+    (:start < f.datedebut  AND :end > f.datefin)
+)
+EOT;
+        $qb = $this->createQueryBuilder('f')
+                   ->select('count(f)')
+                   ->where($whereClause)
+                   ->setParameter('start', $start)
+                   ->setParameter('end', $end)
+                   ->setParameter('proId', $proId)
+                   ->getQuery()
+                   ->getSingleScalarResult();
+        return $qb;
+    }
 }
