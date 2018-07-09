@@ -43,7 +43,7 @@
                 lang: 'fr',
                 eventBackgroundColor: '#0000ff',
                 events: {
-                    url: '{{ path('recherche_creneaux_json') }}',
+                    url: '{{ path('recherche_creneaux_json', {'id': proId}) }}',
                     type: 'POST',
                     data: {
                         typeRdvId: document.getElementById("form_typeDeRdv").value

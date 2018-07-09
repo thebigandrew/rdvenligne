@@ -565,10 +565,10 @@ class DefaultController extends Controller {
 		}
 	}
         
-    public function rechercheCreneauxAction(Request $request){
+    public function rechercheCreneauxAction(Request $request, $id){
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             
-            $proId = $this->getUser()->getId();
+            $proId = $id;
             
              $form = $this->createFormBuilder()
             ->add('typeDeRdv', EntityType::class, [
@@ -587,14 +587,17 @@ class DefaultController extends Controller {
 
             return $this->render('RdvBundle:Default:rechercheCreneaux.html.twig', array(
                 'form' => $form->createView(),
+                'proId' => $proId
             ));
         } else {
             return $this->redirectToRoute('fos_user_security_login');
         }
     }
         
-    public function rechercheCreneauxJsonAction(Request $request){
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) { 
+    public function rechercheCreneauxJsonAction(Request $request, $id){
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            
+            $proId = $id;
             
             $joursSemaine = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
             
@@ -604,10 +607,10 @@ class DefaultController extends Controller {
             $repositoryRdv = $em->getRepository(Rdv::class);
             
             // Récupération du rdv le plus cours.
-            $shortestTypeRdv = $repositoryTypeRdv->getShortestTypeRdvForPro( $this->getUser()->getId())[0];
+            $shortestTypeRdv = $repositoryTypeRdv->getShortestTypeRdvForPro( $proId)[0];
             
             // Récupération du planning par défaut
-            $planning = $repositoryPlanningDefault->findOneByProId($this->getUser()->getId());
+            $planning = $repositoryPlanningDefault->findOneByProId($proId);
             
             $creneauxSemaineCourante = [];
             
@@ -665,7 +668,7 @@ class DefaultController extends Controller {
                         // Il ne faut pas qu'un rdv se termine après la fin de la journée
                         if( $endCreneaux < $end )
                         {
-                            $overlappingRdv = $repositoryRdv->countOverlappingRdv($this->getUser()->getId(), $value, $endCreneaux);
+                            $overlappingRdv = $repositoryRdv->countOverlappingRdv($proId, $value, $endCreneaux);
                             dump( $start->format('Y-m-d') . ' ' . $overlappingRdv );
                             if( $overlappingRdv < $day->getNbcreneaux())
                             {
@@ -676,9 +679,6 @@ class DefaultController extends Controller {
                                 ]);
                             }
                         }
-                        
-                        
-                        //dump( $value->format('Y-m-d H:i:s'));
                     }
                 }
                 
