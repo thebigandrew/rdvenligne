@@ -107,9 +107,13 @@ delete_fermeture:
     defaults: { _controller: RdvBundle:Default:deleteFermeture, id:null }
 
 recherche_creneaux:
-    path: /recherche_creneaux
-    defaults: { _controller: RdvBundle:Default:rechercheCreneaux, id:null }
+    path: /recherche_creneaux/{id}
+    defaults: { _controller: RdvBundle:Default:rechercheCreneaux }
+    requirements:
+        id: '\d+'
     
 recherche_creneaux_json:
-    path: /recherche_creneaux_json
-    defaults: { _controller: RdvBundle:Default:rechercheCreneauxJson, id:null }
+    path: /recherche_creneaux_json/{id}
+    defaults: { _controller: RdvBundle:Default:rechercheCreneauxJson }
+    requirements:
+        id: '\d+'
