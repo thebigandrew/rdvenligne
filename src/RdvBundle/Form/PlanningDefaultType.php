@@ -21,7 +21,8 @@ class PlanningDefaultType extends AbstractType
                     'label' => 'Semaine type',
                     'allow_add' => true,
                     'entry_options' => [
-                        'label_format' => 'week_days.%name%'
+                        'label_format' => 'week_days.%name%',
+                        'idPro' => $options['idPro']
                     ]
                 ))
                 ->add('save', SubmitType::class, [
@@ -34,7 +35,8 @@ class PlanningDefaultType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'RdvBundle\Entity\PlanningDefault'
+            'data_class' => 'RdvBundle\Entity\PlanningDefault',
+            'idPro' => null
         ));
     }
 

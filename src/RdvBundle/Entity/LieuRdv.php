@@ -172,9 +172,4 @@ class LieuRdv {
     public function getTypeRdv() {
         return $this->typeRdv;
     }
-
-    public function removeTypeRdv(TypeRdv $typeRdv) {
-        $this->typeRdv->removeElement($typeRdv);
-    }
-
 }

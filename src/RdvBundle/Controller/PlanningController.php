@@ -16,7 +16,9 @@ class PlanningController extends Controller
         $rPlanningDefault = $entityManager->getRepository(PlanningDefault::class);
         $rDayPlanningDefault = $entityManager->getRepository(DayPlanningDefault::class);
         $oPlanningDefault = $rPlanningDefault->findOneBy(array('proId' => $oUser->getId()));
-        $form = $this->createForm(PlanningDefaultType::class, $oPlanningDefault);
+        $form = $this->createForm(PlanningDefaultType::class, $oPlanningDefault, [
+            'idPro' => $this->getUser()->getId()
+        ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() and $form->isValid()) {
             $pDays = $form->get('planningDays');

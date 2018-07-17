@@ -62,6 +62,12 @@ class DayPlanningDefault
     private $nbcreneaux;
     
     /**
+     * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\LieuRdv")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $lieu;
+    
+    /**
      * Get id
      *
      * @return int
@@ -203,5 +209,29 @@ class DayPlanningDefault
     public function getNbcreneaux()
     {
         return $this->nbcreneaux;
+    }
+    
+        /**
+     * Set lieu
+     *
+     * @param \RdvBundle\Entity\LieuRdv $lieu
+     *
+     * @return Rdv
+     */
+    public function setLieu($lieu)
+    {
+        $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    /**
+     * Get lieu
+     *
+     * @return \RdvBundle\Entity\LieuRdv
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
     }
 }
