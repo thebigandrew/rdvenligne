@@ -12,6 +12,7 @@
 {% block content %}
     <h1>Recherche creneaux</h1>
     {{ form(form) }}
+    <div id="dialog"></div>
     <div class="row">
     	<div id="calendrierCreneaux"></div>
     </div>
@@ -54,6 +55,14 @@
                     error: function() {
                       alert('there was an error while fetching events!');
                     }
+                },
+                eventClick: function(calEvent, jsEvent, view){
+					var url = '{{ path("order_rdv_confirm", {'pro': 'strpro', 'start': 'strstart', 'end': 'strend', 'type': 'strtype'}) }}';
+					url = url.replace("strpro", calEvent.pro);
+					url = url.replace("strstart", calEvent.start);
+					url = url.replace("strend", calEvent.end);
+					url = url.replace("strtype", calEvent.typerdv);
+					window.location.replace(url);
                 },
                 themeSystem: 'bootstrap4'
             };

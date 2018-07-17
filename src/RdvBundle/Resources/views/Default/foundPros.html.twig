@@ -1,0 +1,28 @@
+{% extends "@Rdv/partials/datatables.twig" %}
+{% block content %}
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">R&eacute;sultats de la recherche</h3>
+        </div>
+        <div class="card-body">
+			S&eacute;lectionnez un professionnel
+		</div>
+    </div>
+    {% if tPros is defined %}
+    	{% for pro in tPros %}
+        	<div class="card card-warning">
+                <div class="card-header">
+                    <h3 class="card-title">{{ pro.firstname ~" "~ pro.lastname}}</h3>
+                </div>
+        		<div class="card-body">
+        			{% if pro.metier is not null %}
+            		    {{ pro.metier }}
+            		{% endif %}
+            		<div class="col-2">
+            			<a class="dropdown-item" href="{{ path('pagePerso', {'id':pro.id}) }}"><button class="btn btn-primary col-12" type="button">Visiter la page</button></a>
+        			</div>
+        		</div>
+        	</div>
+    	{% endfor %}
+    {% endif %}
+{% endblock %}

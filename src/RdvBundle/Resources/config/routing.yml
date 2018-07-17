@@ -117,3 +117,7 @@ recherche_creneaux_json:
     defaults: { _controller: RdvBundle:Default:rechercheCreneauxJson }
     requirements:
         id: '\d+'
+
+order_rdv_confirm:
+    path: /rdv/confirm
+    defaults: { _controller: RdvBundle:Default:confirmRdv }
