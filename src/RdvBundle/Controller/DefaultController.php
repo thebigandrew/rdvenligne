@@ -641,8 +641,31 @@ class DefaultController extends Controller {
             
             foreach( $planning->getPlanningDays() as $day)
             {
+                
                 if($day->getActiveDay() == true)
                 {
+                    // Si lieu existant alors vérifier si la prestation est dispo
+                    if($day->getLieu() !== null)
+                    {
+                        if($day->getLieu()->getTypeRdv()->contains($typeRdv) === true)
+                        {
+                            // La prestation est disponible sur le lieu du jour en cours de traitement, on continue.
+                        }
+                        else
+                        {
+                            // La prestation n'est pas disponible sur le lieu de rdv du jour en question, il faut donc passer.
+                            // Il faut passer au jour suivant avant de reboucler
+                            $start->add(new DateInterval('P1D'));
+                            // Avec cette instruction on remonte en haut de la boucle et on passe au jour suivant.
+                            continue;
+                        }
+                    }
+                    // pas de lieu de rdv donc open bar sur la journée
+                    else
+                    {
+                        // Ne rien faire on continue simplement le fil d'execution
+                    }
+                
                     // ajuster l'heure de début
                     $start->setTime(
                         $day->getHeureDebut()->format('H'),
@@ -688,8 +711,10 @@ class DefaultController extends Controller {
                                     'title' => 'crénaux ' . ($i++),
                                     'start' => $value->format('Y-m-d H:i:s'),
                                     'end' => $endCreneaux->format('Y-m-d H:i:s'),
-									'pro' => $proId,
-									'typerdv' => $idTypeRdv,
+                                    'pro' => $proId,
+                                    'typerdv' => $idTypeRdv,
+                                    // attention le lieu peut être nul
+                                    'lieu' => $day->getLieu()
                                 ]);
                             }
                         }
