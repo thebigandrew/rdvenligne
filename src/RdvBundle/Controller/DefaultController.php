@@ -39,8 +39,8 @@ class DefaultController extends Controller {
             $isAjax = $request->isXmlHttpRequest();
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $datatable = null;
+            $entityManager = $this->getDoctrine()->getManager();
             if ($user->hasRole('ROLE_ADMIN')) {
-                $entityManager = $this->getDoctrine()->getManager();
                 $repositoryUser = $entityManager->getRepository(User::class);
                 $nbPro = $repositoryUser->getNbUser('ROLE_PRO');
                 $nbClient = $repositoryUser->getNbUser('ROLE_CLIENT');
@@ -127,8 +127,17 @@ class DefaultController extends Controller {
                             ->setParameter('now', new \DateTime('now'));
                     return $responseService->getResponse();
                 }
+                
                 $form = $this->createForm(SearchType::class, null);
                 $form->handleRequest($request);
+                
+                if($form->isSubmitted() and $form->isValid()){
+                    $repositoryUser = $entityManager->getRepository(User::class);
+                    $tPros = $repositoryUser->getProsByNom($form['text']->getData());
+                    return $this->render('RdvBundle:Default:foundPros.html.twig', array(
+                        'tPros' => $tPros
+                    ));
+                }
                 return $this->render('RdvBundle:Default:index.html.twig', array(
                             'datatable' => $datatable,
                             'form' => $form->createView()
@@ -678,7 +687,9 @@ class DefaultController extends Controller {
                                 array_push($creneauxSemaineCourante, [
                                     'title' => 'crénaux ' . ($i++),
                                     'start' => $value->format('Y-m-d H:i:s'),
-                                    'end' => $endCreneaux->format('Y-m-d H:i:s')
+                                    'end' => $endCreneaux->format('Y-m-d H:i:s'),
+									'pro' => $proId,
+									'typerdv' => $idTypeRdv,
                                 ]);
                             }
                         }
@@ -695,4 +706,51 @@ class DefaultController extends Controller {
             return $this->redirectToRoute('fos_user_security_login');
         }
     }
+	
+	public function confirmRdvAction(Request $request){
+		if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+			$strUri = explode('/', $request->getRequesturi());
+			$strParams = $strUri[5];
+			$strParams = str_replace('confirm?', '', $strParams);
+			$strParams = str_replace('&amp;', ' ', $strParams);
+			$tParams = explode(' ', $strParams);
+			
+			$proParamStr = $tParams[0];
+			$startParamStr = $tParams[1];
+			$endParamStr = $tParams[2];
+			$typeParamStr = $tParams[3];
+			
+			$proId = str_replace('pro=', '', $proParamStr);
+			$typeId = str_replace('type=', '', $typeParamStr);
+			
+			$startDateFormat = str_replace('%20', ' ', $startParamStr);
+			$startDateFormat = str_replace('start=', '', $startDateFormat);
+			$oStartDate = new \DateTime($startDateFormat);
+			
+			$endDateFormat = str_replace('%20', ' ', $endParamStr);
+			$endDateFormat = str_replace('end=', '', $endDateFormat);
+			$oEndDate = new \DateTime($endDateFormat);
+			
+			$em = $this->getDoctrine()->getManager();
+            $repositoryRdv = $em->getRepository(Rdv::class);
+            $repositoryTypeRdv = $em->getRepository(TypeRdv::class);
+            $repositoryUser = $em->getRepository(User::class);
+			
+			$oPro = $repositoryUser->findOneBy(array('id' => $proId));
+			$oTypeRdv = $repositoryTypeRdv->findOneBy(array('id' => $typeId));
+			$oClient = $this->getUser();
+			
+			$oRdv = new Rdv();
+			$oRdv->setTypeId($oTypeRdv);
+			$oRdv->setProId($oPro);
+			$oRdv->setUserId($oClient);
+			$oRdv->setStatut(false);
+			$oRdv->setValidation(false);
+			$oRdv->setCreneauxDebut($oStartDate);
+			$oRdv->setCreneauxFin($oEndDate);
+			dump($oRdv);die;
+		}else{
+			return $this->redirectToRoute('fos_user_security_login');
+		}
+	}
 }

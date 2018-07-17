@@ -47,5 +47,13 @@ class UserRepository extends Repository {
                         ->getQuery()
                         ->getOneOrNullResult();
     }
-
+    
+    public function getProsByNom($str){
+        return $this->createQueryBuilder('u')
+                    ->select('u')
+                    ->andWhere("CONCAT(u.firstname, ' ', u.lastname) like :str")
+                    ->setParameter('str', "%$str%")
+                    ->getQuery()
+                    ->getResult();
+    }
 }
