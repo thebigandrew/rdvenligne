@@ -1,0 +1,15 @@
+{% extends "@Rdv/partials/datatables.twig" %}
+{% block content %}
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Confirmation du RDV</h3>
+        </div>
+        <div class="card-body">
+            {{ dump(oRdv) }}
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-info pull-right" href="{{ path('client_confirm_rdv', {'id':oRdv.id}) }}">Confirmer</a>
+            <a class="btn btn-danger pull-right" href="{{ path('client_cancel_rdv', {'id':oRdv.id}) }}">Annuler</a>
+        </div>
+    </div>
+{% endblock %}

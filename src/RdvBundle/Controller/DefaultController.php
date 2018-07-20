@@ -744,9 +744,11 @@ class DefaultController extends Controller {
 			$startParamStr = $tParams[1];
 			$endParamStr = $tParams[2];
 			$typeParamStr = $tParams[3];
+			$lieuParamStr = $tParams[4];
 			
 			$proId = str_replace('pro=', '', $proParamStr);
 			$typeId = str_replace('type=', '', $typeParamStr);
+			$lieuId = str_replace('lieu=', '', $lieuParamStr);
 			
 			$startDateFormat = str_replace('%20', ' ', $startParamStr);
 			$startDateFormat = str_replace('start=', '', $startDateFormat);
@@ -757,12 +759,13 @@ class DefaultController extends Controller {
 			$oEndDate = new \DateTime($endDateFormat);
 			
 			$em = $this->getDoctrine()->getManager();
-            $repositoryRdv = $em->getRepository(Rdv::class);
             $repositoryTypeRdv = $em->getRepository(TypeRdv::class);
+            $repositoryLieu = $em->getRepository(LieuRdv::class);
             $repositoryUser = $em->getRepository(User::class);
 			
 			$oPro = $repositoryUser->findOneBy(array('id' => $proId));
 			$oTypeRdv = $repositoryTypeRdv->findOneBy(array('id' => $typeId));
+			$oLieu = $repositoryLieu->findOneBy(array('id' => $lieuId));
 			$oClient = $this->getUser();
 			
 			$oRdv = new Rdv();
@@ -771,11 +774,53 @@ class DefaultController extends Controller {
 			$oRdv->setUserId($oClient);
 			$oRdv->setStatut(false);
 			$oRdv->setValidation(false);
+			$oRdv->setLieu($oLieu);
 			$oRdv->setCreneauxDebut($oStartDate);
 			$oRdv->setCreneauxFin($oEndDate);
-			dump($oRdv);die;
+			$em->persist($oRdv);
+			$em->flush();
+			
+			return $this->render('RdvBundle:Default:confirmRdv.html.twig', array(
+			    'oRdv' => $oRdv
+			));
 		}else{
 			return $this->redirectToRoute('fos_user_security_login');
 		}
+	}
+	
+	public function confirmRdvClientAction(Request $request, $id){
+	    if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+	        $em = $this->getDoctrine()->getManager();
+	        $repositoryRdv = $em->getRepository(Rdv::class);
+	        $oRdv = $repositoryRdv->findOneBy(array('id' => $id));
+	        $oRdv->setStatut(true);
+	        $em->flush();
+	        $session = new Session();
+	        $session->getFlashBag()->add(
+	            'success', 'RDV réservé avec succès'
+	        );
+	        return $this->redirectToRoute('rdv_homepage');
+	    }else{
+	        return $this->redirectToRoute('fos_user_security_login');
+	    }
+	}
+	
+	public function cancelRdvClientAction(Request $request, $id){
+	    if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+	        $em = $this->getDoctrine()->getManager();
+	        $repositoryRdv = $em->getRepository(Rdv::class);
+	        $oRdv = $repositoryRdv->findOneBy(array('id' => $id));
+	        $oPro = $oRdv->getProId();
+	        $proId = $oPro->getId();
+	        $em->remove($oRdv);
+	        $em->flush();
+	        $session = new Session();
+	        $session->getFlashBag()->add(
+	            'error', 'Réservation annulée'
+	        );
+	        return $this->redirectToRoute('recherche_creneaux', array('id' => $proId));
+	    }else{
+	        return $this->redirectToRoute('fos_user_security_login');
+	    }
 	}
 }

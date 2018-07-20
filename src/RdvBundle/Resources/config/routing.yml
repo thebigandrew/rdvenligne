@@ -121,3 +121,11 @@ recherche_creneaux_json:
 order_rdv_confirm:
     path: /rdv/confirm
     defaults: { _controller: RdvBundle:Default:confirmRdv }
+    
+client_confirm_rdv:
+    path: /rdv/client/confirm/{id}
+    defaults: { _controller: RdvBundle:Default:confirmRdvClient, id:null }
+    
+client_cancel_rdv:
+    path: /rdv/client/cancel/{id}
+    defaults: { _controller: RdvBundle:Default:cancelRdvClient, id:null }
