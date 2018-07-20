@@ -10,9 +10,15 @@
 {% endblock %}
 
 {% block content %}
+    {% for message in app.flashes('success') %}
+        <div class="row">
+            <div class="alert-success">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
     <h1>Recherche creneaux</h1>
     {{ form(form) }}
-    <div id="dialog"></div>
     <div class="row">
     	<div id="calendrierCreneaux"></div>
     </div>
@@ -57,11 +63,12 @@
                     }
                 },
                 eventClick: function(calEvent, jsEvent, view){
-					var url = '{{ path("order_rdv_confirm", {'pro': 'strpro', 'start': 'strstart', 'end': 'strend', 'type': 'strtype'}) }}';
+					var url = '{{ path("order_rdv_confirm", {'pro': 'strpro', 'start': 'strstart', 'end': 'strend', 'type': 'strtype', 'lieu': 'strlieu'}) }}';
 					url = url.replace("strpro", calEvent.pro);
 					url = url.replace("strstart", calEvent.start);
 					url = url.replace("strend", calEvent.end);
 					url = url.replace("strtype", calEvent.typerdv);
+					url = url.replace("strlieu", calEvent.lieu);
 					window.location.replace(url);
                 },
                 themeSystem: 'bootstrap4'

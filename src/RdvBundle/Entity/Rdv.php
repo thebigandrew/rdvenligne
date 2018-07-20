@@ -64,7 +64,7 @@ class Rdv implements \JsonSerializable {
     
     /**
      * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\LieuRdv")
-     * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id", nullable=true)
      */
     private $lieu;
     
