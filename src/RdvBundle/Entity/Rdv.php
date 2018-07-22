@@ -42,6 +42,12 @@ class Rdv implements \JsonSerializable {
      * @ORM\Column(name="statut", type="boolean")
      */
     private $statut;
+    
+    /**
+     * @var bool
+     * @ORM\Column(name="rappel", type="boolean", nullable=true)
+     */
+    private $rappel;
 
     /**
      * @ORM\ManyToOne(targetEntity="RdvBundle\Entity\User")
@@ -152,6 +158,24 @@ class Rdv implements \JsonSerializable {
      */
     public function getStatut() {
         return $this->statut;
+    }
+    
+        /**
+     * Set rappel
+     * @param boolean $rappel
+     * @return Rdv
+     */
+    public function setRappel($rappel) {
+        $this->rappel = $rappel;
+        return $this;
+    }
+
+    /**
+     * Get rappel
+     * @return bool
+     */
+    public function getRappel() {
+        return $this->rappel;
     }
 
     /**

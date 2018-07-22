@@ -73,6 +73,24 @@ class UserRdvDatatable extends AbstractDatatable {
                 ->add('statut', BooleanColumn::class, array(
                     'title' => 'Statut',
                 ))
+                ->add(null, ActionColumn::class, array(
+                    'title' => 'Actions',
+                    'actions' => array(
+                        array(
+                            'route' => 'client_cancel_rdv',
+                            'route_parameters' => array(
+                                'id' => 'id'
+                            ),
+                            'label' => 'Annuler',
+                            'attributes' => array(
+                                'rel' => 'tooltip',
+                                'title' => 'Annuler ce rendez-vous',
+                                'class' => 'btn btn-danger btn-xs',
+                                'role' => 'button'
+                            ),
+                        )
+                    )
+                ))
         ;
     }
 

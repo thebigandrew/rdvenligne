@@ -1,0 +1,9 @@
+<div >
+    <p>Vous avez rendez {{ oRdv.proId.firstName }} {{ oRdv.proId.lastName }} le {{ oRdv.creneauxDebut|date("d/m/Y") }} à {{ oRdv.creneauxDebut|date("H:i") }}.</p>
+    {% if oRdv.lieu is not null %}
+        <p>Lieu de rendez-vous : {{ oRdv.lieu.nom }}</p>
+    {% endif %}
+    {% if oRdv.typeId is not null %}
+        <p>Type de prestation : {{ oRdv.typeId.type }}</p>
+    {% endif %}
+</div>

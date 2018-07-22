@@ -5,10 +5,17 @@
             <h3 class="card-title">Confirmation du RDV</h3>
         </div>
         <div class="card-body">
-            {{ dump(oRdv) }}
+            <p>Votre rendez vous avec {{ oRdv.proId.firstName }} {{ oRdv.proId.lastName }} le {{ oRdv.creneauxDebut|date("d/m/Y") }} à {{ oRdv.creneauxDebut|date("H:i") }} est en attente de validation.</p>
+            {% if oRdv.lieu is not null %}
+                <p>Lieu de rendez-vous : {{ oRdv.lieu.nom }}</p>
+            {% endif %}
+            {% if oRdv.typeId is not null %}
+                <p>Type de prestation : {{ oRdv.typeId.type }}</p>
+            {% endif %}
         </div>
         <div class="card-footer">
-            <a class="btn btn-info pull-right" href="{{ path('client_confirm_rdv', {'id':oRdv.id}) }}">Confirmer</a>
+            {# ce n'est pas le client qui confirme le rdv ! #}
+            {#<a class="btn btn-info pull-right" href="{{ path('client_confirm_rdv', {'id':oRdv.id}) }}">Confirmer</a>#}
             <a class="btn btn-danger pull-right" href="{{ path('client_cancel_rdv', {'id':oRdv.id}) }}">Annuler</a>
         </div>
     </div>

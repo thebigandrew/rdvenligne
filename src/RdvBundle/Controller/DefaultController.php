@@ -694,28 +694,34 @@ class DefaultController extends Controller {
                     // itérer sur tous les crénaux de la journée
                     foreach($period as $value)
                     {
-                        // le créneaux de fin est le créneaux de début + la durée du rdv que l'on recherche.
-                        $endCreneaux = clone $value;
-                        $endCreneaux->add(new DateInterval( $typeRdvIntervalFormat ));
+                        $currentDateTime = new \DateTime();
                         
-                        // Il ne faut pas qu'un rdv se termine après la fin de la journée
-                        if( $endCreneaux < $end )
+                        // Ne pas afficher les créneaux pour les heures / jours passés
+                        if( $currentDateTime < $value)
                         {
-                            // Récuperer le nombre de rdv qui s'overlap sur la période du créneaux.
-                            $overlappingRdv = $repositoryRdv->countOverlappingRdv($proId, $value, $endCreneaux);
-                            $nbFermeture = $repositoryFermeture->creneauxEstSurFermeture($proId, $value, $endCreneaux);
-                            if( ($overlappingRdv < $day->getNbcreneaux()) && ($nbFermeture == 0))
+                            // le créneaux de fin est le créneaux de début + la durée du rdv que l'on recherche.
+                            $endCreneaux = clone $value;
+                            $endCreneaux->add(new DateInterval( $typeRdvIntervalFormat ));
+
+                            // Il ne faut pas qu'un rdv se termine après la fin de la journée
+                            if( $endCreneaux < $end )
                             {
-                                // Le créneaux rempli toutes les conditions, on peut l'ajouter.
-                                array_push($creneauxSemaineCourante, [
-                                    'title' => 'crénaux ' . ($i++),
-                                    'start' => $value->format('Y-m-d H:i:s'),
-                                    'end' => $endCreneaux->format('Y-m-d H:i:s'),
-                                    'pro' => $proId,
-                                    'typerdv' => $idTypeRdv,
-                                    // attention le lieu peut être nul
-                                    'lieu' => $day->getLieu()
-                                ]);
+                                // Récuperer le nombre de rdv qui s'overlap sur la période du créneaux.
+                                $overlappingRdv = $repositoryRdv->countOverlappingRdv($proId, $value, $endCreneaux);
+                                $nbFermeture = $repositoryFermeture->creneauxEstSurFermeture($proId, $value, $endCreneaux);
+                                if( ($overlappingRdv < $day->getNbcreneaux()) && ($nbFermeture == 0))
+                                {
+                                    // Le créneaux rempli toutes les conditions, on peut l'ajouter.
+                                    array_push($creneauxSemaineCourante, [
+                                        'title' => 'crénaux ' . ($i++),
+                                        'start' => $value->format('Y-m-d H:i:s'),
+                                        'end' => $endCreneaux->format('Y-m-d H:i:s'),
+                                        'pro' => $proId,
+                                        'typerdv' => $idTypeRdv,
+                                        // attention le lieu peut être nul
+                                        'lieu' => $day->getLieu()
+                                    ]);
+                                }
                             }
                         }
                     }
@@ -732,61 +738,91 @@ class DefaultController extends Controller {
         }
     }
 	
-	public function confirmRdvAction(Request $request){
-		if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-			$strUri = explode('/', $request->getRequesturi());
-			$strParams = $strUri[5];
-			$strParams = str_replace('confirm?', '', $strParams);
-			$strParams = str_replace('&amp;', ' ', $strParams);
-			$tParams = explode(' ', $strParams);
+    public function confirmRdvAction(Request $request){
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $strUri = explode('/', $request->getRequesturi());
+            $strParams = $strUri[5];
+            $strParams = str_replace('confirm?', '', $strParams);
+            $strParams = str_replace('&amp;', ' ', $strParams);
+            $tParams = explode(' ', $strParams);
+
+            $proParamStr = $tParams[0];
+            $startParamStr = $tParams[1];
+            $endParamStr = $tParams[2];
+            $typeParamStr = $tParams[3];
+            $lieuParamStr = $tParams[4];
+
+            $proId = str_replace('pro=', '', $proParamStr);
+            $typeId = str_replace('type=', '', $typeParamStr);
+            $lieuId = str_replace('lieu=', '', $lieuParamStr);
+
+            $startDateFormat = str_replace('%20', ' ', $startParamStr);
+            $startDateFormat = str_replace('start=', '', $startDateFormat);
+            $oStartDate = new \DateTime($startDateFormat);
+
+            $endDateFormat = str_replace('%20', ' ', $endParamStr);
+            $endDateFormat = str_replace('end=', '', $endDateFormat);
+            $oEndDate = new \DateTime($endDateFormat);
 			
-			$proParamStr = $tParams[0];
-			$startParamStr = $tParams[1];
-			$endParamStr = $tParams[2];
-			$typeParamStr = $tParams[3];
-			$lieuParamStr = $tParams[4];
-			
-			$proId = str_replace('pro=', '', $proParamStr);
-			$typeId = str_replace('type=', '', $typeParamStr);
-			$lieuId = str_replace('lieu=', '', $lieuParamStr);
-			
-			$startDateFormat = str_replace('%20', ' ', $startParamStr);
-			$startDateFormat = str_replace('start=', '', $startDateFormat);
-			$oStartDate = new \DateTime($startDateFormat);
-			
-			$endDateFormat = str_replace('%20', ' ', $endParamStr);
-			$endDateFormat = str_replace('end=', '', $endDateFormat);
-			$oEndDate = new \DateTime($endDateFormat);
-			
-			$em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $repositoryTypeRdv = $em->getRepository(TypeRdv::class);
             $repositoryLieu = $em->getRepository(LieuRdv::class);
             $repositoryUser = $em->getRepository(User::class);
 			
-			$oPro = $repositoryUser->findOneBy(array('id' => $proId));
-			$oTypeRdv = $repositoryTypeRdv->findOneBy(array('id' => $typeId));
-			$oLieu = $repositoryLieu->findOneBy(array('id' => $lieuId));
-			$oClient = $this->getUser();
-			
-			$oRdv = new Rdv();
-			$oRdv->setTypeId($oTypeRdv);
-			$oRdv->setProId($oPro);
-			$oRdv->setUserId($oClient);
-			$oRdv->setStatut(false);
-			$oRdv->setValidation(false);
-			$oRdv->setLieu($oLieu);
-			$oRdv->setCreneauxDebut($oStartDate);
-			$oRdv->setCreneauxFin($oEndDate);
-			$em->persist($oRdv);
-			$em->flush();
-			
-			return $this->render('RdvBundle:Default:confirmRdv.html.twig', array(
-			    'oRdv' => $oRdv
-			));
-		}else{
-			return $this->redirectToRoute('fos_user_security_login');
-		}
-	}
+            $oPro = $repositoryUser->findOneBy(array('id' => $proId));
+            $oTypeRdv = $repositoryTypeRdv->findOneBy(array('id' => $typeId));
+            $oLieu = $repositoryLieu->findOneBy(array('id' => $lieuId));
+            $oClient = $this->getUser();
+
+            $oRdv = new Rdv();
+            $oRdv->setTypeId($oTypeRdv);
+            $oRdv->setProId($oPro);
+            $oRdv->setUserId($oClient);
+            $oRdv->setStatut(false);
+            $oRdv->setValidation(false);
+            $oRdv->setLieu($oLieu);
+            $oRdv->setCreneauxDebut($oStartDate);
+            $oRdv->setCreneauxFin($oEndDate);
+            $em->persist($oRdv);
+            $em->flush();
+            
+            // envoi mail pro. Désactivé par défault pour ne pas spammer le client.
+            /*$messagePro = (new \Swift_Message('Confirmation rdv'))
+                ->setFrom($this->getParameter('mailer_user'))
+                ->setTo($oRdv->getProId()->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'RdvBundle:Email:confirmation_pro.html.twig', array(
+                            'oRdv' => $oRdv
+                        )
+                    ),
+                    'text/html'
+                );
+            $this->get('mailer')->send($messagePro);*/
+
+            
+            // Envoi mail client.
+            $message = (new \Swift_Message('Confirmation rdv'))
+                ->setFrom($this->getParameter('mailer_user'))
+                ->setTo($oRdv->getUserId()->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'RdvBundle:Email:confirmation_client.html.twig', array(
+                            'oRdv' => $oRdv
+                        )
+                    ),
+                    'text/html'
+                );
+
+            $this->get('mailer')->send($message);
+
+                return $this->render('RdvBundle:Default:confirmRdv.html.twig', array(
+                    'oRdv' => $oRdv
+                ));
+        }else{
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+    }
 	
 	public function confirmRdvClientAction(Request $request, $id){
 	    if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
@@ -799,6 +835,38 @@ class DefaultController extends Controller {
 	        $session->getFlashBag()->add(
 	            'success', 'RDV réservé avec succès'
 	        );
+                
+                // envoi mail pro. Désactivé par défault pour ne pas spammer le client.
+                /*$messagePro = (new \Swift_Message('Validation rdv'))
+                    ->setFrom($this->getParameter('mailer_user'))
+                    ->setTo($oRdv->getProId()->getEmail())
+                    ->setBody(
+                        $this->renderView(
+                            'RdvBundle:Email:validation_rdv_pro.html.twig', array(
+                                'oRdv' => $oRdv
+                            )
+                        ),
+                        'text/html'
+                    );
+                $this->get('mailer')->send($messagePro);*/
+
+                if($oRdv->getUserId() !== null)
+                {
+                    // Envoi mail client.
+                    $message = (new \Swift_Message('Validation rdv'))
+                        ->setFrom($this->getParameter('mailer_user'))
+                        ->setTo($oRdv->getUserId()->getEmail())
+                        ->setBody(
+                            $this->renderView(
+                                'RdvBundle:Email:validation_rdv_client.html.twig', array(
+                                    'oRdv' => $oRdv
+                                )
+                            ),
+                            'text/html'
+                        );
+
+                    $this->get('mailer')->send($message);
+                }
 	        return $this->redirectToRoute('rdv_homepage');
 	    }else{
 	        return $this->redirectToRoute('fos_user_security_login');
@@ -818,6 +886,39 @@ class DefaultController extends Controller {
 	        $session->getFlashBag()->add(
 	            'error', 'Réservation annulée'
 	        );
+                
+                // envoi mail pro. Désactivé par défault pour ne pas spammer le client.
+                /*$messagePro = (new \Swift_Message('Annulation rdv'))
+                    ->setFrom($this->getParameter('mailer_user'))
+                    ->setTo($oRdv->getProId()->getEmail())
+                    ->setBody(
+                        $this->renderView(
+                            'RdvBundle:Email:cancel_rdv_pro.html.twig', array(
+                                'oRdv' => $oRdv
+                            )
+                        ),
+                        'text/html'
+                    );
+                $this->get('mailer')->send($messagePro);*/
+
+                if($oRdv->getUserId() !== null)
+                {
+                    // Envoi mail client.
+                    $message = (new \Swift_Message('Annulation rdv'))
+                        ->setFrom($this->getParameter('mailer_user'))
+                        ->setTo($oRdv->getUserId()->getEmail())
+                        ->setBody(
+                            $this->renderView(
+                                'RdvBundle:Email:cancel_rdv_client.html.twig', array(
+                                    'oRdv' => $oRdv
+                                )
+                            ),
+                            'text/html'
+                        );
+
+                    $this->get('mailer')->send($message);
+                }
+                
 	        return $this->redirectToRoute('recherche_creneaux', array('id' => $proId));
 	    }else{
 	        return $this->redirectToRoute('fos_user_security_login');
