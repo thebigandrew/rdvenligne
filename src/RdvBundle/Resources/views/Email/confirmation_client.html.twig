@@ -1,0 +1,9 @@
+<div >
+    <p>Votre rendez vous avec {{ oRdv.proId.firstName }} {{ oRdv.proId.lastName }} le {{ oRdv.creneauxDebut|date("d/m/Y") }} à {{ oRdv.creneauxDebut|date("H:i") }} est <strong>en attente de validation</strong>.</p>
+    {% if oRdv.lieu is not null %}
+        <p>Lieu de rendez-vous : {{ oRdv.lieu.nom }}</p>
+    {% endif %}
+    {% if oRdv.typeId is not null %}
+        <p>Type de prestation : {{ oRdv.typeId.type }}</p>
+    {% endif %}
+</div>

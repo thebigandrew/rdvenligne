@@ -66,4 +66,29 @@ EOT;
                    ->getSingleScalarResult();
         return $qb;
     }
+    
+    public function getRdvARapeller()
+    {
+        $tomorrow = new \DateTime('tomorrow');
+        
+        $qb = $this->createQueryBuilder('r')
+                   ->select('r')
+                   ->andWhere('r.creneauxDebut <= :tomorrow')
+                   ->andWhere('(r.rappel = false OR r.rappel IS NULL)')
+                   ->setParameter('tomorrow', $tomorrow)
+                   ->getQuery()
+                   ->getResult();
+        
+        return $qb;
+    }
+    
+    public function rappellerRdv($id)
+    {
+        $qb = $this->createQueryBuilder('r');
+        $qb->update()
+            ->set('r.rappel', true)
+            ->where('r.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+    }
 }

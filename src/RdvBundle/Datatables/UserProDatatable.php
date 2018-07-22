@@ -51,18 +51,60 @@ class UserProDatatable extends AbstractDatatable {
         $this->columnBuilder
                 ->add('userId.lastname', Column::class, array(
                     'title' => 'User. Nom',
+                    'default_content' => ''
                 ))
                 ->add('userId.firstname', Column::class, array(
                     'title' => 'User. Prénom',
+                    'default_content' => ''
                 ))
                 ->add('userId.telephone', Column::class, array(
                     'title' => 'User. Telephone',
+                    'default_content' => ''
                 ))
                 ->add('creneauxDebut', DateTimeColumn::class, array(
                     'title' => 'Dernier Creneaux Debut',
                 ))
                 ->add('creneauxFin', DateTimeColumn::class, array(
                     'title' => 'Dernier Creneaux Fin',
+                ))
+                ->add('statut', Column::class, array(
+                    'visible' => false
+                ))
+                ->add(null, ActionColumn::class, array(
+                    'title' => 'Actions',
+                    'actions' => array(
+                        array(
+                            'route' => 'client_cancel_rdv',
+                            'route_parameters' => array(
+                                'id' => 'id'
+                            ),
+                            'label' => 'Annuler',
+                            'attributes' => array(
+                                'rel' => 'tooltip',
+                                'title' => 'Annuler ce rendez-vous',
+                                'class' => 'btn btn-danger btn-xs',
+                                'role' => 'button'
+                            ),
+                        ),
+                        array(
+                            'route' => 'client_confirm_rdv',
+                            'route_parameters' => array(
+                                'id' => 'id'
+                            ),
+                            'label' => 'Confirmer',
+                            'attributes' => array(
+                                'rel' => 'tooltip',
+                                'title' => 'Confirmer ce rendez-vous',
+                                'class' => 'btn btn-danger btn-xs',
+                                'role' => 'button'
+                            ),
+                             'render_if' => function ($row) {
+                                dump( $row );
+                                return $row['statut'] === false;
+                            }
+                        )
+                    )
+                    
                 ))
         ;
     }
