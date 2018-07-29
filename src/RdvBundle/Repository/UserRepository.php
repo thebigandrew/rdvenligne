@@ -45,7 +45,7 @@ class UserRepository extends Repository {
                         ->andWhere("l.roles like :roles")
                         ->setParameter('roles', "%PRO%")
                         ->getQuery()
-                        ->getOneOrNullResult();
+                        ->getArrayResult();
     }
     
     public function getProsByNom($str){
