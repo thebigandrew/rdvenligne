@@ -27,7 +27,7 @@ class RdvRepository extends \Doctrine\ORM\EntityRepository {
     public function getNbRDVDate() {
         return $this->createQueryBuilder('l')
                         ->select('MONTH(l.creneauxDebut) as month, COUNT(l.id) as nb')
-                        ->groupBy('l.creneauxDebut')
+                        ->groupBy('month')
                         ->getQuery()
                         ->getArrayResult();
     }
