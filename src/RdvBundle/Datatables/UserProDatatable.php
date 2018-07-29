@@ -99,7 +99,6 @@ class UserProDatatable extends AbstractDatatable {
                                 'role' => 'button'
                             ),
                              'render_if' => function ($row) {
-                                dump( $row );
                                 return $row['statut'] === false;
                             }
                         )
