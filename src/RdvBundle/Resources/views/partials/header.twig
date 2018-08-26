@@ -5,15 +5,15 @@
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ path('rdv_homepage') }}" class="nav-link">Home</a>
+        <a href="{{ path('rdv_homepage') }}" class="nav-link">Acceuil</a>
       </li>
       {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ path('fos_user_security_login') }}" class="nav-link">Login</a>
+            <a href="{{ path('fos_user_security_login') }}" class="nav-link">Connexion</a>
           </li>
       {% else %}
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ path('fos_user_security_logout') }}" class="nav-link">Logout</a>
+            <a href="{{ path('fos_user_security_logout') }}" class="nav-link">Deconnexion</a>
           </li>
       {% endif %}
     </ul>

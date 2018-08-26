@@ -59,8 +59,7 @@ class ProRdvDatatable extends AbstractDatatable {
 
         $this->options->set(array(
             'classes' => Style::BOOTSTRAP_4_STYLE,
-            'individual_filtering' => true,
-            'individual_filtering_position' => 'head',
+            'individual_filtering' => false,
             'order_cells_top' => false,
         ));
 
@@ -102,12 +101,15 @@ class ProRdvDatatable extends AbstractDatatable {
                 ))
                 ->add('validation', BooleanColumn::class, array(
                     'title' => 'Validation',
+                    'true_label' => 'Oui',
+                    'false_label' => 'Non'
                 ))
                 ->add('statut', BooleanColumn::class, array(
                     'title' => 'Statut',
+                    'visible' => false
                 ))
                 ->add('commentaire', Column::class, array(
-                    'visible' => false
+                    'visible' => false,
                 ))
         ;
     }
