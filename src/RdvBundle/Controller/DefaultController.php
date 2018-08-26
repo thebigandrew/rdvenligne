@@ -374,7 +374,7 @@ class DefaultController extends Controller {
             $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
 
             $qb = $datatableQueryBuilder->getQb();
-            $qb->andWhere('user.roles LIKE :role');
+            $qb->andWhere('user.roles LIKE :role AND users.validationAdmin = true');
             $qb->setParameter('role', '%"ROLE_PRO"%');
 
             return $responseService->getResponse();

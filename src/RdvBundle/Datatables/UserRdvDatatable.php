@@ -73,6 +73,9 @@ class UserRdvDatatable extends AbstractDatatable {
                 ->add('statut', BooleanColumn::class, array(
                     'title' => 'Statut',
                 ))
+                ->add('proId.metier', Column::class, array(
+                    'title' => 'Métier',
+                ))
                 ->add(null, ActionColumn::class, array(
                     'title' => 'Actions',
                     'actions' => array(

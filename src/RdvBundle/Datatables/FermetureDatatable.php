@@ -51,10 +51,10 @@ class FermetureDatatable extends AbstractDatatable {
 
         $this->columnBuilder
                 ->add('datedebut', DateTimeColumn::class, array(
-                    'title' => 'Date'
+                    'title' => 'Date debut'
                 ))
                 ->add('datefin', DateTimeColumn::class, array(
-                    'title' => 'Date'
+                    'title' => 'Date fin'
                 ))
 				->add(null, ActionColumn::class, array(
                     'title' => 'Modifier',
