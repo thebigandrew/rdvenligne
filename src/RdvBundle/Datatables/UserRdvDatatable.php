@@ -59,10 +59,10 @@ class UserRdvDatatable extends AbstractDatatable {
                     'title' => 'Pro. Telephone',
                 ))
                 ->add('creneauxDebut', DateTimeColumn::class, array(
-                    'title' => 'Creneaux Debut',
+                    'title' => 'Date Debut',
                 ))
                 ->add('creneauxFin', DateTimeColumn::class, array(
-                    'title' => 'Creneaux Fin',
+                    'title' => 'Date Fin',
                 ))
                 ->add('typeId.type', Column::class, array(
                     'title' => 'Type RDV',
